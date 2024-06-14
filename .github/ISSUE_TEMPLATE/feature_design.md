@@ -1,5 +1,5 @@
 ---
-name: 기능설계
+name: Feature_Design
 about: 기능설계 내용 작성
 title: "[기능설계]"
 labels: 기능구현잇슈
@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-### 🛠기능 구현 설명
+### 🛠기능 설계 설명
 - 
 
 ### 📑할 일

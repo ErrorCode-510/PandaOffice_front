@@ -1,5 +1,5 @@
 ---
-name: 오류발생
+name: Error
 about: 오류 발생 및 해결 관련 작성
 title: "[오류발생]"
 labels: 버그잇슈, 버그해결햇슈
