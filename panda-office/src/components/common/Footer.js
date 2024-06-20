@@ -1,8 +1,8 @@
 function Footer() {
     return (
-        <>
-            Footer test
-        </>
+        <footer className="panda-footer">
+                <span className="text">© 2024. Panda Office Co.</span>
+        </footer>
     )
 }
 
