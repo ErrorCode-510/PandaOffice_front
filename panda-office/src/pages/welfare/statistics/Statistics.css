@@ -1,0 +1,7 @@
+.statistics-area{ height: calc(100vh - 100px); overflow-y: scroll; overflow-x: hidden;background-color: #EDEBEB;}
+.statistics-area{display: flex;}
+.statistics-area::-webkit-scrollbar{display: none;}
+.statistics-inner-area{display: flex; gap:13px;}
+.statistics-inner-area .statistics-inner-left-area{display: flex; flex-wrap: wrap; gap:15px; width: 1080px;}
+.statistics-area .statistics-inner-left-area .statistics-left-card{width: 530px; height: 385px; border: 1px solid black;}
+.statistics-inner-area .statistics-inner-right-area .statistics-right-card{width: 530px; height: 792px; border: 1px solid black;}

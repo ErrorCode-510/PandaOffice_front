@@ -1,0 +1,80 @@
+/* 공통 css(header, navbar, footer, 컨텐츠 구역) */
+/* 클래스 이름 통일?(임시로 작성한 클래스 이름이 많음) */
+
+
+/* 페이지 전체 영역 ------------------------------------------------------------- */
+/* html,body,#root{margin: 0 ; padding:0;  height: 100%; } */
+body::-webkit-scrollbar{display: none;}
+
+/* layout--------------------------------------------------------------------------- */
+#layout-wrap{display:flex; height:100%;}
+.layout-left{flex:none; position: relative; z-index: 5;} 
+.layout-right{flex-grow: 1; margin-left: 260px;}
+
+
+/* 컨텐츠 영역 (페이지 만들때 꼭 넣어주세요, 클래스 이름은 임시 작성이므로 임의로 작성 가능)*/
+.contents-area{height: calc(100vh - 100px); overflow-y: scroll; overflow-x: hidden;background-color: #EDEBEB;} 
+/* contents-area 안에서 한번 더 감싸는 용도(페이지 만들때 꼭 넣어주세요)*/
+.cover-box{width: 1620px; margin: 0 auto; margin-top:30px; background-color: #EDEBEB;} 
+
+
+/* 구조 예시
+(cover-box는 이름 수정x, contents-area는 본인 컴포넌트 페이지 css에 적용(common에 있는 css는 지울것) )
+
+ function Statistics() {
+    return(
+        <>
+            <div className="statistics-area"> contents-area와 동일한 클래스
+                <div className="cover-box">
+                    <StatisticsComponent/>
+                </div>   
+            </div>
+
+            <Footer/>
+        </>
+    )
+*/
+
+
+/* header ----------------------------------------------------------------------- */
+.panda-header{width:100%; height: 100px; display: flex; justify-content: space-between;  box-shadow: 0 8px 10px -7px gray;  position: relative; z-index: 1; background-color: white;}
+.panda-logo {width:380px; height :80px; padding: 10px; background-image : url('/public/image/logo/pandaOffice_logo.png'); background-size : 330px 80px; background-position : center; background-repeat: no-repeat; }
+.panda-logo{flex:none;}
+.icon-area{ display: flex; justify-content: space-between; flex: none; align-items: center;  width: 200px; margin-right: 50px;} /*헤더 오른쪽 아이콘 공간*/
+.icon-area .icon{width: 45px; height: 45px;}
+
+/* 아이콘 위치 조정 */
+.icon .bell {flex: none; width: 35px; height:35px; color:#898989 } /* 고정된 크기로 설정 */
+.icon .calender {flex: 1; width: 35px; height:35px; color:#898989} /* 남은 공간을 모s두 차지하도록 설정 */
+.icon .logout {flex: none;  width: 35px; height:35px; color:#898989}/* 고정된 크기로 설정 */
+/* .icon-area .icon.bell{background-image : url('/public/image/icon/iconmonstr-bell-1.svg'); background-size: 45px 45px; background-position : center; background-repeat: no-repeat;} */
+/* .icon-area .icon.calender{background-image : url('/public/image/icon/iconmonstr-calendar-5.svg'); background-size: 45px 45px; background-position : center; background-repeat: no-repeat;} */
+/* .icon-area .icon.logout{background-image : url('/public/image/icon/iconmonstr-log-out-18.svg'); background-size: 45px 45px; background-position : center; background-repeat: no-repeat;} */
+
+
+ /* navbar ------------------------------------------------------------------------ */
+ /* 사이드바 (패딩, 마진 조절하면 사이즈 잡힘) */
+.nav-wrap {padding: 0; margin:0; width: 260px; height: 100vh; background-color: #1E1F31; color: #fff; position: fixed;}
+.toggle-box {width: 50px; height: 50px; position: absolute; top: 10px; left: 5px; background-color: #00c8ff; display: flex; justify-content: center; align-items: center;}
+.arrow-icons {width: 30px; height: 0px;}
+.side-nav {display: flex; flex-direction: column; align-items: center;}
+.side-clock {border: 1px solid #fff; border-radius: 50%; width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 50px 0 10px 0;font-weight: bold;}
+.check-button {margin: 10px 0 25px 0; width: 65%; display: flex; justify-content: space-between;}
+.check-button button{width: 80px; height: 35px; font-size: 16px; border-radius: 8px; border: none; cursor: pointer; color: #fff;}
+.check-button button:first-child {background-color: #2B9BCB;}
+.check-button button:last-child {background-color: #858585;}
+.side-icons {width: 27px; height: 27px; color: #c1c1c1; margin-right: 15px;}
+.sub-1 {width: 25px; height: 25px;}
+.nav-link {display: flex; text-decoration: none;}
+.department-list {width: 70%; padding: 0; list-style: none; border-top: 1px solid #fff;}
+.department-list li {margin-top: 40px; padding: 0 20px; height: 32px;}
+.department-list li p {margin:0;}
+.department-list li p:hover {color: #8aa2e3;}
+.department-list p {display: inline-block; font-weight: bold; color: #c1c1c1; font-size: 20px;}
+.department-list li:last-child {margin-top: 100px; height: 50px; border-radius: 8px; background-color: #3D4762; display: flex; justify-content: center; align-items: center;}
+
+/* footer ------------------------------------------------------------------------ */
+.panda-footer{width:100%; height: 50px; box-sizing: border-box;  background-color: white; }
+.panda-footer .text{display: block; height: 50px; line-height: 50px; text-align: center;}
+
+
