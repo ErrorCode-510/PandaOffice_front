@@ -13,7 +13,7 @@ body::-webkit-scrollbar{display: none;}
 
 
 /* 컨텐츠 영역 (페이지 만들때 꼭 넣어주세요, 클래스 이름은 임시 작성이므로 임의로 작성 가능)*/
-.contents-area{height: calc(100vh - 100px); overflow-y: scroll; overflow-x: hidden;background-color: #EDEBEB;} 
+.contents-area{height: calc(100vh - 100px); overflow-y: scroll; overflow-x: hidden;  background-color: #EDEBEB;} 
 /* contents-area 안에서 한번 더 감싸는 용도(페이지 만들때 꼭 넣어주세요)*/
 .cover-box{width: 1620px; margin: 0 auto; margin-top:30px; background-color: #EDEBEB;} 
 

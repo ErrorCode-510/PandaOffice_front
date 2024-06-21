@@ -7,7 +7,7 @@ import LoginForm from "./pages/LoginForm/LoginForm.js"
 import "./pages/main/Main.css"
 import "./pages/welfare/statistics/Statistics.css"
 import "./common.css"
-//import "./style.css"
+// import "./style.css"
 
 
 
@@ -18,8 +18,8 @@ function App() {
       <Routes>
         {/* <Route path='/' element={<LoginForm/>}> */}
             <Route path='/' element={<Layout/>}>
-                <Route index element={<Main/>}/>
-                {/* <Route index element={<Statistics/>}/> */}
+                {/* <Route index element={<Main/>}/> */}
+                <Route index element={<Statistics/>}/>
             </Route>
         {/* </Route> */}
       </Routes>
