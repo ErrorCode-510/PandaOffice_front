@@ -1,0 +1,33 @@
+/* main -----------------------------------------------------------------------------*/
+.panda-main{ height: calc(100vh - 100px); overflow-y: scroll; overflow-x:hidden; background-color: #EDEBEB; z-index: -1;}
+.panda-main::-webkit-scrollbar{display: none;}
+
+
+/* main card (메인 상단 카드 4개) -----------------------------------------------------------------------*/
+.card-area{display: flex;  gap:32px; flex-wrap: nowrap;} /*메인 컴포넌트에 작성된 클래스*/
+.card-area .card{width: 380px; height: 150px; flex: none; border-radius: 15px;  background-color: white; box-shadow: 0 8px 10px -5px gray;  position: relative;}
+.card-area .card .colorbar{width: 250px; height: 7px; margin: 0 auto; border-radius: 10px 10px 10px 10px; transform:  translateY(-50%);} /* 카드 상단 색상 바(position: absolute; top: -3px; left:75px; ) */
+.card-area .card .card-flexbox{display: flex; height: 100%;}
+.card-area .card .card-flexbox .card-left{flex-grow: 1; margin-left: 50px;}
+.card-area .card .card-flexbox .card-left .card-text{text-align: center;font-size: 25px; margin: 0; line-height: 60px;}
+.card-area .card .card-flexbox .card-left .card-text:nth-child(2){line-height: 38px;}  
+.card-area .card .card-flexbox .card-right{flex-grow: 0; width: 130px;}
+.card-area .card .card-flexbox .card-right .card-circle{width: 85px; height: 85px; margin-top:26px; margin-left:10px; border-radius: 50%; background-color: lightcoral; position: relative;}
+.card-area .card .card-flexbox .card-right .card-circle .circle-icon{width:50px; height: 50px; transform: translate(37%,37%); color:white ;} /* 아이콘 컴포넌트(메인에 위치)*/
+
+/* main calender(메인 캘린더)------------------------------------------------------------------------- */
+.main-calender{width: 100%; height: 600px; border-radius: 15px; box-shadow: 0 8px 10px -7px gray; margin:30px auto; background-color: white; }
+.main-calender .calender-wrap{margin-top:10px; display: flex; gap:10px;}
+.main-calender .calender{width: 780px; margin: 10px auto 0 auto;}
+/* .main-calender .preview-area{border: 1px solid lightgray} 구역 잡는 용도*/
+.main-calender .preview-area .preview{height:502px; margin-top:65px; margin-right: 10px; border: 1px solid lightgray}
+
+/* main announcement(메인 공지사항)------------------------------------------------------------------- */
+.announcement-area{display: flex; flex-wrap: wrap; margin: 0 auto; width: 100%; gap:40px;}
+.announcement{width: 790px; height: 235px;  background-color: white; box-shadow: 0 8px 10px -7px gray; gap:10px; border-radius: 10px; box-sizing: border-box;}
+.announcement .announcement-topbar{height: 40px; background-color: #292929; border-radius: 10px 10px 0 0; line-height: 39px;}
+.announcement .announcement-topbar .announcement-title{color: white; font-size: 20px; font-weight: bold; margin: 10px 10px 10px 20px;}
+.announcement .announcement-contents-area{width:700px; margin: 0 auto;} /*공지사항 박스*/
+.announcement .announcement-contents-area .announcement-content{border-bottom: 1px solid #CACACA; margin-top:10px; padding-bottom: 3px; font-size: 16px;}/* 공지사항 내용물 */
+
+
