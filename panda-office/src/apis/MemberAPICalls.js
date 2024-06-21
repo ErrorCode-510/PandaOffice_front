@@ -31,7 +31,7 @@ export const callLoginAPI = ({loginRequest}) => {
     return async (dispatch, getState) => {
         const result = await request(
             'POST',
-            '/api/v1/members/login',
+            '/login',
             {'Content-Type' : 'application/json' },
             JSON.stringify(loginRequest)
         );
@@ -60,23 +60,43 @@ export const callLogoutAPI = () => {
         if(result.status === 200) {
             removeToken();
             dispatch(success());
+            console.log("dispatch success");
+
         }
 
     }
 }
 
-export const callProfileAPI = () => {
 
+export const callFindIdAPI = ({findIdRequest}) => {
     return async (dispatch, getState) => {
 
-        const result = await authRequest.get(`/api/v1/members/${getMemberId()}`);
-        console.log('callProfileAPI result : ', result);
 
-        if(result.status === 200) {
-            dispatch(getProfile(result));
-        }
-    }
-}
+
+            const result = await request(
+                'POST',
+                '/api/v1/members/find-id',
+                { 'Content-Type': 'application/json' },
+                JSON.stringify({findIdRequest})
+            );
+
+            console.log('callFindIdAPI result : ', result);
+
+            if (result?.status === 200) {
+                // 아이디 조회 성공 시 처리할 로직
+                dispatch(success());
+                toast.success("아이디 조회에 성공했습니다.");
+                // 예시: 조회된 아이디를 저장하거나, UI에 표시하는 등의 작업을 수행할 수 있습니다.
+            } else {
+                // 아이디 조회 실패 시 처리할 로직
+
+                toast.warning("아이디 조회에 실패했습니다. 입력 정보를 다시 확인해주세요.");
+            }
+
+    };
+};
+
+
 
 
 

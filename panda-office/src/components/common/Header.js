@@ -1,8 +1,12 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { TbBellFilled } from "react-icons/tb";
+import { IoCalendarNumberOutline } from "react-icons/io5";
+import { FiLogOut } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import {callLogoutAPI} from "../../apis/MemberAPICalls";
+import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {isLogin} from "../../utils/TokenUtils";
-import {useDispatch, useSelector} from "react-redux";
-import {callLogoutAPI} from "../../apis/MemberAPICalls";
 
 function Header() {
 
@@ -16,25 +20,6 @@ function Header() {
         if(e.key === 'Enter') navigate(`/product/search?value=${search}`);
     }
 
-    function BeforeLogin() {
-        return (
-            <div>
-                <button
-                    className="header-btn"
-                    onClick={ () => navigate(`/member/login`) }
-                >
-                    로그인
-                </button>
-
-                {/*<button*/}
-                {/*    className="header-btn"*/}
-                {/*    onClick={ () => navigate(`/member/signup`) }*/}
-                {/*>*/}
-                {/*    회원가입*/}
-                {/*</button>*/}
-            </div>
-        );
-    }
 
     function AfterLogin() {
 
@@ -48,27 +33,37 @@ function Header() {
 
         return (
             <div>
-                {/*<button*/}
-                {/*    className="header-btn"*/}
-                {/*    onClick={ () => navigate('/member/mypage') }*/}
-                {/*>*/}
-                {/*    마이페이지*/}
-                {/*</button>*/}
+                <Link to="/">
+                    <div className="panda-logo"/>
+                </Link>
+                <div className="icon-area">
+                    <div className="icon" >
+                        <Link to>
+                            <TbBellFilled className="bell"/>
+                        </Link>
+                    </div>
 
-                <button
-                    className="header-btn"
-                    onClick={ () => dispatch(callLogoutAPI()) }
-                >
-                    로그아웃
-                </button>
+                    <div className="icon">
+                        <Link to>
+                            <IoCalendarNumberOutline className="calender"/>
+                        </Link>
+                    </div>
+
+                    <div className="icon">
+                        <Link to>
+                            <FiLogOut className="logout" onClick={ () => dispatch(callLogoutAPI()) }/>
+                        </Link>
+                    </div>
+
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="header-div">
+        <div className="panda-header">
 
-            { isLogin() ? <AfterLogin/> : <BeforeLogin/> }
+            { <AfterLogin/> }
         </div>
     );
 }

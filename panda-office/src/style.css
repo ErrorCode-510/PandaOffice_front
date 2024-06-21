@@ -1,698 +1,88 @@
+/* 클래스 이름 통일?(임시로 작성한 클래스 이름이 많음) */
+
+
+/* 페이지 전체 영역 ------------------------------------------------------------- */
+/* html,body,#root{margin: 0 ; padding:0;  height: 100%; } */
+body::-webkit-scrollbar{display: none;}
+
+/* layout--------------------------------------------------------------------------- */
+#layout-wrap{display:flex; height:100%;}
+.layout-left{flex:none; position: relative; z-index: 5;}
+.layout-right{flex-grow: 1; margin-left: 260px;}
+
 /* header ----------------------------------------------------------------------- */
-.header-div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-    line-height: 50px;
-    min-width: 800px;
-}
+.panda-header{width:100%; height: 100px; display: flex; justify-content: space-between;  box-shadow: 0 8px 10px -7px gray;  position: relative; z-index: 1; background-color: white;}
+.panda-logo {width:380px; height :80px; padding: 10px; background-image : url('/public/image/logo/pandaOffice_logo.png'); background-size : 330px 80px; background-position : center; background-repeat: no-repeat; }
+.panda-logo{flex:none;}
+.icon-area{ display: flex; justify-content: space-between; flex: none; align-items: center;  width: 200px; margin-right: 50px;} /*헤더 오른쪽 아이콘 공간*/
+.icon-area .icon{width: 45px; height: 45px;}
+
+/* 아이콘 위치 조정 */
+.icon .bell {flex: none; width: 35px; height:35px; color:#898989 } /* 고정된 크기로 설정 */
+.icon .calender {flex: 1; width: 35px; height:35px; color:#898989} /* 남은 공간을 모s두 차지하도록 설정 */
+.icon .logout {flex: none;  width: 35px; height:35px; color:#898989}/* 고정된 크기로 설정 */
+/* .icon-area .icon.bell{background-image : url('/public/image/icon/iconmonstr-bell-1.svg'); background-size: 45px 45px; background-position : center; background-repeat: no-repeat;} */
+/* .icon-area .icon.calender{background-image : url('/public/image/icon/iconmonstr-calendar-5.svg'); background-size: 45px 45px; background-position : center; background-repeat: no-repeat;} */
+/* .icon-area .icon.logout{background-image : url('/public/image/icon/iconmonstr-log-out-18.svg'); background-size: 45px 45px; background-position : center; background-repeat: no-repeat;} */
+
+
+/* navbar ------------------------------------------------------------------------ */
+/* 사이드바 (패딩, 마진 조절하면 사이즈 잡힘) */
+.nav-wrap {padding: 0; margin:0; width: 260px; height: 100vh; background-color: #1E1F31; color: #fff; position: fixed;}
+.toggle-box {width: 50px; height: 50px; position: absolute; top: 10px; left: 5px; background-color: #00c8ff; display: flex; justify-content: center; align-items: center;}
+.arrow-icons {width: 30px; height: 0px;}
+.side-nav {display: flex; flex-direction: column; align-items: center;}
+.side-clock {border: 1px solid #fff; border-radius: 50%; width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 50px 0 10px 0;font-weight: bold;}
+.check-button {margin: 10px 0 25px 0; width: 65%; display: flex; justify-content: space-between;}
+.check-button button{width: 80px; height: 35px; font-size: 16px; border-radius: 8px; border: none; cursor: pointer; color: #fff;}
+.check-button button:first-child {background-color: #2B9BCB;}
+.check-button button:last-child {background-color: #858585;}
+.side-icons {width: 27px; height: 27px; color: #c1c1c1; margin-right: 15px;}
+.sub-1 {width: 25px; height: 25px;}
+.nav-link {display: flex; text-decoration: none;}
+.department-list {width: 70%; padding: 0; list-style: none; border-top: 1px solid #fff;}
+.department-list li {margin-top: 40px; padding: 0 20px; height: 32px;}
+.department-list li p {margin:0;}
+.department-list li p:hover {color: #8aa2e3;}
+.department-list p {display: inline-block; font-weight: bold; color: #c1c1c1; font-size: 20px;}
+.department-list li:last-child {margin-top: 100px; height: 50px; border-radius: 8px; background-color: #3D4762; display: flex; justify-content: center; align-items: center;}
+
+/* footer ------------------------------------------------------------------------ */
+.panda-footer{width:100%; height: 50px; box-sizing: border-box;  background-color: white;   margin-top: 40px;}
+.panda-footer .text{display: block; height: 50px; line-height: 50px; text-align: center;}
+
+/* main -----------------------------------------------------------------------------*/
+.panda-main{ height: calc(100vh - 100px); overflow-y: scroll; overflow-x:hidden; background-color: #EDEBEB; z-index: -1;}
+.panda-main::-webkit-scrollbar{display: none;}
+
+/*  main안에서 한번 더 감싸는 용도*/
+.text-box{width: 1620px; margin: 0 auto;}
+
+/* main card (메인 상단 카드 4개) -----------------------------------------------------------------------*/
+.card-area{display: flex;  gap:32px; flex-wrap: nowrap; margin-top:30px;} /*메인 컴포넌트에 작성된 클래스*/
+.card-area .card{width: 380px; height: 150px; flex: none; border-radius: 15px;  background-color: white; box-shadow: 0 8px 10px -5px gray;  position: relative;}
+.card-area .card .colorbar{width: 250px; height: 7px; margin: 0 auto; border-radius: 10px 10px 10px 10px; transform:  translateY(-50%);} /* 카드 상단 색상 바(position: absolute; top: -3px; left:75px; ) */
+.card-area .card .card-flexbox{display: flex; height: 100%;}
+.card-area .card .card-flexbox .card-left{flex-grow: 1; margin-left: 50px;}
+.card-area .card .card-flexbox .card-left .card-text{text-align: center;font-size: 23px; margin: 0; line-height: 60px;}
+.card-area .card .card-flexbox .card-left .card-text:nth-child(2){line-height: 38px;}
+.card-area .card .card-flexbox .card-right{flex-grow: 0; width: 130px;}
+.card-area .card .card-flexbox .card-right .card-circle{width: 85px; height: 85px; margin-top:26px; margin-left:10px; border-radius: 50%; background-color: lightcoral; position: relative;}
+.card-area .card .card-flexbox .card-right .card-circle .circle-icon{width:50px; height: 50px; transform: translate(37%,37%); color:white ;} /* 아이콘 컴포넌트(메인에 위치)*/
+
+/* main calender(메인 캘린더)------------------------------------------------------------------------- */
+.main-calender{width: 100%; height: 600px; border-radius: 15px; box-shadow: 0 8px 10px -7px gray; margin:30px auto; background-color: white; }
+.main-calender .calender-wrap{margin-top:10px; display: flex; gap:10px;}
+.main-calender .calender{width: 780px; margin: 10px auto 0 auto;}
+/* .main-calender .preview-area{border: 1px solid lightgray} 구역 잡는 용도*/
+.main-calender .preview-area .preview{height:502px; margin-top:65px; margin-right: 10px; border: 1px solid lightgray}
+
+/* main announcement(메인 공지사항)------------------------------------------------------------------- */
+.announcement-area{display: flex; flex-wrap: wrap; margin: 0 auto; width: 100%; gap:40px;}
+.announcement{width: 790px; height: 235px;  background-color: white; box-shadow: 0 8px 10px -7px gray; gap:10px; border-radius: 10px; box-sizing: border-box;}
+.announcement .announcement-topbar{height: 40px; background-color: #292929; border-radius: 10px 10px 0 0; line-height: 39px;}
+.announcement .announcement-topbar .announcement-title{color: white; font-size: 20px; font-weight: bold; margin: 10px 10px 10px 20px;}
+.announcement .announcement-contents-area{width:700px; margin: 0 auto;} /*공지사항 박스*/
+.announcement .announcement-contents-area .announcement-content{border-bottom: 1px solid #CACACA; margin-top:10px; padding-bottom: 3px; font-size: 16px;}/* 공지사항 내용물 */
 
-.input-style {
-    width: 460px;
-    height: 25px;
-    margin-left: 15px;
-    margin-right: 15px;
-    border-radius: 20px;
-    text-indent: 1em;
-}
 
-.logo-btn {
-    padding: 0;
-    border: none;
-    background: none;
-    font-size: 1.2em;
-}
-
-.header-btn {
-    padding: 0;
-    border: none;
-    background: none;
-    cursor: pointer;
-}
-
-.header-btn:hover {
-    text-decoration: none;
-    color: slateblue;
-    font-weight: bold;
-}
-
-/* navbar ------------------------------------------------------------------------------------- */
-.navbar-div {
-    border-top: solid 1px black;
-    border-bottom: solid 1px black;
-}
-
-.nav-list-ul {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    min-width: 800px;
-    list-style:none;
-    padding-left:0px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.nav-list-ul li {
-    min-width: 170px;
-    height: auto;
-    text-align: center;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-}
-
-a:hover, a:focus, a:active{
-    text-decoration: none;
-    color: slateblue;
-    font-weight: bold;
-}
-
-.active {
-    color: slateblue;
-    font-weight: bold;
-}
-
-/* paging bar ------------------------------------------------------------------------ */
-
-.paging-ul {
-    display: flex;
-    list-style-type : none;
-    margin-bottom: 30px;
-}
-
-.paging-btn{
-    margin: 5px;
-    border-radius: 25px;
-    background-color: white;
-    font-weight: bold;
-}
-
-.paging-btn:hover{
-    cursor: pointer;
-    background-color: burlywood;
-}
-
-/* footer --------------------------------------------------------------------------- */
-
-.footer-div {
-    border-top: solid 1px black;
-    padding: 30px;
-    text-align: center;
-}
-
-/* layout ----------------------------------------------------------------------------- */
-.main {
-    width: 100%;
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: auto;
-}
-
-/* product list ---------------------------------------------------------------------- */
-.products-div {
-    display: flex;
-    flex-wrap: wrap;
-    width: 850px;
-    height: 100%;
-    margin: 10px auto;
-}
-
-/* product item ---------------------------------------------------------------------- */
-.product-div{
-    width: 150px;
-    height: 200px;
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-}
-
-.product-div img {
-    width: 150px;
-    height: 150px;
-    object-fit: contain;
-}
-
-.product-div h5 {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-/* product detail -------------------------------------------------------------------------- */
-.detail-div {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 50px;
-}
-
-.detail-div div{
-    width: 550px;
-    height: 350px;
-}
-
-.img-div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-}
-
-.img-div img {
-    margin: 5px;
-    width: 70%;
-    height: 80%;
-}
-
-.img-div button {
-    margin: 5px;
-    height: 8%;
-    width: 80%;
-}
-
-.description-div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-}
-
-.description-table{
-    width: 80%;
-    height: 80%;
-}
-
-.review-btn{
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 30px;
-    width: 100%;
-    border-radius: 25px;
-    background-color: white;
-    font-weight: bold;
-}
-
-.product-buy-btn{
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 30px;
-    width: 100%;
-    border-radius: 25px;
-    background-color: white;
-    font-weight: bold;
-}
-
-/* signup ---------------------------------------------------------------------------------------- */
-.background-div{
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-    background-color: #E8E8E8;
-}
-
-.signup-div {
-    height: 350px;
-    width: 300px;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-    background-color: white;
-    border: solid 1px black;
-    border-radius: 25px;
-}
-
-.signup-div input {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 30px;
-    width: 250px;
-    border-radius: 25px;
-    text-indent: 10px;
-}
-
-.signup-div button {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 30px;
-    width: 250px;
-    border-radius: 25px;
-    background-color: white;
-    font-weight: bold;
-}
-
-/* login ---------------------------------------------------------------------------- */
-.login-div{
-    height: 300px;
-    width: 300px;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-    background-color: white;
-    border: solid 1px black;
-    border-radius: 25px;
-}
-
-.login-div input {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 30px;
-    width: 250px;
-    border-radius: 25px;
-    text-indent: 10px;
-}
-
-.login-div button {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 30px;
-    width: 250px;
-    border-radius: 25px;
-    background-color: white;
-    font-weight: bold;
-}
-
-/* mypage ----------------------------------------------------------------------- */
-.mypage-main {
-    width: 80%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: auto;
-}
-
-.mypage-layout-div {
-    display: flex;
-    height: 100vh;
-}
-
-/* mypage navbar */
-.mypage-navbar-div {
-    min-width: 200px;
-    border-right: 1px solid black;
-}
-
-.mypage-navbar-ul {
-    display: flex;
-    justify-content: left;
-    flex-wrap: wrap;
-    list-style:none;
-    padding-left:0px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.mypage-navbar-ul li {
-    width: 100%;
-    padding-left: 20px;
-    height: auto;
-    text-align: left;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.mypage-navbar-ul a {
-    text-decoration: none;
-    color: black;
-}
-
-/* profile ----------------------------------------- */
-.profile-background-div{
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-}
-
-.profile-item-div{
-    height: 300px;
-    width: 500px;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-    background-color: white;
-    border: solid 1px black;
-    border-radius: 25px;
-}
-
-.profile-item-div input {
-    text-align: center;
-    width: 250px;
-    height: 30px;
-    font-size: 15px;
-    margin : 10px;
-    outline: none;
-}
-
-/* product management ------------------------------------------------------------------ */
-.management-div{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.management-div button {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-right: 25px;
-    border-radius: 25px;
-    font-weight: bold;
-}
-
-.product-table{
-    width: 900px;
-    margin-top: 50px;
-}
-
-.product-table tr:hover {
-    background-color: #F5F5F5;
-}
-
-.product-table tr {
-    cursor: pointer;
-}
-
-/* product regist -------------------------------------------------------- */
-.product-section{
-    border: 1px solid black;
-    display: flex;
-    flex-direction: row;
-    padding: 25px;
-}
-
-.product-info-div{
-    display: flex;
-    width: 350px;
-}
-
-.product-info-input {
-    width: 80%;
-    margin: 0;
-    padding: 0;
-    border-radius: 10px;
-    background-color: white;
-    text-indent: 0.5em;
-}
-
-.product-info-div table {
-    width: 100%;
-}
-
-.textarea-style {
-    width: 100%;
-    height: 6.25em;
-    border: 1px solid black;
-    border-radius: 10px;
-    resize: none;
-}
-
-.product-button-div{
-    display: flex;
-    justify-content: flex-end;
-}
-.product-button-div button{
-    margin: 5px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    height: 25px;
-    width: 150px;
-    border-radius: 25px;
-    background-color: white;
-    font-weight: bold;
-}
-
-.product-image-div{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.product-img{
-    margin-top: 5px;
-    width: 80%;
-    height: 80%;
-}
-
-.product-image-button{
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 30px;
-    width: 150px;
-    border-radius: 25px;
-    background-color: white;
-    font-weight: bold;
-}
-
-/* purchase ---------------------------------------------------------- */
-.purchase-div{
-    display: flex;
-    flex-direction: row;
-}
-
-.purchase-info-div{
-    margin-top: 10px;
-    width: 350px;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.purchase-info-div button {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 30px;
-    width: 250px;
-    border-radius: 25px;
-    background-color: white;
-    font-weight: bold;
-}
-
-
-.purchase-info-div h3{
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.purchase-input{
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 20px;
-    width: 80%;
-    border-radius: 25px;
-    background-color: white;
-    font-weight: bold;
-    text-indent: 1em;
-}
-
-/* payment ----------------------------------------------------------------- */
-.payment-div{
-    margin-top: 20px;
-}
-
-.payment-table{
-    width: 800px;
-    border-collapse: collapse;
-    table-layout: fixed;
-}
-
-.payment-table th, td {
-    padding: 10px;
-    height: 10px;
-    text-align: center;
-    word-break:break-all;
-    table-layout:fixed;
-}
-
-.payment-table tr:hover {
-    background-color: #F5F5F5;
-}
-
-.review-write-button {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 30px;
-    width: 100px;
-    border-radius: 25px;
-    background-color: white;
-    font-weight: bold;
-}
-
-/* review modal ------------------------------------------------------------------------------------------------ */
-.modal{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-}
-
-
-.modal-container{
-    position: absolute;
-    width: 400px;
-    height: 500px;
-    padding: 10px;
-    text-align: center;
-    background-color: rgb(255, 255, 255);
-    border-radius: 10px;
-    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-    z-index: 1000;
-}
-
-.product-review-modal-div{
-    width: 400px;
-    height: 500px;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-    background-color: white;
-    border: solid 1px black;
-    border-radius: 25px;
-}
-
-.product-review-modal-div input {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 30px;
-    width: 90%;
-    border-radius: 25px;
-    text-indent: 1.2em;
-}
-
-.product-review-modal-div textarea {
-    width: 90%;
-    height: 250px;
-    resize: none;
-    border-radius: 20px;
-    text-indent: 1em;
-}
-
-.product-review-modal-div button {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 30px;
-    width: 250px;
-    border-radius: 25px;
-    background-color: white;
-    font-weight: bold;
-}
-
-/* review ---------------------------------------------------------------------------------------- */
-.review-table-div {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
-    width: 850px;
-    height: 100%;
-    margin: 10px;
-}
-
-.review-table{
-    width: 80%;
-    border-collapse: collapse;
-    table-layout: fixed;
-}
-
-.review-table th, td {
-    padding: 10px;
-    height: 10px;
-    text-align: center;
-    word-break:break-all;
-    table-layout:fixed;
-}
-
-.review-table tr:hover {
-    background-color: #F5F5F5;
-}
-
-.reviewTableCss tr {
-    cursor: pointer;
-}
-
-/* reivew detail ------------------------------------------------------------------------------------------------------ */
-.review-detail-table-div {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
-    width: 850px;
-    margin: 10px;
-}
-
-.review-detail-table{
-    width: 80%;
-    border-collapse: collapse;
-    table-layout: fixed;
-}
-
-.review-detail-table th, td {
-    padding: 10px;
-    height: 10px;
-    text-align: center;
-    word-break:break-all;
-    table-layout:fixed;
-}
-
-.content-textarea{
-    width: 90%;
-    height: 250px;
-    resize: none;
-}
-
-.review-detail-input{
-    width: 87%;
-}
-
-.back-btn {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 30px;
-    width: 250px;
-    border-radius: 25px;
-    background-color: white;
-    font-weight: bold;
-}

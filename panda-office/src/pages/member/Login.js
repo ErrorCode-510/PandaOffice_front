@@ -27,11 +27,7 @@ function Login () {
             <div className="background-div">
                 <div className="login-div">
                     <LoginForm/>
-                    {/*<button*/}
-                    {/*    onClick={ onClickSignupHandler }*/}
-                    {/*>*/}
-                    {/*    회원가입*/}
-                    {/*</button>*/}
+
                 </div>
             </div>
         </>
