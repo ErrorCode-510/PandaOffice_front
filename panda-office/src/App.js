@@ -2,7 +2,7 @@ import './App.css';
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import Main from "./pages/main/Main"
 import Layout from "./layouts/Layout"
-import LoginForm from "./components/Assets/LoginForm/LoginForm.jsx"
+import LoginForm from "./pages/LoginForm/LoginForm.js"
 import "./style.css"
 
 

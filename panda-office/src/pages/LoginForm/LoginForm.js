@@ -29,7 +29,7 @@ const LoginForm = () => {
 
                             <button type="submit">로그인</button>
 
-                            <div className="remember-link">
+                            <div className="find-account">
                                 <a href="#">아이디 찾기</a>
                                 <PiLineVerticalThin />
                                 <a href="#">비밀번호 찾기</a>
