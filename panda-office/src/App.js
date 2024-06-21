@@ -2,8 +2,13 @@ import './App.css';
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import Main from "./pages/main/Main"
 import Layout from "./layouts/Layout"
+import Statistics from "./pages/welfare/statistics/Statistics.js"
 import LoginForm from "./pages/LoginForm/LoginForm.js"
-import "./style.css"
+import "./pages/main/Main.css"
+import "./pages/welfare/statistics/Statistics.css"
+import "./common.css"
+//import "./style.css"
+
 
 
 
@@ -11,11 +16,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<LoginForm/>}>
-          <Route path='/' element={<Layout/>}>
-              <Route index element={<Main/>}/>
+        {/* <Route path='/' element={<LoginForm/>}> */}
+            <Route path='/' element={<Layout/>}>
+                <Route index element={<Main/>}/>
+                {/* <Route index element={<Statistics/>}/> */}
             </Route>
-        </Route>
+        {/* </Route> */}
       </Routes>
     </BrowserRouter>
   )
