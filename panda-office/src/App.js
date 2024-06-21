@@ -3,10 +3,12 @@ import {BrowserRouter, Routes, Route} from "react-router-dom"
 import Main from "./pages/main/Main"
 import Layout from "./layouts/Layout"
 import Statistics from "./pages/welfare/statistics/Statistics.js"
-import LoginForm from "./components/Assets/LoginForm/LoginForm.jsx"
+import LoginForm from "./pages/LoginForm/LoginForm.js"
 import "./pages/main/Main.css"
 import "./pages/welfare/statistics/Statistics.css"
 import "./common.css"
+//import "./style.css"
+
 
 
 
