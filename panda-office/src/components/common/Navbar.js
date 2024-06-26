@@ -12,14 +12,11 @@ function Navbar() {
 
     const location = useLocation();
     const isRootPath = location.pathname === "/";
-    
+
     return (
         <>
             <div className={`nav-wrap ${isRootPath ? '' : 'collapsed'}`}>
                 <div className="side-nav">
-                    {/* <button className="toggle-box">
-                        <FaArrowRight className="toggle-icons"/>
-                    </button> */}
                     <div className="side-clock">
                         <Clock/>
                     </div>
@@ -29,25 +26,25 @@ function Navbar() {
                     </div>
                     <ul className="department-list">
                         <li>
-                            <NavLink to="/" className="nav-link">
+                            <NavLink to="/notice" className="nav-link">
                                 <RiMegaphoneLine className="side-icons"/>
                                 <p>공지사항</p>
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/" className="nav-link">
+                            <NavLink to="/employee" className="nav-link">
                                 <FaRegUser className="side-icons"/>
                                 <p>인사</p>
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/" className="nav-link">
+                            <NavLink to="/attendance" className="nav-link">
                                 <LiaBusinessTimeSolid className="side-icons"/>
                                 <p>근태</p>
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/" className="nav-link">
+                            <NavLink to="/e_approval" className="nav-link">
                                 <FaRegFolderOpen className="side-icons sub-1"/>
                                 <p>문서함</p>
                             </NavLink>
@@ -59,15 +56,15 @@ function Navbar() {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/" className="nav-link">
+                            <NavLink to="/welfare" className="nav-link">
                                 <TfiHeadphoneAlt className="side-icons"/>
                                 <p>사내민원</p>
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/" className="nav-link">
-                                    <LiaSitemapSolid className="side-icons"/>
-                                    <p>조직도</p>   
+                            <NavLink className="nav-link">
+                                <LiaSitemapSolid className="side-icons"/>
+                                <p>조직도</p>
                             </NavLink>
                         </li>
                     </ul>

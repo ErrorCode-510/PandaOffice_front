@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {ToastContainer} from "react-toastify";
-import LoginForm from "../../components/form/LoginForm";
+import LoginForm from "../../pages/LoginForm/LoginForm";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {reset} from "../../modules/MemberModules";

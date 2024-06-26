@@ -27,28 +27,65 @@ body::-webkit-scrollbar{display: none;}
 
 
 /* navbar ------------------------------------------------------------------------ */
-/* 사이드바 (패딩, 마진 조절하면 사이즈 잡힘) */
-.nav-wrap {padding: 0; margin:0; width: 260px; height: 100vh; background-color: #1E1F31; color: #fff; position: fixed;}
-.toggle-box {width: 50px; height: 50px; position: absolute; top: 10px; left: 5px; background-color: #00c8ff; display: flex; justify-content: center; align-items: center;}
-.arrow-icons {width: 30px; height: 0px;}
-.side-nav {display: flex; flex-direction: column; align-items: center;}
-.side-clock {border: 1px solid #fff; border-radius: 50%; width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 50px 0 10px 0;font-weight: bold;}
-.check-button {margin: 10px 0 25px 0; width: 65%; display: flex; justify-content: space-between;}
-.check-button button{width: 80px; height: 35px; font-size: 16px; border-radius: 8px; border: none; cursor: pointer; color: #fff;}
-.check-button button:first-child {background-color: #2B9BCB;}
-.check-button button:last-child {background-color: #858585;}
-.side-icons {width: 27px; height: 27px; color: #c1c1c1; margin-right: 15px;}
-.sub-1 {width: 25px; height: 25px;}
-.nav-link {display: flex; text-decoration: none;}
-.department-list {width: 70%; padding: 0; list-style: none; border-top: 1px solid #fff;}
-.department-list li {margin-top: 40px; padding: 0 20px; height: 32px;}
-.department-list li p {margin:0;}
-.department-list li p:hover {color: #8aa2e3;}
-.department-list p {display: inline-block; font-weight: bold; color: #c1c1c1; font-size: 20px;}
-.department-list li:last-child {margin-top: 100px; height: 50px; border-radius: 8px; background-color: #3D4762; display: flex; justify-content: center; align-items: center;}
+.nav-wrap { width: 260px; height: 100vh; background-color: #1E1F31; color: #fff; position: absolute; }
+.toggle-box { width: 50px; height: 50px; position: absolute; top: 10px; left: 5px; background-color: #00c8ff; display: flex; justify-content: center; align-items: center; }
+.arrow-icons { width: 30px; height: 0px; }
+.side-nav { display: flex; flex-direction: column; align-items: center; }
+.side-clock { border: 1px solid #fff; border-radius: 50%; width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 50px 0 10px 0; font-weight: bold; }
+.check-button { margin: 10px 0 25px 0; width: 65%; display: flex; justify-content: space-between; }
+.check-button button { width: 80px; height: 35px; font-size: 16px; border-radius: 8px; border: none; cursor: pointer; color: #fff; }
+.check-button button:first-child { background-color: #2B9BCB; }
+.check-button button:last-child { background-color: #858585; }
+.side-icons { width: 27px; height: 27px; color: #c1c1c1; margin-right: 15px; }
+.sub-1 { width: 25px; height: 25px; }
+.nav-link { display: flex; text-decoration: none;}
+.department-list { width: 70%; border-top: 1px solid #fff; }
+.department-list li { margin-top: 40px; padding: 0 20px; height: 32px; }
+.department-list li p:hover { color: #00c8ff; }
+.department-list p { display: inline-block; font-weight: bold; color: #c1c1c1; font-size: 20px; }
+.department-list li:last-child { margin-top: 100px; height: 50px; padding-top: 10px; border-radius: 8px; background-color: #3D4762; display: flex; justify-content: center; }
+
+/* navbar(개인 컴포넌트: 접혔을 떄) ------------------------------------------------------------------------ */
+.nav-wrap.collapsed { width: 65px; transition: .3s; }
+.nav-wrap.collapsed:hover { width: 260px; transition: .3s; }
+.nav-wrap.collapsed .side-clock, .nav-wrap.collapsed .check-button { visibility: hidden; opacity: 0; transition: opacity 0.01s ease, visibility 0.01s ease; }
+.nav-wrap.collapsed:hover .side-clock, .nav-wrap.collapsed:hover .check-button { visibility: visible; transition: .1s; transition-delay: .1s; opacity: 1; }
+.nav-wrap.collapsed .department-list li p { opacity: 0; }
+.nav-wrap.collapsed:hover .department-list li p { visibility: visible; transition-delay: .1s; opacity: 1; }
+.nav-wrap.collapsed .department-list li { padding: 0 10px; transition: .3s; height: 32px; overflow: hidden; }
+.nav-wrap.collapsed:hover .department-list li { padding: 0 20px; }
+.nav-wrap.collapsed .nav-link { display: block; text-decoration: none;}
+.nav-wrap.collapsed:hover .nav-link { display: flex; }
+.nav-wrap.collapsed .department-list li:last-child { height: 50px; padding-top: 10px; }
+.nav-wrap.collapsed .department-list li:last-child .side-icons { margin-left: 15px; }
+.nav-wrap.collapsed:hover .department-list li:last-child .side-icons { margin-left: 0; }
+
+/* sidebar(메인 화면) ------------------------------------------------------------------------ */
+.side-wrap.collapsed {display: none;}
+
+/* sidebar(개인 화면) ------------------------------------------------------------------------ */
+.side-wrap { height: 100%; width: 195px; position: absolute; top: 0; left: 65px; padding: 0 10px; border: 1px solid #C6C6C6; }
+.side-bar { text-align: center; }
+.side-bar .title { font-size: 24px; margin-top: 30px; }
+.side-bar .add-btn { width: 150px; height: 40px; border: 1px solid #000; background-color: #fff; font-size: 14px; border-radius: 7px; cursor: pointer; margin: 30px 0; }
+.mt-30 { margin-top: 30px; }
+.mt-10 { margin-top: 10px; }
+.sidebar-icons { margin-right: 5px; cursor: pointer; }
+.cursor-p { cursor: pointer; }
+.icons-text:hover { color: #00c8ff; }
+.fs-18 { font-size: 18px; }
+.fs-14 { font-size: 14px; }
+.fs-12 { font-size: 12px; }
+.txt-align-left { text-align: left; }
+.ml-20 { margin-left: 20px; }
+.ml-55 { margin-left: 55px; }
+
+/* 개인 컴포넌트 공용 CSS ------------------------------------------------------------------------ */
+.common-comp {overflow-y: scroll; height: calc(100vh - 100px);}
 
 /* footer ------------------------------------------------------------------------ */
-.panda-footer{width:100%; height: 50px; box-sizing: border-box;  background-color: white;   margin-top: 40px;}
+.footer .isTrue {display: none !important;}
+.panda-footer{width:100%; height: 50px; box-sizing: border-box;  background-color: white; margin-top: 40px;}
 .panda-footer .text{display: block; height: 50px; line-height: 50px; text-align: center;}
 
 /* main -----------------------------------------------------------------------------*/
@@ -85,4 +122,8 @@ body::-webkit-scrollbar{display: none;}
 .announcement .announcement-contents-area{width:700px; margin: 0 auto;} /*공지사항 박스*/
 .announcement .announcement-contents-area .announcement-content{border-bottom: 1px solid #CACACA; margin-top:10px; padding-bottom: 3px; font-size: 16px;}/* 공지사항 내용물 */
 
-
+/* recruitment ------------------------------------------------------------------------ */
+.rm-ul li { height: 200px; }
+.rm-right-comp { width: 45%; }
+.rm-calendar { width: 55%; }
+.rm-container {display: flex;}

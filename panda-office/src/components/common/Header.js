@@ -32,7 +32,7 @@ function Header() {
         }, [success]);
 
         return (
-            <div>
+            <header className="panda-header">
                 <Link to="/">
                     <div className="panda-logo"/>
                 </Link>
@@ -56,7 +56,7 @@ function Header() {
                     </div>
 
                 </div>
-            </div>
+            </header>
         );
     }
 
