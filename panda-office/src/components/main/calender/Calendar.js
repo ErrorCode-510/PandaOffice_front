@@ -5,7 +5,7 @@ function Calender() {
     <div className='main-calender'>
         <div className="calender-wrap">
             <div className="calender api">
-                  <CalendarApi/>
+                  <CalendarApi height="570px"/>
             </div>
             <div className="calender preview-area">
                 <div className="preview">

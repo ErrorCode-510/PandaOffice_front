@@ -2,11 +2,11 @@ import React from "react";
 import Modal from "react-modal";
 
 const FindPasswordModal = ({
-                         isOpen,
-                         onRequestClose,
-                         onChangeHandler,
-                         onClickFindPasswordHandler
-                     }) => (
+    isOpen,
+    onRequestClose,
+    onChangeHandler,
+    onClickFindPasswordHandler
+}) => (
     <Modal
         isOpen={isOpen}
         onRequestClose={onRequestClose}
@@ -27,7 +27,7 @@ const FindPasswordModal = ({
                     name="name"
                 />
 
-                <br/>
+                <br />
                 <input
                     type="text"
                     placeholder="아이디 입력"
@@ -35,7 +35,7 @@ const FindPasswordModal = ({
                     onChange={onChangeHandler}
                     name="employeeId"
                 />
-                <br/>
+                <br />
                 <input
                     type="email"
                     placeholder="이메일 입력"
@@ -47,7 +47,7 @@ const FindPasswordModal = ({
             <div>
                 <button onClick={onRequestClose}>취소</button>
                 <button
-                    style={{backgroundColor: "#1E1F31", color: "white"}}
+                    style={{ backgroundColor: "#1E1F31", color: "white" }}
                     onClick={onClickFindPasswordHandler}
                 >
                     찾기

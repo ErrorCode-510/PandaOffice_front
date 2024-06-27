@@ -1,7 +1,7 @@
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
 
-function CalendarApi() {    
+function CalendarApi({height}) {    
     return (
         <div style={{marginLeft:"10px"}}>
             <FullCalendar 
@@ -9,7 +9,7 @@ function CalendarApi() {
                 plugins = {[
                     dayGridPlugin
                 ]}
-                 height={570}
+                 height={height}
                 
             />
         </div>
