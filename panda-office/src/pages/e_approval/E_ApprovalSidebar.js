@@ -2,7 +2,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowDropright, IoIosArrowForward, IoIosArrowRoundForward, IoIosArrowUp } from "react-icons/io";
 import { useEffect, useState } from "react";
 
-function RecruitmentSidebar() {
+function E_ApprovalSidebar() {
 
     const location = useLocation();
     const isRootPath = location.pathname === "/";
@@ -76,4 +76,4 @@ function RecruitmentSidebar() {
     )
 }
 
-export default RecruitmentSidebar;
+export default E_ApprovalSidebar;
