@@ -6,10 +6,10 @@ import Navbar from "../components/common/Navbar";
 function Layout() {
     return (
         <div id="layout-wrap">
-            <div class="layout-left" >
+            <div className="layout-left" >
                 <Navbar/>
             </div>
-            <div class="layout-right" >
+            <div className="layout-right" >
                 <Header/>
                 <Outlet/>
                 {/* Footer는 Main에 위치 */}

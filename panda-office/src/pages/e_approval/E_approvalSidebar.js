@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowDropright, IoIosArrowForward, IoIosArrowRoundForward, IoIosArrowUp } from "react-icons/io";
 import { useEffect, useState } from "react";
 
 function RecruitmentSidebar() {
@@ -48,14 +48,14 @@ function RecruitmentSidebar() {
                     <ul className="mt-30 txt-align-left">
                         <li>
                             <div className="sidebar-item" onClick={toggleMainHandler}>
-                                {isMainOpen ? <IoIosArrowDown className="sidebar-icons toggle-down"/> : <IoIosArrowUp className="sidebar-icons toggle-up"/>}
+                                {isMainOpen ? <IoIosArrowDown className="sidebar-icons toggle-down"/> : <IoIosArrowForward className="sidebar-icons toggle-up"/>}
                                 <span className="icons-text fs-18 cursor-p">채용/면접 관리</span>
                             </div>
                             {isMainOpen && (
                                 <ul className="mt-10">
                                     <li>
                                         <div className="sidebar-item" onClick={togglesubHandler}>
-                                            {isSubOpen ? <IoIosArrowDown className="sidebar-icons ml-20"/> : <IoIosArrowUp className="sidebar-icons ml-20"/>}
+                                            {isSubOpen ? <IoIosArrowDown className="sidebar-icons ml-20"/> : <IoIosArrowForward className="sidebar-icons ml-20"/>}
                                             <span className="icons-text fs-14 cursor-p">면접 일정 관리</span>
                                         </div>
                                         {isSubOpen && (

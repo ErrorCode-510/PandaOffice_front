@@ -4,6 +4,7 @@
 /* 페이지 전체 영역 ------------------------------------------------------------- */
 /* html,body,#root{margin: 0 ; padding:0;  height: 100%; } */
 body::-webkit-scrollbar{display: none;}
+body{background-color: #F6F6F6;}
 
 /* layout--------------------------------------------------------------------------- */
 #layout-wrap{display:flex; height:100%;}
@@ -64,7 +65,7 @@ body::-webkit-scrollbar{display: none;}
 .side-wrap.collapsed {display: none;}
 
 /* sidebar(개인 화면) ------------------------------------------------------------------------ */
-.side-wrap { height: 100%; width: 195px; position: absolute; top: 0; left: 65px; padding: 0 10px; border: 1px solid #C6C6C6; }
+.side-wrap { height: 100%; width: 195px; position: absolute; top: 0; left: 65px; padding: 0 10px; border: 1px solid #C6C6C6; background-color: white;}
 .side-bar { text-align: center; }
 .side-bar .title { font-size: 24px; margin-top: 30px; }
 .side-bar .add-btn { width: 150px; height: 40px; border: 1px solid #000; background-color: #fff; font-size: 14px; border-radius: 7px; cursor: pointer; margin: 30px 0; }
@@ -81,7 +82,8 @@ body::-webkit-scrollbar{display: none;}
 .ml-55 { margin-left: 55px; }
 
 /* 개인 컴포넌트 공용 CSS ------------------------------------------------------------------------ */
-.common-comp {overflow-y: scroll; height: calc(100vh - 100px);}
+.common-comp {overflow-y: scroll; height: calc(100vh - 100px); }
+.pd {padding: 20px;}
 
 /* footer ------------------------------------------------------------------------ */
 .footer .isTrue {display: none !important;}
@@ -89,7 +91,7 @@ body::-webkit-scrollbar{display: none;}
 .panda-footer .text{display: block; height: 50px; line-height: 50px; text-align: center;}
 
 /* main -----------------------------------------------------------------------------*/
-.panda-main{ height: calc(100vh - 100px); overflow-y: scroll; overflow-x:hidden; background-color: #EDEBEB; z-index: -1;}
+.panda-main{ height: calc(100vh - 100px); overflow-y: scroll; overflow-x:hidden; background-color: #F6F6F6; z-index: -1;}
 .panda-main::-webkit-scrollbar{display: none;}
 
 /*  main안에서 한번 더 감싸는 용도*/

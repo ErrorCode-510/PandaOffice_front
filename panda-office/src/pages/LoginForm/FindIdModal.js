@@ -2,11 +2,11 @@ import React from "react";
 import Modal from "react-modal";
 
 const FindIdModal = ({
-                         isOpen,
-                         onRequestClose,
-                         onChangeHandler,
-                         onClickFindIdHandler
-                     }) => (
+    isOpen,
+    onRequestClose,
+    onChangeHandler,
+    onClickFindIdHandler
+}) => (
     <Modal
         isOpen={isOpen}
         onRequestClose={onRequestClose}
