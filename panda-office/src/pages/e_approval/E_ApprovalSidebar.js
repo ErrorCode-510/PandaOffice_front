@@ -1,70 +1,80 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowDropright, IoIosArrowForward, IoIosArrowRoundForward, IoIosArrowUp } from "react-icons/io";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSidebarStatus } from "../../modules/E_ApprovalModules";
+import { callDepartmentBox } from "../../apis/E_ApprovalAPICalls";
 
 function E_ApprovalSidebar() {
 
-    const location = useLocation();
-    const isRootPath = location.pathname === "/";
-    const [isMainOpen, setIsMainOpen] = useState(false);
-    const [isSubOpen, setIsSubOpen] = useState(false);
+    const dispatch = useDispatch();
 
-    /* 사이드바 대소문자 수정 */
-    const toggleMainHandler = () => {
-        const newMainState = !isMainOpen;
-        setIsMainOpen(newMainState);
-        /* 로컬은 문자열만 저장이 가능하여 JSON 타입으로 파싱하여 저장 */
-        localStorage.setItem("mainHandler", JSON.stringify(newMainState));
+    const { sidebarStatus, departmentBox } = useSelector(state => state.e_approvalReducer)
+
+    /* 부서함 정보 호출 */
+    useEffect(() => {
+        dispatch(callDepartmentBox())
+    }, [])
+
+    /* 사이드바 열림/접힘 상태 관리 */
+    const toggleHandler = (e) => {
+        dispatch(fetchSidebarStatus({
+            ...sidebarStatus,
+            [e.target.id]: !sidebarStatus[e.target.id]
+        }))
     };
 
-    /* 렌더링 후 마운트 될 떄 로컬에 저장 된 상태 값을 가져와서 파싱 된 문자열을 set 
-    * 애플리케이션 재실행해도 저장 값이 남아있음 */
-    useEffect(() => {
-        const savedMainStorage = localStorage.getItem("mainHandler")
-        if (savedMainStorage !== null) {
-            setIsMainOpen(JSON.parse(savedMainStorage));
-        }
-    }, []);
 
-    const togglesubHandler = () => {
-        const newSubState = !isSubOpen;
-        setIsSubOpen(newSubState);
-        localStorage.setItem("subHandler", JSON.stringify(newSubState));
-    };
 
-    useEffect(() => {
-        const savedSubStorage = localStorage.getItem("subHandler")
-        if (savedSubStorage !== null) {
-            setIsSubOpen(JSON.parse(savedSubStorage));
-        }
-    }, []);
+
 
     return (
         <>
-            <div className={`side-wrap ${isRootPath ? 'collapsed' : ''}`}>
+            <div className={`side-wrap no-select`}>
                 <div className="side-bar">
-                    <div className="title">채용/면접</div>
-                    <button className="add-btn">작성/등록</button>
+                    <div className="title">전자 결재</div>
+                    <button className="add-btn">결재 기안</button>
                     <ul className="mt-30 txt-align-left">
                         <li>
-                            <div className="sidebar-item" onClick={toggleMainHandler}>
-                                {isMainOpen ? <IoIosArrowDown className="sidebar-icons toggle-down" /> : <IoIosArrowForward className="sidebar-icons toggle-up" />}
-                                <span className="icons-text fs-18 cursor-p">채용/면접 관리</span>
+                            <div className="sidebar-item" onClick={toggleHandler}>
+                                {sidebarStatus.A ? <IoIosArrowDown className="sidebar-icons toggle-down" /> : <IoIosArrowForward className="sidebar-icons toggle-up" />}
+                                <span className="icons-text fs-18 cursor-p" id="A">문서함</span>
                             </div>
-                            {isMainOpen && (
+                            {sidebarStatus.A && (
                                 <ul className="mt-10">
                                     <li>
-                                        <div className="sidebar-item" onClick={togglesubHandler}>
-                                            {isSubOpen ? <IoIosArrowDown className="sidebar-icons ml-20" /> : <IoIosArrowForward className="sidebar-icons ml-20" />}
-                                            <span className="icons-text fs-14 cursor-p">면접 일정 관리</span>
+                                        <div className="sidebar-item" onClick={toggleHandler}>
+                                            {sidebarStatus.Aa ? <IoIosArrowDown className="sidebar-icons ml-20" /> : <IoIosArrowForward className="sidebar-icons ml-20" />}
+                                            <span className="icons-text fs-14 cursor-p" id="Aa">내 문서함</span>
                                         </div>
-                                        {isSubOpen && (
+                                        {sidebarStatus.Aa && (
                                             <ul className="mt-10">
                                                 <li className="icons-text fs-12 mt-10 ml-55 cursor-p">면접 일정</li>
                                                 <li className="icons-text fs-12 mt-10 ml-55 cursor-p">면접 일정 등록</li>
                                                 <li className="icons-text fs-12 mt-10 ml-55 cursor-p">면접 일정 수정/삭제</li>
                                             </ul>
                                         )}
+                                    </li>
+                                </ul>
+                            )}
+                            {sidebarStatus.A && (
+                                <ul className="mt-10">
+                                    <li>
+                                        <div className="sidebar-item" onClick={toggleHandler}>
+                                            {sidebarStatus.Ab ? <IoIosArrowDown className="sidebar-icons ml-20" /> : <IoIosArrowForward className="sidebar-icons ml-20" />}
+                                            <span className="icons-text fs-14 cursor-p" id="Ab">부서함</span>
+                                        </div>
+                                        {sidebarStatus.Ab &&
+                                            <ul className="mt-10">
+                                                {
+                                                    departmentBox.data.map(box => (
+                                                        <li key={box.departmentBoxId} className="icons-text fs-12 mt-10 ml-55 cursor-p">
+                                                            {box.name}
+                                                        </li>
+                                                    ))
+                                                }
+                                            </ul>
+                                        }
                                     </li>
                                 </ul>
                             )}
