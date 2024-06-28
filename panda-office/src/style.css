@@ -79,6 +79,7 @@ body{background-color: #F6F6F6;}
 .fs-12 { font-size: 12px; }
 .txt-align-left { text-align: left; }
 .ml-20 { margin-left: 20px; }
+.ml-35 { margin-left: 35px; }
 .ml-55 { margin-left: 55px; }
 
 /* 개인 컴포넌트 공용 CSS ------------------------------------------------------------------------ */

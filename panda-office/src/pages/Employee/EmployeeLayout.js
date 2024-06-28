@@ -6,10 +6,13 @@ function Employee() {
     return (
         <>
             <EmployeeSidebar />
-            <div className="pd">
-                <Outlet />   {/* 메인 콘텐츠 레이아웃 (모르면 공부하셈) */ }
+            <div className="common-comp">
+                <div className="pd">
+                    {/* 여기 안에 모든 걸 작성 */}
+                    <Outlet />
+                </div>
+                <Footer />
             </div>
-            <Footer />
         </>
     )
 }
