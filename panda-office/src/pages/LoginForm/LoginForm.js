@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import {callLoginAPI, callFindIdAPI, callSendAuthCodeAPI, callVerifyAuthCodeAPI} from "../../apis/MemberAPICalls";
+import {
+    callLoginAPI,
+    callFindIdAPI,
+    callSendAuthCodeAPI,
+    callVerifyAuthCodeAPI,
+    callChangePasswordAPI
+} from "../../apis/MemberAPICalls";
 import React from "react";
 import "./LoginForm.css";
 import { FaUserAlt, FaLock } from "react-icons/fa";
@@ -9,6 +15,7 @@ import FindIdModal from "./FindIdModal";
 import NewModal from "./NewModal";
 import FindPasswordModal from "./FindPasswordModal";
 import VerificationCodeModal from "./VerificationCodeModal";
+import ResetPasswordModal from "./ResetPasswordModal";
 
 function LoginForm() {
     const dispatch = useDispatch();
@@ -18,6 +25,8 @@ function LoginForm() {
     const [isNewModalOpen, setIsNewModalOpen] = useState(false);
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
     const [isVerificationCodeModalOpen, setIsVerificationCodeModalOpen] = useState(false);
+    const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
+
     const openModal = () => {
         setIsModalOpen(true);
     };
@@ -47,6 +56,13 @@ function LoginForm() {
         setIsVerificationCodeModalOpen(false);
     };
 
+    const openResetPasswordModal = () => {
+        setIsResetPasswordModalOpen(true);
+    };
+
+    const closeResetPasswordModal = () => {
+        setIsResetPasswordModalOpen(false);
+    };
 
     const onChangeHandler = (e) => {
         const { name, value } = e.target;
@@ -116,7 +132,7 @@ function LoginForm() {
             const result = await dispatch(callVerifyAuthCodeAPI({ email, verificationCode }));
             if (result?.status === 200) {
                 alert('인증이 완료되었습니다. 새로운 비밀번호를 입력하세요.');
-                // Here you could redirect to a password reset page or open another modal to reset the password
+                openResetPasswordModal()
             } else {
                 alert('인증 코드가 잘못되었습니다.');
             }
@@ -125,7 +141,25 @@ function LoginForm() {
             alert('인증 코드 확인 과정에서 오류가 발생했습니다.');
         }
     };
+    const onSubmitNewPasswordHandler = async (e) => {
+        e.preventDefault();
+        const { newPassword} = form;
 
+
+
+        try {
+            const result = await dispatch(callChangePasswordAPI({ email: form.email, newPassword }));
+            if (result?.status === 200) {
+                alert("비밀번호가 성공적으로 변경되었습니다.");
+                closeResetPasswordModal();
+            } else {
+                alert("비밀번호 변경에 실패했습니다. 다시 시도해주세요.");
+            }
+        } catch (error) {
+            console.error('비밀번호 변경 API 호출 오류:', error);
+            alert('비밀번호 변경 과정에서 오류가 발생했습니다.');
+        }
+    };
 
 
     return (
@@ -207,6 +241,13 @@ function LoginForm() {
                     onChangeHandler={onChangeHandler}
                     onClickVerifyCodeHandler={onClickVerifyCodeHandler}
                 />
+                <ResetPasswordModal
+                    isOpen={isResetPasswordModalOpen}
+                    onRequestClose={closeResetPasswordModal}
+                    onChangeHandler={onChangeHandler}
+                    onSubmitNewPasswordHandler={onSubmitNewPasswordHandler}
+
+                    />
             </div>
         </>
     );
