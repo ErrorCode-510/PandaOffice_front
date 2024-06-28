@@ -4,27 +4,27 @@ import {getMemberId, removeToken, saveToken} from "../utils/TokenUtils";
 import {getProfile, success} from "../modules/MemberModules";
 import axios from "axios";
 
-export const callSignupAPI = ({signupRequest}) => {
-
-
-    return async (dispatch, getState) => {
-        const result = await request(
-            'POST',
-            '/api/v1/members/signup',
-            {'Content-Type' : 'application/json' },
-            JSON.stringify(signupRequest)
-        );
-
-        console.log('callSignupAPI result : ', result);
-
-        if(result?.status === 201) {
-            dispatch(success());
-        } else {
-            toast.warning("회원 가입에 실패했습니다. 다시 시도해주세요.");
-        }
-
-    }
-}
+// export const callSignupAPI = ({signupRequest}) => {
+//
+//
+//     return async (dispatch, getState) => {
+//         const result = await request(
+//             'POST',
+//             '/api/v1/members/signup',
+//             {'Content-Type' : 'application/json' },
+//             JSON.stringify(signupRequest)
+//         );
+//
+//         console.log('callSignupAPI result : ', result);
+//
+//         if(result?.status === 201) {
+//             dispatch(success());
+//         } else {
+//             toast.warning("회원 가입에 실패했습니다. 다시 시도해주세요.");
+//         }
+//
+//     }
+// }
 
 export const callLoginAPI = ({loginRequest}) => {
 
@@ -74,27 +74,27 @@ export const callFindIdAPI = ({findIdRequest}) => {
 
 
 
-            const result = await request(
-                'POST',
-                '/api/v1/members/find-id',
-                { 'Content-Type': 'application/json' },
-                JSON.stringify(findIdRequest)
-            );
+        const result = await request(
+            'POST',
+            '/api/v1/members/find-id',
+            { 'Content-Type': 'application/json' },
+            JSON.stringify(findIdRequest)
+        );
 
-            console.log('callFindIdAPI result : ', result);
+        console.log('callFindIdAPI result : ', result);
 
-            if (result?.status === 200) {
-                // 아이디 조회 성공 시 처리할 로직
-                // dispatch(success());
-                // toast.success("아이디 조회에 성공했습니다.");
+        if (result?.status === 200) {
+            // 아이디 조회 성공 시 처리할 로직
+            // dispatch(success());
+            // toast.success("아이디 조회에 성공했습니다.");
 
-                // 예시: 조회된 아이디를 저장하거나, UI에 표시하는 등의 작업을 수행할 수 있습니다.
-            } else {
-                // 아이디 조회 실패 시 처리할 로직
+            // 예시: 조회된 아이디를 저장하거나, UI에 표시하는 등의 작업을 수행할 수 있습니다.
+        } else {
+            // 아이디 조회 실패 시 처리할 로직
 
-                // toast.warning("아이디 조회에 실패했습니다. 입력 정보를 다시 확인해주세요.");
-            }
-            return(result);
+            // toast.warning("아이디 조회에 실패했습니다. 입력 정보를 다시 확인해주세요.");
+        }
+        return(result);
     };
 
 };
@@ -141,6 +141,33 @@ export const callVerifyAuthCodeAPI = ({ email, verificationCode }) => {
             toast.error("인증 코드가 잘못되었습니다. 다시 시도해주세요.");
         }
         return(result);
+    };
+};
+export const callChangePasswordAPI = ({ email, newPassword }) => {
+    return async (dispatch, getState) => {
+        try {
+            const result = await request(
+                'POST',
+                '/api/v1/members/change-password',
+                { 'Content-Type': 'application/json' },
+                JSON.stringify({ email, newPassword })
+            );
+
+            console.log('callChangePasswordAPI result : ', result);
+
+            if (result?.status === 200) {
+                toast.success("비밀번호가 성공적으로 변경되었습니다.");
+                // Dispatch any success action or handle UI accordingly
+            } else {
+                toast.error("비밀번호 변경에 실패했습니다. 다시 시도해주세요.");
+                // Handle failure case
+            }
+            return result;
+        } catch (error) {
+            console.error('비밀번호 변경 API 호출 오류:', error);
+            toast.error("비밀번호 변경 과정에서 오류가 발생했습니다.");
+            throw error; // Optionally re-throw the error for higher-level handling
+        }
     };
 };
 

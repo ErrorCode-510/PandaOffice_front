@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Footer from "../../components/common/Footer";
-import E_ApprovalSidebar from "./E_ApprovalSidebar";
+import E_ApprovalSidebar from "./E_approvalSidebar";
 
 function E_ApprovalLayout() {
     return (

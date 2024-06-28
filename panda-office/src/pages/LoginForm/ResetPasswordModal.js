@@ -1,12 +1,12 @@
 import Modal from "react-modal";
 import React from "react";
 
-const VerificationCodeModal = ({
-                               isOpen,
-                               onRequestClose,
-                               onChangeHandler,
-                                   onClickVerifyCodeHandler
-                           }) => (
+const ResetPasswordModal = ({
+                                   isOpen,
+                                   onRequestClose,
+                                   onChangeHandler,
+                                   onSubmitNewPasswordHandler
+                               }) => (
     <Modal
         isOpen={isOpen}
         onRequestClose={onRequestClose}
@@ -20,11 +20,11 @@ const VerificationCodeModal = ({
         <div className="modalActions">
             <form>
                 <input
-                    type="text"
-                    placeholder="인증 코드 입력"
-                    required
+                    type="password"
+                    placeholder="새 비밀번호 입력"
+                    name="newPassword"
                     onChange={onChangeHandler}
-                    name="verificationCode"
+                    required
                 />
 
             </form>
@@ -32,7 +32,7 @@ const VerificationCodeModal = ({
                 <button onClick={onRequestClose}>취소</button>
                 <button
                     style={{backgroundColor: "#1E1F31", color: "white"}}
-                    onClick={onClickVerifyCodeHandler}
+                    onClick={onSubmitNewPasswordHandler}
                 >
                     찾기
                 </button>
@@ -41,4 +41,4 @@ const VerificationCodeModal = ({
     </Modal>
 );
 
-export default VerificationCodeModal;
+export default ResetPasswordModal;
