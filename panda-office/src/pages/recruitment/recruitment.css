@@ -20,7 +20,8 @@
 }
 
 .ali-ul:hover li {
-    background-color: #b8b8bd;
+    background-color: #c1c1c1;
+    color: #fff;
 }
 
 /* 페이지 버튼 ----------------------------------------------------------------------------------------------------------------------------------------- */
@@ -34,14 +35,26 @@
     width: 50px;
     height: 30px;
     background-color: #fff;
-    border: 1px solid #000;
+    border: 1px solid #000000;
+}
+
+.ali-paging-btn:hover {
+    background-color: #c1c1c1;
+    color: #fff;
+    border: 1px solid #c1c1c1;
 }
 
 .ali-no-paging-btn {
     width: 30px;
     height: 30px;
     background-color: #fff;
-    border: 1px solid #000;
+    border: 1px solid #c1c1c1;
+    color: #c1c1c1;
+}
+
+.ali-no-paging-btn:hover {
+    background-color: #c1c1c1;
+    color: #fff;
 }
 
 .ali-bd-radius-left {
@@ -50,4 +63,8 @@
 
 .ali-bd-radius-right {
     border-radius: 0 3px 3px 0;
+}
+
+.ali-btn {
+    cursor: pointer;
 }
