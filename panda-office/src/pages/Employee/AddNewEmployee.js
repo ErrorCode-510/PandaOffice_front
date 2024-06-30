@@ -1,19 +1,92 @@
 import React, { useState } from 'react';
 import EmployeeSidebar from "./EmployeeSidebar";
 import "./Employee.css";
+import axios from "axios";
 
 function AddNewEmployee() {
-    const [rows, setRows] = useState([{ relation: '', name: '', dob: '', job: '', education: '', note: '' }]);
-    const [employmentRows, setEmploymentRows] = useState([{ period: '', companyName: '', department: '', finalPosition: '', jobDescription: '' }]);
+    const [rows, setRows] = useState([{ relationship: '', name: '', birthDate: '', job: '', education: '', note: '' }]);
+    const [employmentRows, setEmploymentRows] = useState([{ joinDate: '', leaveDate: '', companyName: '', department: '', finalPosition: '', jobDescription: '' }]);
+    const [educationRows, setEducationRows] = useState([{ admissionDate: '', graduationDate: '', schoolName: '', major: '', degree: '' }]);
+    const [photo, setPhoto] = useState(null);
+    const [formData, setFormData] = useState({
+        name: '',
+        accountNumber: '',
+        phone: '',
+        ssn: '',
+        gender: '',
+        joinDate: '',
+        address: '',
+        nationality: '',
+        birthDate: '',
+        email: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
 
     const handleAddRow = () => {
-        const newRow = { relation: '', name: '', dob: '', job: '', education: '', note: '' };
-        setRows([...rows, newRow]);
+        setRows([...rows, { relationship: '', name: '', birthDate: '', job: '', education: '', note: '' }]);
     };
 
     const handleAddEmploymentRow = () => {
-        const newRow = { period: '', companyName: '', department: '', finalPosition: '', jobDescription: '' };
-        setEmploymentRows([...employmentRows, newRow]);
+        setEmploymentRows([...employmentRows, { joinDate: '', leaveDate: '', companyName: '', department: '', finalPosition: '', jobDescription: '' }]);
+    };
+
+    const handleAddEducationRow = () => {
+        setEducationRows([...educationRows, { admissionDate: '', graduationDate: '', schoolName: '', major: '', degree: '' }]);
+    };
+
+    const handlePhotoChange = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            setPhoto(URL.createObjectURL(e.target.files[0]));
+        }
+    };
+
+    const handlePhotoClick = () => {
+        document.getElementById('photo').click();
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const data = {
+            employee: formData,
+            familyMember: rows,
+            careerHistory: employmentRows,
+            educationHistory: educationRows,
+            photo: photo
+        };
+                console.log(data);
+        try {
+            const response = await axios.post('http://localhost:8001/api/v1/members/newEmployee', data);
+            console.log('서버 응답:', response.data);
+
+            alert('사원 정보가 성공적으로 저장되었습니다.');
+            setRows([{ relationship: '', name: '', birthDate: '', job: '', education: '', note: '' }]);
+            setEmploymentRows([{ joinDate: '', leaveDate: '', companyName: '', department: '', finalPosition: '', jobDescription: '' }]);
+            setEducationRows([{ admissionDate: '', graduationDate: '', schoolName: '', major: '', degree: '' }]);
+            setPhoto(null);
+            setFormData({
+                name: '',
+                accountNumber: '',
+                phone: '',
+                ssn: '',
+                gender: '',
+                joinDate: '',
+                address: '',
+                nationality: '',
+                birthDate: '',
+                email: ''
+            });
+        } catch (error) {
+            console.error('서버 요청 실패:', error);
+            alert('사원 정보 저장에 실패했습니다. 다시 시도해 주세요.');
+        }
     };
 
     return (
@@ -24,61 +97,88 @@ function AddNewEmployee() {
                 </div>
                 <div className="common-comp">
                     <div className="table-container">
-                        <h1>사원 목록</h1>
-                        <form>
+                        <h1>사원 등록</h1>
+                        <form onSubmit={handleSubmit}>
                             <div className="flex-container">
                                 <table>
                                     <tbody>
                                     <tr>
                                         <th rowSpan="2">사진</th>
                                         <td rowSpan="2">
-                                            <input type="text" id="emp_id" name="emp_id"/>
+                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                <input
+                                                    type="file"
+                                                    id="photo"
+                                                    name="photo"
+                                                    onChange={handlePhotoChange}
+                                                    style={{display: 'none'}}
+                                                />
+                                                <button type="button" onClick={handlePhotoClick}
+                                                        className="photo-button">
+                                                    +
+                                                </button>
+                                                {photo && (
+                                                    <img
+                                                        src={photo}
+                                                        alt="preview"
+                                                        style={{
+                                                            width: '50px',
+                                                            height: '50px',
+                                                            marginLeft: '10px',
+                                                            objectFit: 'cover'
+                                                        }}
+                                                    />
+                                                )}
+                                            </div>
                                         </td>
                                         <th>성명</th>
                                         <td>
-                                            <input type="text" id="name" name="name"/>
+                                            <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} />
                                         </td>
                                         <th>계좌번호</th>
                                         <td>
-                                            <input type="text" id="account_number" name="account_number"/>
+                                            <input type="text" id="account_number" name="accountNumber" value={formData.accountNumber} onChange={handleChange} />
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>전화번호</th>
                                         <td>
-                                            <input type="text" id="phone" name="phone"/>
+                                            <input type="text" id="phone" name="phone" value={formData.phone} onChange={handleChange} />
                                         </td>
                                         <th>주민등록번호</th>
                                         <td>
-                                            <input type="text" id="ssn" name="ssn"/>
+                                            <input type="text" id="ssn" name="ssn" value={formData.ssn} onChange={handleChange} />
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>성별</th>
                                         <td>
-                                            <input type="text" id="gender" name="gender"/>
+                                            <label htmlFor="male">남성</label>
+                                            <input type="radio" id="male" name="gender" value="male" checked={formData.gender === 'male'} onChange={handleChange} />
+                                            <label htmlFor="female">여성</label>
+                                            <input type="radio" id="female" name="gender" value="female" checked={formData.gender === 'female'} onChange={handleChange} />
                                         </td>
                                         <th>입사일</th>
                                         <td>
-                                            <input type="text" id="join_date" name="join_date"/>
+                                            <input type="date" id="join_date" name="joinDate" value={formData.joinDate} onChange={handleChange} />
                                         </td>
                                         <th>주소</th>
                                         <td>
-                                            <input type="text" id="address" name="address"/>
+                                            <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} />
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>국적</th>
                                         <td>
-                                            <input type="text" id="nationality" name="nationality"/>
+                                            <input type="text" id="nationality" name="nationality" value={formData.nationality} onChange={handleChange} />
                                         </td>
                                         <th>생년월일</th>
                                         <td>
-                                            <input type="text" id="dob" name="dob"/>
+                                            <input type="date" id="birthDate" name="birthDate" value={formData.birthDate} onChange={handleChange} />
                                         </td>
                                         <th>이메일</th>
                                         <td>
-                                            <input type="text" id="email" name="email"/>
+                                            <input type="text" id="email" name="email" value={formData.email} onChange={handleChange} />
                                         </td>
                                     </tr>
                                     <tr>
@@ -94,36 +194,36 @@ function AddNewEmployee() {
                                     </tr>
                                     {rows.map((row, index) => (
                                         <tr key={index}>
-                                            <td><input type="text" value={row.relation} onChange={(e) => {
+                                            <td><input type="text" value={row.relationship} onChange={(e) => {
                                                 const newRows = [...rows];
-                                                newRows[index].relation = e.target.value;
+                                                newRows[index].relationship = e.target.value;
                                                 setRows(newRows);
-                                            }} /></td>
+                                            }}/></td>
                                             <td><input type="text" value={row.name} onChange={(e) => {
                                                 const newRows = [...rows];
                                                 newRows[index].name = e.target.value;
                                                 setRows(newRows);
-                                            }} /></td>
-                                            <td><input type="text" value={row.dob} onChange={(e) => {
+                                            }}/></td>
+                                            <td><input type="date" value={row.birthDate} onChange={(e) => {
                                                 const newRows = [...rows];
-                                                newRows[index].dob = e.target.value;
+                                                newRows[index].birthDate = e.target.value;
                                                 setRows(newRows);
-                                            }} /></td>
+                                            }}/></td>
                                             <td><input type="text" value={row.job} onChange={(e) => {
                                                 const newRows = [...rows];
                                                 newRows[index].job = e.target.value;
                                                 setRows(newRows);
-                                            }} /></td>
+                                            }}/></td>
                                             <td><input type="text" value={row.education} onChange={(e) => {
                                                 const newRows = [...rows];
                                                 newRows[index].education = e.target.value;
                                                 setRows(newRows);
-                                            }} /></td>
+                                            }}/></td>
                                             <td><input type="text" value={row.note} onChange={(e) => {
                                                 const newRows = [...rows];
                                                 newRows[index].note = e.target.value;
                                                 setRows(newRows);
-                                            }} /></td>
+                                            }}/></td>
                                         </tr>
                                     ))}
                                     <tr>
@@ -136,52 +236,106 @@ function AddNewEmployee() {
                                         <th colSpan="6">경력사항</th>
                                     </tr>
                                     <tr>
-                                        <th>기간</th>
+                                        <th>입사년월</th>
+                                        <th>퇴사년월</th>
                                         <th>회사명</th>
                                         <th>근무부서</th>
                                         <th>최종직위</th>
                                         <th>업무내용</th>
-                                        <th></th>
                                     </tr>
                                     {employmentRows.map((row, index) => (
                                         <tr key={index}>
-                                            <td><input type="text" value={row.period} onChange={(e) => {
+                                            <td><input type="date" value={row.joinDate} onChange={(e) => {
                                                 const newRows = [...employmentRows];
-                                                newRows[index].period = e.target.value;
+                                                newRows[index].joinDate = e.target.value;
                                                 setEmploymentRows(newRows);
-                                            }} /></td>
+                                            }}/></td>
+                                            <td><input type="date" value={row.leaveDate} onChange={(e) => {
+                                                const newRows = [...employmentRows];
+                                                newRows[index].leaveDate = e.target.value;
+                                                setEmploymentRows(newRows);
+                                            }}/></td>
                                             <td><input type="text" value={row.companyName} onChange={(e) => {
                                                 const newRows = [...employmentRows];
                                                 newRows[index].companyName = e.target.value;
                                                 setEmploymentRows(newRows);
-                                            }} /></td>
+                                            }}/></td>
                                             <td><input type="text" value={row.department} onChange={(e) => {
                                                 const newRows = [...employmentRows];
                                                 newRows[index].department = e.target.value;
                                                 setEmploymentRows(newRows);
-                                            }} /></td>
+                                            }}/></td>
                                             <td><input type="text" value={row.finalPosition} onChange={(e) => {
                                                 const newRows = [...employmentRows];
                                                 newRows[index].finalPosition = e.target.value;
                                                 setEmploymentRows(newRows);
-                                            }} /></td>
+                                            }}/></td>
                                             <td><input type="text" value={row.jobDescription} onChange={(e) => {
                                                 const newRows = [...employmentRows];
                                                 newRows[index].jobDescription = e.target.value;
                                                 setEmploymentRows(newRows);
-                                            }} /></td>
+                                            }}/></td>
+                                        </tr>
+                                    ))}
+                                    <tr>
+                                        <td colSpan="6" style={{textAlign: 'center'}}>
+                                            <button type="button" onClick={handleAddEmploymentRow}
+                                                    className="plus-button">+
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th colSpan="6">학력사항</th>
+                                    </tr>
+                                    <tr>
+                                        <th>입학일자</th>
+                                        <th>졸업일자</th>
+                                        <th>학교명</th>
+                                        <th>전공</th>
+                                        <th>학위</th>
+                                        <th></th>
+                                    </tr>
+                                    {educationRows.map((row, index) => (
+                                        <tr key={index}>
+                                            <td><input type="date" value={row.admissionDate} onChange={(e) => {
+                                                const newRows = [...educationRows];
+                                                newRows[index].admissionDate = e.target.value;
+                                                setEducationRows(newRows);
+                                            }}/></td>
+                                            <td><input type="date" value={row.graduationDate} onChange={(e) => {
+                                                const newRows = [...educationRows];
+                                                newRows[index].graduationDate = e.target.value;
+                                                setEducationRows(newRows);
+                                            }}/></td>
+                                            <td><input type="text" value={row.schoolName} onChange={(e) => {
+                                                const newRows = [...educationRows];
+                                                newRows[index].schoolName = e.target.value;
+                                                setEducationRows(newRows);
+                                            }}/></td>
+                                            <td><input type="text" value={row.major} onChange={(e) => {
+                                                const newRows = [...educationRows];
+                                                newRows[index].major = e.target.value;
+                                                setEducationRows(newRows);
+                                            }}/></td>
+                                            <td><input type="text" value={row.degree} onChange={(e) => {
+                                                const newRows = [...educationRows];
+                                                newRows[index].degree = e.target.value;
+                                                setEducationRows(newRows);
+                                            }}/></td>
                                             <td></td>
                                         </tr>
                                     ))}
                                     <tr>
                                         <td colSpan="6" style={{textAlign: 'center'}}>
-                                            <button type="button" onClick={handleAddEmploymentRow} className="plus-button">+
+                                            <button type="button" onClick={handleAddEducationRow}
+                                                    className="plus-button">+
                                             </button>
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
+                            <button type="submit">저장</button>
                         </form>
                     </div>
                 </div>
