@@ -5,7 +5,12 @@ const initialState = {
     departmentBox: {},
     approvalDocumentList: {},
     detailApprovalDocument: {},
-    documentTemplateFolder: {data:[]}
+    documentTemplateFolder: {data:[]},
+    documentTemplateSearchResult: [],
+    searchWord: '',
+    currentFolder: null,
+    selectFolders: [],
+    selectDocuments: []
 }
 
 const FETCH_SIDEBAR_STATUS = 'sidebar/FETCH_SIDEBAR_STATUS';
@@ -13,10 +18,17 @@ const SET_DEPARTMENT_BOX = 'sidebar/SET_DEPARTMENT_BOX';
 const GET_APPROVAL_DOCUMENT_LIST = 'approvalDocument/GET_APPROVAL_DOCUMENT_LIST';
 const GET_DETAIL_APPROVAL_DOCUMENT = 'approvalDocument/GET_DETAIL_APPROVAL_DOCUMENT';
 const SET_DOCUMENT_TEMPLATE_FOLDER = 'documentTemplate/SET_DOCUMENT_TEMPLATE_FOLDER';
+const FETCH_DOCUMENT_TEMPLATE_SEARCH = 'documentTemplate/FETCH_DOCUMENT_TEMPLATE_SEARCH';
+const FETCH_SEARCH_WORD = 'documentTemplate/FETCH_SEARCH_WORD';
+const FETCH_CURRENT_FOLDER = 'documentTemplate/FETCH_CURRENT_FOLDER';
+const FETCH_SELECT_FOLDERS = 'documentTemplate/FETCH_SELECT_FOLDERS';
+const FETCH_SELECT_DOCUMENTS = 'documentTemplate/FETCH_SELECT_DOCUMENTS'
 
 export const { sidebar: { fetchSidebarStatus, setDepartmentBox },
     approvalDocument: { getApprovalDocumentList, getDetailApprovalDocument },
-    documentTemplate: {setDocumentTemplateFolder} } = createActions({
+    documentTemplate: {setDocumentTemplateFolder, fetchDocumentTemplateSearch, fetchSearchWord,
+        fetchCurrentFolder, fetchSelectFolders, fetchSelectDocuments
+    } } = createActions({
         /* 사이드바 열림/닫힘 설정 */
         [FETCH_SIDEBAR_STATUS]: result => ({ sidebarStatus: result }),
         /* 부서함 가져오기 셋 */
@@ -26,7 +38,16 @@ export const { sidebar: { fetchSidebarStatus, setDepartmentBox },
         /* 문서 상세보기 셋 */
         [GET_DETAIL_APPROVAL_DOCUMENT]: result => ({ detailApprovalDocument: result }),
         /* 양식 폴더 셋 */
-        [SET_DOCUMENT_TEMPLATE_FOLDER]: result => ({ documentTemplateFolder: result })
+        [SET_DOCUMENT_TEMPLATE_FOLDER]: result => ({ documentTemplateFolder: result }),
+        /* 양식 폴더 검색 결과 */
+        [FETCH_DOCUMENT_TEMPLATE_SEARCH]: result => ({ documentTemplateSearchResult: result}),
+        /* 양식 폴더 검색어 */
+        [FETCH_SEARCH_WORD]: result => ({searchWord: result}),
+        /* 현재 조회중인 폴더 */
+        [FETCH_CURRENT_FOLDER]: result=>({currentFolder: result}),
+        /* 현재 선택한 폴더/양식 리스트 */
+        [FETCH_SELECT_FOLDERS]: result=>({selectFolders: result}),
+        [FETCH_SELECT_DOCUMENTS]: result=>({selectDocuments: result})
     })
 
 const e_approvalReducer = handleActions({
@@ -53,6 +74,31 @@ const e_approvalReducer = handleActions({
     [SET_DOCUMENT_TEMPLATE_FOLDER]: (state, {payload})=>({
         ...state,
         documentTemplateFolder: payload.documentTemplateFolder
+    }),
+
+    [FETCH_DOCUMENT_TEMPLATE_SEARCH]: (state, {payload})=>({
+        ...state,
+        documentTemplateSearchResult: payload.documentTemplateSearchResult
+    }),
+
+    [FETCH_SEARCH_WORD]: (state, {payload})=>({
+        ...state,
+        searchWord: payload.searchWord
+    }),
+
+    [FETCH_CURRENT_FOLDER]: (state, {payload})=>({
+        ...state,
+        currentFolder: payload.currentFolder
+    }),
+
+    [FETCH_SELECT_FOLDERS]: (state, {payload})=>({
+        ...state,
+        selectFolders: payload.selectFolders
+    }),
+
+    [FETCH_SELECT_DOCUMENTS]: (state, {payload})=>({
+        ...state,
+        selectDocuments: payload.selectDocuments
     })
 }, initialState)
 
