@@ -1,4 +1,4 @@
-const ApplicantListItem = ({ applicant: { id, name, birthDate, gender, phone, address, email } }) => {
+const ApplicantListItem = ({ applicant: { name, birthDate, gender, phone, address, email } }) => {
 
     // 생일로부터 나이 계산 함수
     const calculateAge = (birthDate) => {

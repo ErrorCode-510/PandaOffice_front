@@ -1,17 +1,20 @@
 import { createActions, handleActions } from 'redux-actions'
 
-/* 초기값 */    
-const initialState = {};
+/* 초기값 */
+const initialState = {
+    applicant: null,
+    criteria: null
+};
 
 /* 액션 타입 */
 const GET_APPLICANT = 'applicant/GET_APPLICANT';
+const SET_CRITERIA = 'applicant/SET_CRITERIA';
 
 /* 액션 함수 */
-export const { applicant : { getApplicant }} = createActions({
-    [GET_APPLICANT]: result => {
-        // console.log('액션함수 콘솔로그' + JSON.stringify(result))
-        return {applicant : result.data}
-    }
+export const { applicant: { getApplicant, setCriteria, setCurrentPage } } = createActions({
+    [GET_APPLICANT]: result => ({ applicant: result.data }),
+    [SET_CRITERIA]: params => ({ criteria: params })
+    // [SET_CURRENT_PAGE]: result => ({ currentPage: result.data})
 });
 /* getApplicant를 디스패치하면 액션 함수에서 applicant:getApplicant가 불러와지는데
 * 액션타입의 값과 매핑이 되면서 액션타입의 값의 변수를 가져온다. */
@@ -28,7 +31,12 @@ export const { applicant : { getApplicant }} = createActions({
 
 /* 리듀서 함수 */
 const applicantReducer = handleActions({
-    [GET_APPLICANT] : (state, { payload }) => payload
+    [GET_APPLICANT]: (state, { payload }) => ({ ...state, applicant: payload.applicant }),
+    /* 검색 조건 상태 값 저장하기 */
+    [SET_CRITERIA]: (state, { payload }) => {
+        // console.log("리듀서 함수 로그: " + JSON.stringify(payload.criteria));
+        return {...state, criteria: payload.criteria }
+    }
 }, initialState);
 
 export default applicantReducer;
