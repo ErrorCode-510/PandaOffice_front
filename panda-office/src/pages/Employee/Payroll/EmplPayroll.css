@@ -1,0 +1,113 @@
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 7px;
+    border: none;
+    padding-right: 10px;
+}
+
+.button-container button {
+    border: none;
+    border-radius: 7px;
+    padding: 4px 10px;
+    background-color: #DDDDDD;
+    color: #000;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.button-container button:active  {
+    background: #cccccc;
+}
+
+/* ------------------------------------- 데이터 테이블 -------------------------------------------- */
+.emplPay-table-combine {
+    display: flex;
+    flex-direction: column;
+    width: 23%;
+    float: left;
+    margin-right: 20px;
+    max-height: 900px;
+}
+
+.emplPay-table-container {
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 724px;
+    background: #fff;
+    max-height: 750px;
+}
+
+.emplPay-data-table,
+.emplPay-foot-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    
+}
+
+.emplPay-data-table th,
+.emplPay-data-table td {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    padding: 8px;
+}
+
+.emplPay-data-table td {
+    padding-left: 10px;
+}
+
+.emplPay-data-table th:first-child,
+.emplPay-data-table td:first-child {
+    border-left: none;
+}
+
+.emplPay-data-table thead {
+    text-align: center;
+    background: #2F3850;
+    color: #fff;
+    line-height: 27px;
+}
+
+.emplPay-foot-table th,
+.emplPay-foot-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    line-height: 20px;
+}
+
+.emplPay-foot {
+    background: #CACACA;
+    border-collapse: collapse;
+}
+
+.emplPay-foot-table tfoot td {
+    text-align: center;
+}
+
+/* ------------------------------------- 총합 데이터 테이블 -------------------------------------------- */
+.emplAll-table-combine {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    float: left;
+}
+
+.emplAll-container {
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 278px;
+    background: #fff;
+    max-height: 1000px;
+}
