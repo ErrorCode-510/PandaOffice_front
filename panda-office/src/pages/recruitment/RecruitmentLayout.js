@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import Footer from "../../components/common/Footer";
-import Calendar from "../../utils/CalendarApi";
 import RecruitmentSidebar from "./RecruitmentSidebar";
 
 function Recruitment() {
