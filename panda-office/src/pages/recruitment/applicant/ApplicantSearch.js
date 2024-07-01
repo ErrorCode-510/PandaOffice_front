@@ -110,6 +110,7 @@ const ApplicantSearch = () => {
                     <input className="as-input-box" type="text" placeholder="이름을 입력해 주세요." value={searchCriteria} onChange={handlerSearchChange} onKeyDown={onSubmitSearch}></input>
                 </div>
                 <button className="as-search-btn" onClick={handlerOnClink}>조회</button>
+                
             </div>
         </>
     )
