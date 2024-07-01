@@ -12,3 +12,69 @@
     margin-top: 3px;
     margin-right: 5px;
 }
+
+.test {
+    background-color: beige;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+}
+.flex {
+    display: flex;
+}
+
+/* 일반 컴포넌트 헤더 */
+.cc-header {
+    background-color: #1E1F31;
+    color: white;
+    font-size: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 상하 정렬 추가 */
+}
+/* 일반 컴포넌트 컨텐트 */
+.cc-content{
+    background-color: white;
+}
+
+/* 폰트 정렬 */
+.align-c {
+    text-align: center;
+}
+.align-l {
+    text-align: left;
+}
+.align-r {
+    text-align: right;
+}
+
+.folder-icon{
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+.folder-name{
+    cursor: pointer;
+    margin-left: 5px;
+}
+.selected-folder-name{
+    cursor: pointer;
+    margin-left: 5px;
+    color: #2076B4;
+}
+.template-name{
+    margin-left: 5px;
+}
+
+.folder-button{
+    border-radius: 3px;
+    background-color: #E6E6E6;
+    width: 30%;
+    height: 20px;
+    border: none;
+}
