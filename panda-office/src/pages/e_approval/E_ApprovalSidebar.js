@@ -1,9 +1,10 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { IoIosArrowDown, IoIosArrowDropright, IoIosArrowForward, IoIosArrowRoundForward, IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown, IoMdSettings, IoIosArrowForward, IoIosArrowRoundForward, IoIosArrowUp } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSidebarStatus } from "../../modules/E_ApprovalModules";
 import { callDepartmentBox } from "../../apis/E_ApprovalAPICalls";
+import './E_Approval.css';
 
 function E_ApprovalSidebar() {
 
@@ -49,9 +50,10 @@ function E_ApprovalSidebar() {
                                         </div>
                                         {sidebarStatus.Aa && (
                                             <ul className="mt-10">
-                                                <li className="icons-text fs-12 mt-10 ml-55 cursor-p">면접 일정</li>
-                                                <li className="icons-text fs-12 mt-10 ml-55 cursor-p">면접 일정 등록</li>
-                                                <li className="icons-text fs-12 mt-10 ml-55 cursor-p">면접 일정 수정/삭제</li>
+                                                <NavLink to="draft-box"> <li className="icons-text fs-12 mt-10 ml-55 cursor-p">내 기안 문서</li></NavLink>
+                                                <NavLink to="pending-box"><li className="icons-text fs-12 mt-10 ml-55 cursor-p">결재 대기 문서</li></NavLink>
+                                                <NavLink to="scheduled-box"><li className="icons-text fs-12 mt-10 ml-55 cursor-p">결재 예정 문서</li></NavLink>
+                                                <NavLink to="archived-box"><li className="icons-text fs-12 mt-10 ml-55 cursor-p">후열 문서</li></NavLink>
                                             </ul>
                                         )}
                                     </li>
@@ -63,14 +65,17 @@ function E_ApprovalSidebar() {
                                         <div className="sidebar-item" onClick={toggleHandler}>
                                             {sidebarStatus.Ab ? <IoIosArrowDown className="sidebar-icons ml-20" /> : <IoIosArrowForward className="sidebar-icons ml-20" />}
                                             <span className="icons-text fs-14 cursor-p" id="Ab">부서함</span>
+                                            <IoMdSettings className="setting-icon icons-text cursor-p"/>
                                         </div>
                                         {sidebarStatus.Ab &&
                                             <ul className="mt-10">
                                                 {
                                                     departmentBox.data.map(box => (
+                                                        <NavLink to={`department-box?boxId=${box.departmentBoxId}`}>
                                                         <li key={box.departmentBoxId} className="icons-text fs-12 mt-10 ml-55 cursor-p">
                                                             {box.name}
                                                         </li>
+                                                        </NavLink>
                                                     ))
                                                 }
                                             </ul>
@@ -80,6 +85,7 @@ function E_ApprovalSidebar() {
                             )}
                         </li>
                     </ul>
+                    <div className="approval-setting-sidebar icons-text cursor-p"><IoMdSettings className="setting-icon"/>전자결재 양식 관리</div>
                 </div>
             </div>
         </>

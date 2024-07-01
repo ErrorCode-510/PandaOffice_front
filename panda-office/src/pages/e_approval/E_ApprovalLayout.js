@@ -8,7 +8,6 @@ function E_ApprovalLayout() {
             <E_ApprovalSidebar />
             <div className="common-comp">
                 <div className="pd">
-                    {/* 여기 안에 모든 걸 작성 */}
                     <Outlet />
                 </div>
                 <Footer />
