@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import '../E_Approval.css';
 import { useEffect, useState } from 'react';
-import { callDocumentFolderAPI } from '../../../apis/E_ApprovalAPICalls';
+import { callDocumentFolderAPI } from '../../../apis/e_approval/ApprovalDocumentFolderAPICalls';
 import { Folder } from '../../../components/e_approval/template/TemplateFolder';
 import { FolderManager } from '../../../components/e_approval/template/FolderManager';
 import { TemplateManager } from '../../../components/e_approval/template/TemplateManager';

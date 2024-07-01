@@ -3,7 +3,7 @@ import { IoIosArrowDown, IoMdSettings, IoIosArrowForward, IoIosArrowRoundForward
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSidebarStatus } from "../../modules/E_ApprovalModules";
-import { callDepartmentBox } from "../../apis/E_ApprovalAPICalls";
+import { callDepartmentBox } from "../../apis/e_approval/ApprovalDocumentFolderAPICalls";
 import './E_Approval.css';
 
 function E_ApprovalSidebar() {

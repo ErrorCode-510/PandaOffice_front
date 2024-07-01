@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import DocumentTable from "../../components/e_approval/DocumentTable";
-import { DocumentTemplateFolderPage } from "./template/E_ApprovalTemplateFolder";
+import { DocumentTemplateFolderPage } from "./documentTemplate/E_ApprovalTemplateFolder";
 
 function E_ApprovalRoute() {
     return (

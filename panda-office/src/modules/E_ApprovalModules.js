@@ -10,9 +10,10 @@ const initialState = {
     searchWord: '',
     currentFolder: null,
     selectFolders: [],
-    selectDocuments: []
+    selectDocuments: [],
+    folderEditMode: false
 }
-
+const SUCCESS = 'approvalDocument/SUCCESS';
 const FETCH_SIDEBAR_STATUS = 'sidebar/FETCH_SIDEBAR_STATUS';
 const SET_DEPARTMENT_BOX = 'sidebar/SET_DEPARTMENT_BOX';
 const GET_APPROVAL_DOCUMENT_LIST = 'approvalDocument/GET_APPROVAL_DOCUMENT_LIST';
@@ -23,12 +24,15 @@ const FETCH_SEARCH_WORD = 'documentTemplate/FETCH_SEARCH_WORD';
 const FETCH_CURRENT_FOLDER = 'documentTemplate/FETCH_CURRENT_FOLDER';
 const FETCH_SELECT_FOLDERS = 'documentTemplate/FETCH_SELECT_FOLDERS';
 const FETCH_SELECT_DOCUMENTS = 'documentTemplate/FETCH_SELECT_DOCUMENTS'
+const SET_FOLDER_EDIT_MODE = 'documentTemplate/SET_FOLDER_EDIT_MODE'
 
 export const { sidebar: { fetchSidebarStatus, setDepartmentBox },
-    approvalDocument: { getApprovalDocumentList, getDetailApprovalDocument },
+    approvalDocument: { getApprovalDocumentList, getDetailApprovalDocument, success },
     documentTemplate: {setDocumentTemplateFolder, fetchDocumentTemplateSearch, fetchSearchWord,
-        fetchCurrentFolder, fetchSelectFolders, fetchSelectDocuments
+        fetchCurrentFolder, fetchSelectFolders, fetchSelectDocuments, setFolderEditMode
     } } = createActions({
+        /* 성공값 반환 */
+        [SUCCESS] : () => ({ success : true }),
         /* 사이드바 열림/닫힘 설정 */
         [FETCH_SIDEBAR_STATUS]: result => ({ sidebarStatus: result }),
         /* 부서함 가져오기 셋 */
@@ -47,10 +51,16 @@ export const { sidebar: { fetchSidebarStatus, setDepartmentBox },
         [FETCH_CURRENT_FOLDER]: result=>({currentFolder: result}),
         /* 현재 선택한 폴더/양식 리스트 */
         [FETCH_SELECT_FOLDERS]: result=>({selectFolders: result}),
-        [FETCH_SELECT_DOCUMENTS]: result=>({selectDocuments: result})
+        [FETCH_SELECT_DOCUMENTS]: result=>({selectDocuments: result}),
+        /* 폴더 이름 수정상태 */
+        [SET_FOLDER_EDIT_MODE]: result=>({folderEditMode: result})
     })
 
 const e_approvalReducer = handleActions({
+    [SUCCESS] : (state, {payload}) => ({
+        ...state,
+        success: payload.success
+    }),
     [FETCH_SIDEBAR_STATUS]: (state, { payload }) => ({
         ...state,
         sidebarStatus: payload.sidebarStatus
@@ -99,6 +109,11 @@ const e_approvalReducer = handleActions({
     [FETCH_SELECT_DOCUMENTS]: (state, {payload})=>({
         ...state,
         selectDocuments: payload.selectDocuments
+    }),
+
+    [SET_FOLDER_EDIT_MODE]: (state, {payload})=>({
+        ...state,
+        folderEditMode: payload.folderEditMode
     })
 }, initialState)
 

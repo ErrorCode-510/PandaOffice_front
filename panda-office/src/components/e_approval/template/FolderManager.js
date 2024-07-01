@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDocumentTemplateSearch, fetchSearchWord } from "../../../modules/E_ApprovalModules";
+import { fetchDocumentTemplateSearch, fetchSearchWord, setFolderEditMode } from "../../../modules/E_ApprovalModules";
+import { callCreateDocumentFolderAPI, callRemoveDocumentFolderAPI } from "../../../apis/e_approval/ApprovalDocumentFolderAPICalls";
 
 export function FolderManager() {
 
@@ -8,7 +9,7 @@ export function FolderManager() {
 
     const dispatch = useDispatch();
 
-    const { documentTemplateFolder, searchWord } = useSelector(state => state.e_approvalReducer);
+    const { documentTemplateFolder, searchWord, folderEditMode, currentFolder } = useSelector(state => state.e_approvalReducer);
 
     const filterFolders = (folders, word) => {
         return folders
@@ -47,9 +48,13 @@ export function FolderManager() {
     return (
         <div className="align-c" style={{height: '120px'}}>
             <span className="flex-center">
-                <button className="folder-button-navy">폴더 추가</button>
-                <button className="folder-button-grey">수정</button>
-                <button className="folder-button-grey">삭제</button>
+                <button className="folder-button-navy"
+                onClick={() => {dispatch(callCreateDocumentFolderAPI(currentFolder))}}>폴더 추가</button>
+                <button className="folder-button-grey" onClick={() => {dispatch(setFolderEditMode(!folderEditMode))}}>
+                    {folderEditMode?"종료":"수정"}
+                </button>
+                <button className="folder-button-grey"
+                onClick={() => {dispatch(callRemoveDocumentFolderAPI(currentFolder))}}>삭제</button>
             </span>
             <input className="folder-search-input"
                 placeholder="검색어를 입력해주세요."
