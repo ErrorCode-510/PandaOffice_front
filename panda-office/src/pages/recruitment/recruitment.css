@@ -1,13 +1,20 @@
-/* applicant------------------------------------------------------------------------------------------------------------------------------------------- */
+/* applicant-title ------------------------------------------------------------------------------------------------------------------------------- */
+.applicant-title {
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+/* applicant ------------------------------------------------------------------------------------------------------------------------------------------- */
 .applicant-wrap {
     background-color: #fff;
+    padding-bottom: 30px;
 }
 
 /* applicant-info-title ------------------------------------------------------------------------------------------------------------------------------- */
 .ait-comp {
     width: 100%;
     background-color: #fff;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .ait-ul {
@@ -58,7 +65,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 77px;
+    margin-top: 47px;
+}
+
+.ali-paging-ul li {
+    margin-right: 10px;
+}
+
+.ali-paging-ul li:last-child {
+    margin-right: 0;
 }
 
 .ali-paging-btn {
@@ -131,4 +146,9 @@
     border: none;
     border-radius: 3px;
     cursor: pointer;
+}
+
+/* delete-attribute-css( 푸터 마진 탑 제거 ) ----------------------------------------------------------------------------------------------------------- */
+.delete-attribute-css {
+    margin-top: 0;
 }
