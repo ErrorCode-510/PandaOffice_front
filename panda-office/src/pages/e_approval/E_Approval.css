@@ -1,0 +1,14 @@
+/* 기존 CSS 코드의 맨 아래에 추가 */
+.approval-setting-sidebar {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.setting-icon {
+    margin-top: 3px;
+    margin-right: 5px;
+}

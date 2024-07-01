@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import "./E_Approval.css"
 
-
-function DocumentTable({ exceptColumn }) {
+function DocumentTable({ mainTitle, exceptColumn }) {
 
     return <>
         <style>
@@ -16,6 +16,8 @@ function DocumentTable({ exceptColumn }) {
                 `
             }
         </style>
+        <div className="common-comp">
+        <span className="page-title">{mainTitle}</span>
         <table>
             <thead>
                 <tr>
@@ -32,6 +34,7 @@ function DocumentTable({ exceptColumn }) {
                 {/* 값이 들어올 자리 */}
             </tbody>
         </table>
+        </div>
     </>
 }
 
