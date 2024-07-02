@@ -1,10 +1,13 @@
 import { Routes, Route } from "react-router-dom";
+import Notice from "./Notice";
+import React from 'react';
+import NoticeDetail from './NoticeDetail';
 
 function NoticeRoutes() {
     return (
         <Routes>
-            <Route path="test" element={<div>공지 라우팅 테스트</div>} />
-            {/* 라우트 적용 */}
+            <Route path="/all-notice" element={<Notice />} />
+            <Route path="detail" element={<NoticeDetail />} />
         </Routes>
     );
 }
