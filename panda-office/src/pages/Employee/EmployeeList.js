@@ -3,6 +3,7 @@ import EmployeeSidebar from "./EmployeeSidebar";
 import "./Employee.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 function EmployeeList() {
     const [employees, setEmployees] = useState([]);
@@ -134,7 +135,7 @@ function EmployeeList() {
                                 {filteredEmployees.map(employee => (
                                     <tr key={employee.employeeId}>
                                         <td>{employee.employeeId}</td>
-                                        <td>{employee.name}</td>
+                                        <td><Link to={`/employee/${employee.employeeId}`}>{employee.name}</Link></td>
                                         <td>{employee.department ? employee.department.name : ''}</td>
                                         <td>{employee.employmentStatus}</td>
                                         <td>{employee.job ? employee.job.title : ''}</td>

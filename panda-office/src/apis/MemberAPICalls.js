@@ -4,27 +4,7 @@ import {getMemberId, removeToken, saveToken} from "../utils/TokenUtils";
 import {getProfile, success} from "../modules/MemberModules";
 import axios from "axios";
 
-// export const callSignupAPI = ({signupRequest}) => {
-//
-//
-//     return async (dispatch, getState) => {
-//         const result = await request(
-//             'POST',
-//             '/api/v1/members/signup',
-//             {'Content-Type' : 'application/json' },
-//             JSON.stringify(signupRequest)
-//         );
-//
-//         console.log('callSignupAPI result : ', result);
-//
-//         if(result?.status === 201) {
-//             dispatch(success());
-//         } else {
-//             toast.warning("회원 가입에 실패했습니다. 다시 시도해주세요.");
-//         }
-//
-//     }
-// }
+
 
 export const callLoginAPI = ({loginRequest}) => {
 

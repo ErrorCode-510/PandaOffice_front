@@ -5,8 +5,9 @@ import axios from "axios";
 
 function AddNewEmployee() {
     const [rows, setRows] = useState([{ relationship: '', name: '', birthDate: '', job: '', education: '', note: '' }]);
-    const [employmentRows, setEmploymentRows] = useState([{ joinDate: '', leaveDate: '', companyName: '', department: '', finalPosition: '', jobDescription: '' }]);
+    const [employmentRows, setEmploymentRows] = useState([{ hireDate: '', endDate: '', companyName: '', department: '', lastPosition: '', jobDescription: '' }]);
     const [educationRows, setEducationRows] = useState([{ admissionDate: '', graduationDate: '', schoolName: '', major: '', degree: '' }]);
+    const [licensesRows, setLicenses] = useState([{ issuingOrganization: '', issueDate: '', name: '' }]);
     const [photo, setPhoto] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
@@ -14,7 +15,7 @@ function AddNewEmployee() {
         phone: '',
         ssn: '',
         gender: '',
-        joinDate: '',
+        hireDate: '',
         address: '',
         nationality: '',
         birthDate: '',
@@ -34,16 +35,25 @@ function AddNewEmployee() {
     };
 
     const handleAddEmploymentRow = () => {
-        setEmploymentRows([...employmentRows, { joinDate: '', leaveDate: '', companyName: '', department: '', finalPosition: '', jobDescription: '' }]);
+        setEmploymentRows([...employmentRows, { hireDate: '', endDate: '', companyName: '', department: '', lastPosition: '', jobDescription: '' }]);
     };
 
     const handleAddEducationRow = () => {
         setEducationRows([...educationRows, { admissionDate: '', graduationDate: '', schoolName: '', major: '', degree: '' }]);
     };
 
+    const handleAddCertificationRow = () => {
+        setLicenses([...licensesRows, { issuingOrganization: '', issueDate: '', name: '' }]);
+    };
+
     const handlePhotoChange = (e) => {
         if (e.target.files && e.target.files[0]) {
-            setPhoto(URL.createObjectURL(e.target.files[0]));
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPhoto({ name: file.name, path: reader.result });
+            };
+            reader.readAsDataURL(file);
         }
     };
 
@@ -59,17 +69,20 @@ function AddNewEmployee() {
             familyMember: rows,
             careerHistory: employmentRows,
             educationHistory: educationRows,
-            photo: photo
+            licenses: licensesRows,  // 수정
+            photoName: photo ? photo.name : '',
+            photoPath: photo ? photo.path : ''
         };
-                console.log(data);
+        console.log(data);
         try {
             const response = await axios.post('http://localhost:8001/api/v1/members/newEmployee', data);
             console.log('서버 응답:', response.data);
 
             alert('사원 정보가 성공적으로 저장되었습니다.');
             setRows([{ relationship: '', name: '', birthDate: '', job: '', education: '', note: '' }]);
-            setEmploymentRows([{ joinDate: '', leaveDate: '', companyName: '', department: '', finalPosition: '', jobDescription: '' }]);
+            setEmploymentRows([{ hireDate: '', endDate: '', companyName: '', department: '', lastPosition: '', jobDescription: '' }]);
             setEducationRows([{ admissionDate: '', graduationDate: '', schoolName: '', major: '', degree: '' }]);
+            setLicenses([{ issuingOrganization: '', issueDate: '', name: '' }]);
             setPhoto(null);
             setFormData({
                 name: '',
@@ -77,7 +90,7 @@ function AddNewEmployee() {
                 phone: '',
                 ssn: '',
                 gender: '',
-                joinDate: '',
+                hireDate: '',
                 address: '',
                 nationality: '',
                 birthDate: '',
@@ -119,7 +132,7 @@ function AddNewEmployee() {
                                                 </button>
                                                 {photo && (
                                                     <img
-                                                        src={photo}
+                                                        src={photo.path}
                                                         alt="preview"
                                                         style={{
                                                             width: '50px',
@@ -160,7 +173,7 @@ function AddNewEmployee() {
                                         </td>
                                         <th>입사일</th>
                                         <td>
-                                            <input type="date" id="join_date" name="joinDate" value={formData.joinDate} onChange={handleChange} />
+                                            <input type="date" id="join_date" name="hireDate" value={formData.hireDate} onChange={handleChange} />
                                         </td>
                                         <th>주소</th>
                                         <td>
@@ -245,14 +258,14 @@ function AddNewEmployee() {
                                     </tr>
                                     {employmentRows.map((row, index) => (
                                         <tr key={index}>
-                                            <td><input type="date" value={row.joinDate} onChange={(e) => {
+                                            <td><input type="date" value={row.hireDate} onChange={(e) => {
                                                 const newRows = [...employmentRows];
-                                                newRows[index].joinDate = e.target.value;
+                                                newRows[index].hireDate = e.target.value;
                                                 setEmploymentRows(newRows);
                                             }}/></td>
-                                            <td><input type="date" value={row.leaveDate} onChange={(e) => {
+                                            <td><input type="date" value={row.endDate} onChange={(e) => {
                                                 const newRows = [...employmentRows];
-                                                newRows[index].leaveDate = e.target.value;
+                                                newRows[index].endDate = e.target.value;
                                                 setEmploymentRows(newRows);
                                             }}/></td>
                                             <td><input type="text" value={row.companyName} onChange={(e) => {
@@ -265,9 +278,9 @@ function AddNewEmployee() {
                                                 newRows[index].department = e.target.value;
                                                 setEmploymentRows(newRows);
                                             }}/></td>
-                                            <td><input type="text" value={row.finalPosition} onChange={(e) => {
+                                            <td><input type="text" value={row.lastPosition} onChange={(e) => {
                                                 const newRows = [...employmentRows];
-                                                newRows[index].finalPosition = e.target.value;
+                                                newRows[index].lastPosition = e.target.value;
                                                 setEmploymentRows(newRows);
                                             }}/></td>
                                             <td><input type="text" value={row.jobDescription} onChange={(e) => {
@@ -328,6 +341,46 @@ function AddNewEmployee() {
                                     <tr>
                                         <td colSpan="6" style={{textAlign: 'center'}}>
                                             <button type="button" onClick={handleAddEducationRow}
+                                                    className="plus-button">+
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th colSpan="6">자격증</th>
+                                    </tr>
+                                    <tr>
+                                        <th>발행기관</th>
+                                        <th>취득일자</th>
+                                        <th>자격증명</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    {licensesRows.map((row, index) => (
+                                        <tr key={index}>
+                                            <td><input type="text" value={row.issuingOrganization} onChange={(e) => {
+                                                const newRows = [...licensesRows];
+                                                newRows[index].issuingOrganization = e.target.value;
+                                                setLicenses(newRows);
+                                            }}/></td>
+                                            <td><input type="date" value={row.issueDate} onChange={(e) => {
+                                                const newRows = [...licensesRows];
+                                                newRows[index].issueDate = e.target.value;
+                                                setLicenses(newRows);
+                                            }}/></td>
+                                            <td><input type="text" value={row.name} onChange={(e) => {
+                                                const newRows = [...licensesRows];
+                                                newRows[index].name = e.target.value;
+                                                setLicenses(newRows);
+                                            }}/></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    ))}
+                                    <tr>
+                                        <td colSpan="6" style={{textAlign: 'center'}}>
+                                            <button type="button" onClick={handleAddCertificationRow}
                                                     className="plus-button">+
                                             </button>
                                         </td>
