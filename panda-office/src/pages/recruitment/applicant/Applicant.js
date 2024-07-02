@@ -21,6 +21,7 @@ const Applicant = () => {
             {
                 applicant &&
                 <>
+                        <p className="applicant-title">면접자 목록</p>
                         <ApplicantSearch />
                         <div className="applicant-wrap">
                         <ApplicantList applicant={applicant.data} />
