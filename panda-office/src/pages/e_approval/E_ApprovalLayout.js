@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
 import Footer from "../../components/common/Footer";
-import E_ApprovalSidebar from "./E_approvalSidebar";
+import E_ApprovalSidebar from "./E_ApprovalSidebar";
 
 function E_ApprovalLayout() {
     return (
         <>
-            <E_ApprovalSidebar />
+            <E_ApprovalSidebar/>
             <div className="common-comp">
                 <div className="pd">
                     <Outlet />
