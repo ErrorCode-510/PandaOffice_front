@@ -1,5 +1,5 @@
-import { getApplicant, setCurrentPage } from '../modules/ApplicantModules';
-import { authRequest, request } from './api';
+import { getApplicant, setApplicantDetail } from '../modules/ApplicantModules';
+import { authRequest } from './api';
 
 /* 면접자 전체 조회 API */
 export const callApplicantListAPI = ({ criteria, currentPage = 1 }) => {
@@ -36,6 +36,20 @@ export const callApplicantListAPI = ({ criteria, currentPage = 1 }) => {
             // console.log('리듀서 함수: ' + JSON.stringify(result))
         } else {
             console.error('callApplicantListAPI error : ', result);
+        }
+    }
+}
+
+/* 면접자 ID 조회 API */
+export const callApplicantDetail = (applicantId) => {
+    return async (dispatch, getState) => {
+
+        const result = await authRequest.get(`/recruitment/applicant/detail/${applicantId}`)
+
+        if (result.status === 200) {
+            dispatch(setApplicantDetail(result.data))
+        } else {
+            console.error('callApplicantDetailAPI error : ', result);
         }
     }
 }
