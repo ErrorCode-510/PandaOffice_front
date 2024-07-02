@@ -17,7 +17,7 @@ export const request = async (method, url, headers, data) => {
 
 /* 인증이 필요한 (토큰을 전달해야 하는) 기능 호출 시 사용하는 함수 */
 export const authRequest = axios.create({
-    baseURL : DEFAULT_URL
+    baseURL: DEFAULT_URL
 });
 
 authRequest.interceptors.request.use((config) => {

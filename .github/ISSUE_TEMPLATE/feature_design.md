@@ -2,7 +2,7 @@
 name: Feature_Design
 about: 기능설계 내용 작성
 title: "[기능설계]"
-labels: 기능구현잇슈
+labels: 기능설계
 assignees: ''
 
 ---

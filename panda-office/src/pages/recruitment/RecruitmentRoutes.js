@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
+import Applicant from "./applicant/Applicant";
 
 function RecruitmentRoutes() {
     return (
         <Routes>
-            <Route path="test" element={<div>면접 라우팅 테스트</div>} />
-            {/* 라우트 적용 */}
+            <Route path="applicant" element={<Applicant/>} />
         </Routes>
     );
 }

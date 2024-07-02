@@ -1,0 +1,154 @@
+/* applicant-title ------------------------------------------------------------------------------------------------------------------------------- */
+.applicant-title {
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+/* applicant ------------------------------------------------------------------------------------------------------------------------------------------- */
+.applicant-wrap {
+    background-color: #fff;
+    padding-bottom: 30px;
+}
+
+/* applicant-info-title ------------------------------------------------------------------------------------------------------------------------------- */
+.ait-comp {
+    width: 100%;
+    background-color: #fff;
+    margin-top: 20px;
+}
+
+.ait-ul {
+    display: flex;
+    justify-content: space-around;
+    border-radius: 15px 15px 0 0;
+    background-color: #1E1F31;
+}
+
+.ait-ul li {
+    width: 270px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45px;
+    font-weight: bold;
+    color: #fff;
+}
+/* applicant-list-item -------------------------------------------------------------------------------------------------------------------------------- */
+.ali-comp {
+    width: 100%;
+    background-color: #fff;
+}
+
+.ali-ul {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.ali-ul:hover {
+    background-color: #c1c1c1;
+    color: #fff;
+}
+
+.ali-ul li {
+    width: 270px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* page ----------------------------------------------------------------------------------------------------------------------------------------- */
+.ali-paging-ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 47px;
+}
+
+.ali-paging-ul li {
+    margin-right: 10px;
+}
+
+.ali-paging-ul li:last-child {
+    margin-right: 0;
+}
+
+.ali-paging-btn {
+    width: 50px;
+    height: 30px;
+    background-color: #fff;
+    border: 1px solid #000000;
+}
+
+.ali-paging-btn:hover {
+    background-color: #c1c1c1;
+    color: #fff;
+    border: 1px solid #c1c1c1;
+}
+
+.ali-no-paging-btn {
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    border: 1px solid #c1c1c1;
+    color: #c1c1c1;
+}
+
+.ali-no-paging-btn:hover {
+    background-color: #c1c1c1;
+    color: #fff;
+}
+
+.ali-bd-radius-left {
+    border-radius: 3px 0 0 3px;
+}
+
+.ali-bd-radius-right {
+    border-radius: 0 3px 3px 0;
+}
+
+.ali-btn {
+    cursor: pointer;
+}
+
+/* applicantSearch ----------------------------------------------------------------------------------------------------------------------------------------- */
+.as-criteria-wrap {
+    display: flex;
+    /* border: 1px solid #ff0000; */
+    justify-content: space-around;
+    align-items: center;
+    height: 65px;
+    border-radius: 15px;
+    background-color: #fff;
+}
+
+.as-main-selected,
+.as-sub-selected,
+.as-search-box {
+    display: flex;
+    align-items: center;
+}
+
+#criteriaSelect,
+#criteriaSubSelect,
+.as-input-box {
+    margin-left: 10px;
+}
+
+.as-search-btn {
+    width: 80px;
+    height: 35px;
+    background-color: #2F3850;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* delete-attribute-css( 푸터 마진 탑 제거 ) ----------------------------------------------------------------------------------------------------------- */
+.delete-attribute-css {
+    margin-top: 0;
+}
