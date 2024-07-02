@@ -80,6 +80,7 @@
     color: #2076B4;
 }
 .template-name{
+    font-size: 16px;
     margin-left: 5px;
 }
 
@@ -139,6 +140,7 @@
     border: solid #C6C6C6 1px;
     color: #FFFFFF;
     margin: 10px 5px 20px 5px;
+    cursor: pointer;
 }
 .template-button-gery{
     border-radius: 3px;
@@ -148,6 +150,7 @@
     border: solid #999999 1px;
     color: #000000;
     margin: 10px 5px 20px 5px;
+    cursor: pointer;
 }
 .template-folder-table thead tr th {
     text-align: left;

@@ -1,10 +1,33 @@
-import { IoIosCheckboxOutline } from "react-icons/io"
-import { useSelector } from "react-redux"
+import { useEffect, useState } from "react"
+import { IoIosCheckbox, IoIosCheckboxOutline } from "react-icons/io"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchSelectTemplates } from "../../../modules/E_ApprovalModules";
 
 export function TemplateTable() {
-    const { currentFolder } = useSelector(state => state.e_approvalReducer)
+    const { currentFolder, selectTemplates, documentTemplateFolder } = useSelector(state => state.e_approvalReducer)
+    const dispatch = useDispatch();
 
-    return currentFolder&&<>
+    // const [selectTemplates, setSelectTemplates] = useState([]);
+    const [selectAllTemplates, setSelectAllTemplates] = useState(false);
+
+    const setSelect = (documentId) => {
+        /* 상태값 매핑 */
+        dispatch(fetchSelectTemplates(selectTemplates.includes(documentId)
+                ? selectTemplates.filter(id => id !== documentId)
+                : [...selectTemplates, documentId]
+        ));
+        setSelectAllTemplates(false);
+    };
+    const setSelectAll = () => {
+        if(selectAllTemplates){
+            dispatch(fetchSelectTemplates([]))
+        } else {
+            dispatch(fetchSelectTemplates(currentFolder.documentList.map(doc => doc.documentId)))
+        }
+        setSelectAllTemplates(!selectAllTemplates)
+    }
+
+    return currentFolder && <>
         <table className="template-folder-table">
             <colgroup>
                 <col style={{ width: "10%" }} />
@@ -16,7 +39,9 @@ export function TemplateTable() {
             <thead>
 
                 <tr>
-                    <th><IoIosCheckboxOutline /></th>
+                    <th onClick={setSelectAll}>{selectAllTemplates
+                        ? <IoIosCheckbox />
+                        : <IoIosCheckboxOutline />}</th>
                     <th>제목</th>
                     <th>최종 수정자</th>
                     <th>최종 수정일</th>
@@ -24,16 +49,21 @@ export function TemplateTable() {
                 </tr>
             </thead>
             <tbody>
-                {console.log(JSON.stringify(currentFolder))}
-                {currentFolder.documentList.map(doc=>{return (
-                    <tr key={doc.documentId}>
-                        <td><IoIosCheckboxOutline/></td>
-                        <td>{doc.title}</td>
-                        <td>{`${doc.employeeName} ${doc.employeeJob}`}</td>
-                        <td>{doc.lastEditDate}</td>
-                        <td>{doc.status}</td>
-                    </tr>
-                )})}
+                {currentFolder.documentList.map(doc => {
+                    return (
+                        <tr key={doc.documentId}>
+                            <td onClick={() => setSelect(doc.documentId)}>
+                                {selectTemplates.includes(doc.documentId)
+                                    ? <IoIosCheckbox />
+                                    : <IoIosCheckboxOutline />}
+                            </td>
+                            <td>{doc.title}</td>
+                            <td>{`${doc.employeeName} ${doc.employeeJob}`}</td>
+                            <td>{doc.lastEditDate}</td>
+                            <td>{doc.status}</td>
+                        </tr>
+                    )
+                })}
             </tbody>
         </table>
     </>

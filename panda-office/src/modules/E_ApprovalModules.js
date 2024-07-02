@@ -11,7 +11,8 @@ const initialState = {
     currentFolder: null,
     selectFolders: [],
     selectDocuments: [],
-    folderEditMode: false
+    folderEditMode: false,
+    selectTemplates: []
 }
 const SUCCESS = 'approvalDocument/SUCCESS';
 const FETCH_SIDEBAR_STATUS = 'sidebar/FETCH_SIDEBAR_STATUS';
@@ -25,11 +26,12 @@ const FETCH_CURRENT_FOLDER = 'documentTemplate/FETCH_CURRENT_FOLDER';
 const FETCH_SELECT_FOLDERS = 'documentTemplate/FETCH_SELECT_FOLDERS';
 const FETCH_SELECT_DOCUMENTS = 'documentTemplate/FETCH_SELECT_DOCUMENTS'
 const SET_FOLDER_EDIT_MODE = 'documentTemplate/SET_FOLDER_EDIT_MODE'
+const FETCH_SELECT_TEMPLATES = 'documentTemplate/FETCH_SELECT_TEMPLATES'
 
 export const { sidebar: { fetchSidebarStatus, setDepartmentBox },
     approvalDocument: { getApprovalDocumentList, getDetailApprovalDocument, success },
     documentTemplate: {setDocumentTemplateFolder, fetchDocumentTemplateSearch, fetchSearchWord,
-        fetchCurrentFolder, fetchSelectFolders, fetchSelectDocuments, setFolderEditMode
+        fetchCurrentFolder, fetchSelectFolders, fetchSelectDocuments, setFolderEditMode, fetchSelectTemplates
     } } = createActions({
         /* 성공값 반환 */
         [SUCCESS] : () => ({ success : true }),
@@ -53,7 +55,9 @@ export const { sidebar: { fetchSidebarStatus, setDepartmentBox },
         [FETCH_SELECT_FOLDERS]: result=>({selectFolders: result}),
         [FETCH_SELECT_DOCUMENTS]: result=>({selectDocuments: result}),
         /* 폴더 이름 수정상태 */
-        [SET_FOLDER_EDIT_MODE]: result=>({folderEditMode: result})
+        [SET_FOLDER_EDIT_MODE]: result=>({folderEditMode: result}),
+        /* 테이블에서 선택한 템플릿 */
+        [FETCH_SELECT_TEMPLATES]: result=>({selectTemplates: result})
     })
 
 const e_approvalReducer = handleActions({
@@ -114,6 +118,11 @@ const e_approvalReducer = handleActions({
     [SET_FOLDER_EDIT_MODE]: (state, {payload})=>({
         ...state,
         folderEditMode: payload.folderEditMode
+    }),
+
+    [FETCH_SELECT_TEMPLATES]: (state, {payload})=>({
+        ...state,
+        selectTemplates: payload.selectTemplates
     })
 }, initialState)
 

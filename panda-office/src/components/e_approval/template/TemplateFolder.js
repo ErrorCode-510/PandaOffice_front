@@ -2,14 +2,14 @@ import { useRef, useEffect, useState } from "react";
 import { IoIosAdd, IoIosDocument, IoIosFolder, IoIosListBox, IoIosPaper, IoIosRemove } from "react-icons/io";
 import '../../../pages/e_approval/E_Approval.css';
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCurrentFolder, setFolderEditMode } from "../../../modules/E_ApprovalModules";
+import { fetchCurrentFolder, fetchSelectTemplates, setFolderEditMode } from "../../../modules/E_ApprovalModules";
 import { callDocumentFolderAPI, callUpdateDocumentFolderAPI } from "../../../apis/e_approval/ApprovalDocumentFolderAPICalls";
 
 export function Folder({ folder }) {
 
     const dispatch = useDispatch();
 
-    const { currentFolder, searchWord, folderEditMode } = useSelector(state => state.e_approvalReducer)
+    const { currentFolder, searchWord, folderEditMode, documentTemplateFolder } = useSelector(state => state.e_approvalReducer)
 
     const [isOpen, setIsOpen] = useState(false);
     const [folderName, setFolderName] = useState(folder.name);
@@ -30,6 +30,11 @@ export function Folder({ folder }) {
         } else {
             dispatch(fetchCurrentFolder(folder))
         }
+        dispatch(fetchSelectTemplates([]))
+    }
+    function onClickTemplateFile(folder){
+        dispatch(fetchCurrentFolder(folder))
+        dispatch(fetchSelectTemplates([]))
     }
 
     useEffect(() => {
@@ -40,25 +45,25 @@ export function Folder({ folder }) {
         }
     }, [searchWord]);
 
-    const isSelected = currentFolder === folder;
-
+    
     const handleNameChange = (e) => {
         setFolderName(e.target.value);
     };
-
+    
     const handleBlur = () => {
         if (folderName !== folder.name) {
             dispatch(callUpdateDocumentFolderAPI({ folderId: currentFolder.folderId, name: folderName }))
             dispatch(setFolderEditMode(false))
         }
     };
-
+    
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             e.target.blur();
         }
     };
-
+    const isSelected = currentFolder === folder;
+    
     return (
         <div className="no-select left-border">
             <div className="flex">
@@ -99,7 +104,7 @@ export function Folder({ folder }) {
                     {folder.documentList.length > 0 && (
                         <ul className="document-list">
                             {folder.documentList.map((doc) => (
-                                <li key={doc.documentId} className="flex left-border" onClick={() => { dispatch(fetchCurrentFolder(folder)) }}>
+                                <li key={doc.documentId} className="flex left-border" onClick={() => { onClickTemplateFile(folder)}}>
                                     <div className='folder-icon'></div>
                                     <div className='folder-icon'><IoIosPaper /></div>
                                     <span className="template-name">
