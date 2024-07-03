@@ -4,6 +4,7 @@ import EmployeeList from "./EmployeeList";
 import AddNewEmployee from "./AddNewEmployee";
 import EmployeeDetail from "./EmployeeDetail";
 import {getMemberId, removeToken, saveToken} from "../../utils/TokenUtils";
+import EditEmployee from "./EditEmployee";
 
 function EmployeeRoutes() {
     console.log(getMemberId());
@@ -14,7 +15,7 @@ function EmployeeRoutes() {
             <Route path="employeeList" element={<EmployeeList />} />
             <Route path="addNewEmployee" element={<AddNewEmployee />} />
             <Route path=":id" element={<EmployeeDetail />} />
-            <Route path="editEmployee/:id" element={<AddNewEmployee />} />
+            <Route path="editEmployee/:id" element={<EditEmployee />} />
         </Routes>
 
     );

@@ -4,6 +4,23 @@ import "./Employee.css";
 import axios from "axios";
 
 function AddNewEmployee() {
+    const job = [
+        { id: 600, name: '사원' },
+        { id: 500, name: '주임' },
+        { id: 400, name: '대리' },
+        { id: 300, name: '과장' },
+        { id: 200, name: '차장' },
+        { id: 100, name: '부장' },
+        { id: 1, name: '사장' }
+    ];
+
+    const department = [
+        { id: 11, name: '인사' },
+        { id: 12, name: '회계' },
+        { id: 13, name: '영업' },
+        { id: 14, name: '기획' },
+        { id: 15, name: '마케팅' }
+    ];
     const [rows, setRows] = useState([{ relationship: '', name: '', birthDate: '', job: '', education: '', note: '' }]);
     const [employmentRows, setEmploymentRows] = useState([{ hireDate: '', endDate: '', companyName: '', department: '', lastPosition: '', jobDescription: '' }]);
     const [educationRows, setEducationRows] = useState([{ admissionDate: '', graduationDate: '', schoolName: '', major: '', degree: '' }]);
@@ -11,6 +28,8 @@ function AddNewEmployee() {
     const [photo, setPhoto] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
+        englishName : '',
+        hanjaName : '',
         accountNumber: '',
         phone: '',
         ssn: '',
@@ -19,7 +38,12 @@ function AddNewEmployee() {
         address: '',
         nationality: '',
         birthDate: '',
-        email: ''
+        email: '',
+        job:'',
+        department:'',
+        employmentStatus:'',
+
+
     });
 
     const handleChange = (e) => {
@@ -94,7 +118,8 @@ function AddNewEmployee() {
                 address: '',
                 nationality: '',
                 birthDate: '',
-                email: ''
+                email: '',
+                job:''
             });
         } catch (error) {
             console.error('서버 요청 실패:', error);
@@ -146,53 +171,116 @@ function AddNewEmployee() {
                                         </td>
                                         <th>성명</th>
                                         <td>
-                                            <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} />
+                                            <input type="text" id="name" name="name" value={formData.name}
+                                                   onChange={handleChange}/>
                                         </td>
+
                                         <th>계좌번호</th>
                                         <td>
-                                            <input type="text" id="account_number" name="accountNumber" value={formData.accountNumber} onChange={handleChange} />
+                                            <input type="text" id="account_number" name="accountNumber"
+                                                   value={formData.accountNumber} onChange={handleChange}/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>전화번호</th>
                                         <td>
-                                            <input type="text" id="phone" name="phone" value={formData.phone} onChange={handleChange} />
+                                            <input type="text" id="phone" name="phone" value={formData.phone}
+                                                   onChange={handleChange}/>
                                         </td>
                                         <th>주민등록번호</th>
                                         <td>
-                                            <input type="text" id="ssn" name="ssn" value={formData.ssn} onChange={handleChange} />
+                                            <input type="text" id="ssn" name="ssn" value={formData.ssn}
+                                                   onChange={handleChange}/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>성별</th>
                                         <td>
                                             <label htmlFor="male">남성</label>
-                                            <input type="radio" id="male" name="gender" value="male" checked={formData.gender === 'male'} onChange={handleChange} />
+                                            <input type="radio" id="male" name="gender" value="male"
+                                                   checked={formData.gender === 'male'} onChange={handleChange}/>
                                             <label htmlFor="female">여성</label>
-                                            <input type="radio" id="female" name="gender" value="female" checked={formData.gender === 'female'} onChange={handleChange} />
+                                            <input type="radio" id="female" name="gender" value="female"
+                                                   checked={formData.gender === 'female'} onChange={handleChange}/>
                                         </td>
                                         <th>입사일</th>
                                         <td>
-                                            <input type="date" id="join_date" name="hireDate" value={formData.hireDate} onChange={handleChange} />
+                                            <input type="date" id="join_date" name="hireDate" value={formData.hireDate}
+                                                   onChange={handleChange}/>
                                         </td>
                                         <th>주소</th>
                                         <td>
-                                            <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} />
+                                            <input type="text" id="address" name="address" value={formData.address}
+                                                   onChange={handleChange}/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>국적</th>
                                         <td>
-                                            <input type="text" id="nationality" name="nationality" value={formData.nationality} onChange={handleChange} />
+                                            <input type="text" id="nationality" name="nationality"
+                                                   value={formData.nationality} onChange={handleChange}/>
                                         </td>
                                         <th>생년월일</th>
                                         <td>
-                                            <input type="date" id="birthDate" name="birthDate" value={formData.birthDate} onChange={handleChange} />
+                                            <input type="date" id="birthDate" name="birthDate"
+                                                   value={formData.birthDate} onChange={handleChange}/>
                                         </td>
                                         <th>이메일</th>
                                         <td>
-                                            <input type="text" id="email" name="email" value={formData.email} onChange={handleChange} />
+                                            <input type="text" id="email" name="email" value={formData.email}
+                                                   onChange={handleChange}/>
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <th>영어이름</th>
+                                        <td>
+                                            <input type="text" id="englishName" name="englishName"
+                                                   value={formData.englishName} onChange={handleChange}/>
+                                        </td>
+                                        <th>한자이름</th>
+                                        <td>
+                                            <input type="text" id="hanjaName" name="hanjaName"
+                                                   value={formData.hanjaName}
+                                                   onChange={handleChange}/>
+                                        </td>
+                                        <th>직위</th>
+                                        <td>
+                                            <select id="job" name="job" value={formData.job} onChange={handleChange}>
+                                                <option value="">직위를 선택하세요</option>
+                                                {job.map(job => (
+                                                    <option key={job.id} value={job.id}>{job.name}</option>
+                                                ))}
+                                            </select>
+                                        </td>
+
+
+
+                                    </tr>
+                                    <tr>
+                                        <th>부서</th>
+                                        <td>
+                                            <select id="department" name="department" value={formData.department}
+                                                    onChange={handleChange}>
+                                                <option value="">부서를 선택하세요</option>
+                                                {department.map(department => (
+                                                    <option key={department.id}
+                                                            value={department.id}>{department.name}</option>
+                                                ))}
+                                            </select>
+                                        </td>
+                                        <th>재직상태</th>
+                                        <td>
+                                            <label htmlFor="working">재직중</label>
+                                            <input type="radio" id="working" name="employmentStatus" value="재직"
+                                                   checked={formData.employmentStatus === '재직'}
+                                                   onChange={handleChange}/>
+                                            <label htmlFor="resigned">퇴사함</label>
+                                            <input type="radio" id="resigned" name="employmentStatus" value="퇴사"
+                                                   checked={formData.employmentStatus === '퇴사'}
+                                                   onChange={handleChange}/>
+                                        </td>
+
+
                                     </tr>
                                     <tr>
                                         <th colSpan="6">가족관계</th>
@@ -207,7 +295,7 @@ function AddNewEmployee() {
                                     </tr>
                                     {rows.map((row, index) => (
                                         <tr key={index}>
-                                            <td><input type="text" value={row.relationship} onChange={(e) => {
+                                        <td><input type="text" value={row.relationship} onChange={(e) => {
                                                 const newRows = [...rows];
                                                 newRows[index].relationship = e.target.value;
                                                 setRows(newRows);

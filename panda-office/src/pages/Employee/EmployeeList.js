@@ -54,6 +54,7 @@ function EmployeeList() {
             const matchesName = searchCriteria.name === '' || employee.name.includes(searchCriteria.name);
             const matchesPosition = searchCriteria.position === '' || (employee.job && employee.job.title.includes(searchCriteria.position));
             const matchesStatus = searchCriteria.employment_status === '' || employee.employmentStatus === searchCriteria.employment_status;
+            console.log(employee.employmentStatus);
             console.log(searchCriteria.employment_status);
             console.log(`Employee ID: ${employee.employeeId}, Employment Status: ${employee.employmentStatus}, Matches Status: ${matchesStatus}`);
 
@@ -106,7 +107,9 @@ function EmployeeList() {
                                         </td>
                                         <th>재직여부</th>
                                         <td>
-                                            <select id="employment_status" name="employment_status" value={searchCriteria.employment_status} onChange={handleInputChange}>
+                                            <select id="employment_status" name="employment_status"
+                                                    value={searchCriteria.employment_status}
+                                                    onChange={handleInputChange}>
                                                 <option value="active">재직중</option>
                                                 <option value="inactive">퇴사</option>
                                             </select>
