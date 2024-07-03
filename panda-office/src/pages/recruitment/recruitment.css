@@ -114,7 +114,7 @@
     cursor: pointer;
 }
 
-/* applicantSearch ----------------------------------------------------------------------------------------------------------------------------------------- */
+/* applicant-search ----------------------------------------------------------------------------------------------------------------------------------------- */
 .as-criteria-wrap {
     display: flex;
     /* border: 1px solid #ff0000; */
@@ -138,6 +138,18 @@
     margin-left: 10px;
 }
 
+#criteriaSelect,
+#criteriaSubSelect {
+    width: 110px;
+    height: 30px;
+    padding-left: 10px;
+}
+
+.as-input-box {
+    height: 30px;
+    padding-left: 10px;
+}
+
 .as-search-btn {
     width: 80px;
     height: 35px;
@@ -151,4 +163,95 @@
 /* delete-attribute-css( 푸터 마진 탑 제거 ) ----------------------------------------------------------------------------------------------------------- */
 .delete-attribute-css {
     margin-top: 0;
+}
+
+/* applicant-modar ----------------------------------------------------------------------------------------------------------------------------------------- */
+.modal-bg {
+    background-color: rgba(0, 0, 0, 0.50);
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+.modal-wrap {
+    width: 600px;
+    height: 300px;
+    background-color: #fff;
+    border-radius: 15px;
+    position: absolute;
+    top: 300px;
+    left: 700px;
+    padding: 30px 50px 10px 50px;
+    z-index: 10;
+}
+
+.modal-wrap h1 {
+    font-size: 20px;
+}
+
+.modal-wrap p {
+    width: 80px;
+}
+
+.modal-wrap input {
+    width: 150px;
+    height: 30px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+.applicant-info {
+    font-size: 20px;
+    font-weight: bold;
+    width: 100%;
+    border-bottom: 1px solid #696969;
+    margin-bottom: 20px;
+}
+
+.applicant-info-wrap {
+    display: flex;
+    justify-content: space-between;
+}
+
+.applicant-name,
+.applicant-gender,
+.applicant-phone,
+.applicant-age,
+.applicant-email,
+.applicant-address {
+    display: flex;
+    align-items: center;
+}
+
+.modal-btn {
+    text-align: center;
+}
+
+.cancel-btn {
+    width: 80px;
+    height: 35px;
+    background-color: #e3e3e3;
+    color: #000;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.modyfi-btn {
+    width: 80px;
+    height: 35px;
+    background-color: #2F3850;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.wd-420 input {
+    width: 420px;
 }
