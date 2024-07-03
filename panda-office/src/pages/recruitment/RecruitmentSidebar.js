@@ -56,12 +56,21 @@ function RecruitmentSidebar() {
         }
     }, []);
 
+    /* 서브 사이드바의 위치에 따라 버튼 텍스트 동적 변경 */
+    const getAddButtonText = () => {
+        if (location.pathname.includes("/recruitment/applicant")) {
+            return "면접자 등록"
+        } else {
+            return "면접일정 등록"
+        }
+    }
+
     return (
         <>
             <div className={`side-wrap ${isRootPath ? 'collapsed' : ''}`}>
                 <div className="side-bar">
                     <div className="title">채용/면접</div>
-                    <button className="add-btn">면접일정 등록</button>
+                    <button className="add-btn">{getAddButtonText()}</button>
                     <ul className="mt-30 txt-align-left">
                         <li>
                             <div className="sidebar-item" onClick={toggleRecruitmentHandler}>
