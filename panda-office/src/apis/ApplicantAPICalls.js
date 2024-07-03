@@ -100,3 +100,8 @@ export const callApplicantDelete = (id) => {
         }
     }
 }
+
+/* 면접자 등록 API */
+export const callApplicantRegist = () => {
+    
+}

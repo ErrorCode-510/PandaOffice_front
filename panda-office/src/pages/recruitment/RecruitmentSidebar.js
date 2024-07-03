@@ -1,11 +1,15 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 function RecruitmentSidebar() {
 
+    const dispatch = useDispatch();
+
     const location = useLocation();
     const isRootPath = location.pathname === "/";
+
     const [isRecruitmentOpen, setIsRecruitmentOpen] = useState(false);
     const [isInterviewOpen, setIsInterviewOpen] = useState(false);
     const [isApplicantOpen, setIsApplicantOpen] = useState(false);
