@@ -165,7 +165,7 @@
     margin-top: 0;
 }
 
-/* applicant-modar ----------------------------------------------------------------------------------------------------------------------------------------- */
+/* applicant-modar ( 직접 만든 모달 ) --------------------------------------------------------------------------------------------------------- */
 .modal-bg {
     background-color: rgba(0, 0, 0, 0.50);
     position: absolute;
@@ -182,8 +182,9 @@
     background-color: #fff;
     border-radius: 15px;
     position: absolute;
-    top: 300px;
-    left: 700px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     padding: 30px 50px 10px 50px;
     z-index: 10;
 }
@@ -254,4 +255,34 @@
 
 .wd-420 input {
     width: 420px;
+}
+
+/* applicant-create-modar( 리액트 모달 사용 )---------------------------------------------------------------------------------------------- */
+/* .create-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 300px;
+    background-color: white;
+    padding: 30px 50px 10px 50px;
+    border-radius: 15px;
+}
+
+.create-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+} */
+
+/* applicant-create-modar ---------------------------------------------------------------------------------------------- */
+.acm-gender {
+    width: 150px;
+    height: 30px;
+    text-align: center;
 }

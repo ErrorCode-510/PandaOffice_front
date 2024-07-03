@@ -27,7 +27,8 @@ export const { applicant: {
     setApplicantDetail,
     setApplicantModify,
     setApplicantDelete,
-    setModalCreate
+    setModalRegist,
+    setModalStatus
 } } = createActions({
     [GET_APPLICANT]: result => ({ applicant: result.data }),
     [SET_CRITERIA]: params => ({ criteria: params }),
@@ -75,7 +76,7 @@ const applicantReducer = handleActions({
         return { ...state, modalRegist: payload.modalRegist }   
     },
     [SET_MODAL_STATUS]: (state, { payload }) => {
-        // console.log('리듀서 생성 확인: ' + JSON.stringify({ modalStatus: payload }))
+        // console.log('리듀서 모달 상태 확인: ' + JSON.stringify({ modalStatus: payload }))
         return { ...state, modalStatus: payload.modalStatus }   
     }
 }, initialState);

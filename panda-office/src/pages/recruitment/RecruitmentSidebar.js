@@ -2,6 +2,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { setModalStatus } from "../../modules/ApplicantModules";
 
 function RecruitmentSidebar() {
 
@@ -26,7 +27,7 @@ function RecruitmentSidebar() {
 
     /* 렌더링 후 마운트 될 떄 로컬에 저장 된 상태 값을 가져와서 파싱 된 문자열을 set 
     * 애플리케이션 재실행해도 저장 값이 남아있음 */
-    useEffect( () => {
+    useEffect(() => {
         const savedMainStorage = localStorage.getItem("recruimentHandler")
         if (savedMainStorage !== null) {
             setIsRecruitmentOpen(JSON.parse(savedMainStorage));
@@ -40,7 +41,7 @@ function RecruitmentSidebar() {
         localStorage.setItem("interviewHandler", JSON.stringify(newInterviewState));
     };
 
-    useEffect( () => {
+    useEffect(() => {
         const savedInterviewStorage = localStorage.getItem("interviewHandler")
         if (savedInterviewStorage !== null) {
             setIsInterviewOpen(JSON.parse(savedInterviewStorage));
@@ -54,7 +55,7 @@ function RecruitmentSidebar() {
         localStorage.setItem("applicantHandler", JSON.stringify(newApplicantState));
     };
 
-    useEffect( () => {
+    useEffect(() => {
         const savedApplicantStorage = localStorage.getItem("applicantHandler")
         if (savedApplicantStorage !== null) {
             setIsApplicantOpen(JSON.parse(savedApplicantStorage));
@@ -82,8 +83,7 @@ function RecruitmentSidebar() {
 
     /* 면접자 목록 경로 일 경우 면접자 등록 핸들러 */
     const handlerModarOpen = () => {
-        setIsModalOpen(true);
-        console.log('면접자 등록 모달: ' + isModalOpen)
+        dispatch(setModalStatus(true))
     }
 
     return (
@@ -95,14 +95,14 @@ function RecruitmentSidebar() {
                     <ul className="mt-30 txt-align-left">
                         <li>
                             <div className="sidebar-item" onClick={toggleRecruitmentHandler}>
-                                {isRecruitmentOpen ? <IoIosArrowDown className="sidebar-icons toggle-down"/> : <IoIosArrowForward className="sidebar-icons toggle-up"/>}
+                                {isRecruitmentOpen ? <IoIosArrowDown className="sidebar-icons toggle-down" /> : <IoIosArrowForward className="sidebar-icons toggle-up" />}
                                 <span className="icons-text fs-18 cursor-p">채용/면접 관리</span>
                             </div>
                             {isRecruitmentOpen && (
                                 <ul className="mt-10">
                                     <li>
                                         <div className="sidebar-item" onClick={toggleInterviewHandler}>
-                                            {isInterviewOpen ? <IoIosArrowDown className="sidebar-icons ml-20"/> : <IoIosArrowForward className="sidebar-icons ml-20"/>}
+                                            {isInterviewOpen ? <IoIosArrowDown className="sidebar-icons ml-20" /> : <IoIosArrowForward className="sidebar-icons ml-20" />}
                                             <span className="icons-text fs-14 cursor-p">면접일정 관리</span>
                                         </div>
                                         {isInterviewOpen && (
@@ -118,7 +118,7 @@ function RecruitmentSidebar() {
                                     </li>
                                     <li className="mt-10">
                                         <div className="sidebar-item" onClick={toggleApplicantHandler}>
-                                            {isApplicantOpen ? <IoIosArrowDown className="sidebar-icons ml-20"/> : <IoIosArrowForward className="sidebar-icons ml-20"/>}
+                                            {isApplicantOpen ? <IoIosArrowDown className="sidebar-icons ml-20" /> : <IoIosArrowForward className="sidebar-icons ml-20" />}
                                             <span className="icons-text fs-14 cursor-p">면접자 관리</span>
                                         </div>
                                         {isApplicantOpen && (
