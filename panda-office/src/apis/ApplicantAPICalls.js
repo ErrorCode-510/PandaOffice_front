@@ -83,20 +83,20 @@ export const callApplicantModify = (formValues) => {
 }
 
 /* 면접자 정보 삭제 API */
-// export const callApplicantDelete = (id) => {
-//     return async (dispatch, getState) => {
-//         try {
-//             const result = await authRequest.delete(`/recruitment/applicant/delete/${id}`)
+export const callApplicantDelete = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            const result = await authRequest.delete(`/recruitment/applicant/delete/${id}`)
 
-//             if (result.status === 204) {
-//                 dispatch(setApplicantDelete(result))
-//                 alert('삭제 성공')
-//             } else {
-//                 console.error('else: callApplicantDelete error : ', result);
-//                 alert('삭제 실패')
-//             }
-//         } catch (error) {
-//             console.error('catch: callApplicantDelete error : ', error);
-//         }
-//     }
-// }
+            if (result.status === 204) {
+                dispatch(setApplicantDelete(result))
+                alert('삭제 성공')
+            } else {
+                console.error('else: callApplicantDelete error : ', result);
+                alert('삭제 실패')
+            }
+        } catch (error) {
+            console.error('catch: callApplicantDelete error : ', error);
+        }
+    }
+}
