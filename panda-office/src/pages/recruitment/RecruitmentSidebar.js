@@ -9,6 +9,7 @@ function RecruitmentSidebar() {
     const [isRecruitmentOpen, setIsRecruitmentOpen] = useState(false);
     const [isInterviewOpen, setIsInterviewOpen] = useState(false);
     const [isApplicantOpen, setIsApplicantOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     /* Main Handler ----------------------------------------------------------------------------------------------------------------------------------- */
     /* 로컬에 열림/닫힘 상태 값 boolean 형태로 저장하기 */
@@ -56,6 +57,7 @@ function RecruitmentSidebar() {
         }
     }, []);
 
+    /* Modal Handler ----------------------------------------------------------------------------------------------------------------------------------- */
     /* 서브 사이드바의 위치에 따라 버튼 텍스트 동적 변경 */
     const getAddButtonText = () => {
         if (location.pathname.includes("/recruitment/applicant")) {
@@ -65,12 +67,27 @@ function RecruitmentSidebar() {
         }
     }
 
+    /* 조건에 맞는 경로, 버튼 클릭 시 상호작용 */
+    const handlerAddClick = () => {
+        if (location.pathname.includes("/recruitment/applicant")) {
+            handlerModarOpen();
+        } else {
+            console.log('경로 확인 불가능')
+        }
+    }
+
+    /* 면접자 목록 경로 일 경우 면접자 등록 핸들러 */
+    const handlerModarOpen = () => {
+        setIsModalOpen(true);
+        console.log('면접자 등록 모달: ' + isModalOpen)
+    }
+
     return (
         <>
             <div className={`side-wrap ${isRootPath ? 'collapsed' : ''}`}>
                 <div className="side-bar">
                     <div className="title">채용/면접</div>
-                    <button className="add-btn">{getAddButtonText()}</button>
+                    <button className="add-btn" onClick={handlerAddClick}>{getAddButtonText()}</button>
                     <ul className="mt-30 txt-align-left">
                         <li>
                             <div className="sidebar-item" onClick={toggleRecruitmentHandler}>
