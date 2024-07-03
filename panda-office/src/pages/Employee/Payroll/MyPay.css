@@ -7,15 +7,6 @@ body {
 }
 
 /* ---------------------------------- 검색 ----------------------------------------------------------*/
-/* 공통 input 스타일 */
-input[type="date"],
-input[type="text"],
-select {
-    height: 30px;
-    border: 1px solid #ccc;
-    border-radius: 0;
-    padding: 0 10px;
-}
 
 option {
     border: 1px solid #ccc;
@@ -34,12 +25,20 @@ option {
 
 .search-section input[type="date"],
 .search-section select {
-    margin-right: 30px;
+    margin-right: 40px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    padding: 0 10px;
 }
 
 .search-section input[type="text"] {
     margin-right: 10px;
     width: 100px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    padding: 0 10px;
 }
 
 /* 조건 검색 버튼 */
@@ -52,6 +51,10 @@ option {
     border-radius: 3px;
     margin-left: auto;
     cursor: pointer;
+}
+
+.search-section button:active {
+    background: #3a4563;
 }
 
 span {
@@ -67,7 +70,6 @@ span {
     width: 25%;
     float: left;
     margin-right: 20px;
-    max-height: 1000px;
 }
 
 .table-container {
@@ -75,9 +77,9 @@ span {
     border: 1px solid #ccc;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    height: 500px;
+    height: 650px;
     background: #fff;
-    max-height: 500px;
+    max-height: 700px;
 }
 
 
@@ -86,14 +88,13 @@ span {
     border: 1px solid #ccc;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    height: 537px;
+    height: 687px;
     background: #fff;
-    max-height: 550px;
-    overflow: auto;
+    max-height: 700px;
 }
 
 .data-table,
-.foot-table {
+.myPay-foot-table {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
@@ -128,21 +129,24 @@ span {
     text-align: right;
 }
 
-
-
-tfoot {
-    background: #CACACA;
-    border-collapse: collapse;
+.combine-table input[type="text"] {
+    border: 1px solid #ccc;
+    border-radius: 0;
 }
 
-.foot-table th,
-.foot-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
+.myPay-foot {
+    background: #CACACA;
+    border-collapse: collapse;
     line-height: 20px;
 }
 
-.foot-table tfoot td:first-child {
+.myPay-foot-table th,
+.myPay-foot-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.myPay-foot-table tfoot td:first-child {
     text-align: center;
 }
 
@@ -150,7 +154,7 @@ tfoot {
     letter-spacing: 4.5px;
 } */
 
-.foot-table tfoot td:last-child {
+.myPay-foot-table tfoot td:last-child {
     text-align: right;
 }
 
@@ -175,16 +179,17 @@ tfoot {
 .result-table-combine {
     display: flex;
     flex-direction: column;
-    margin-bottom: -30px;
+    /* margin-bottom: -30px; */
 }
 
-.combine-container {
-    height: 600px;
-    max-height: 500px;
-}
+/* .combine-container {
+    height: 700px;
+    max-height: 700px;
+} */
 
 .combine-table {
     width: 60%;
+    height: 762px;
     border-collapse: collapse;
     table-layout: fixed;
 }
