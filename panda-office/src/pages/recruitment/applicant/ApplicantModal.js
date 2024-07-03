@@ -29,18 +29,18 @@ const ApplicantModal = () => {
 
     /* 닫기 버튼: 버튼 클릭 시 값 비우기(값이 비워지면 if 문에서 return 됨) 
     * 삭제 버튼: 버튼 클릭 시 해당 값 삭제(DB에서 사라짐) */
-    // const handlerCancelDeleteOnClick = () => {
-    //     if (isTrue) {
-    //         dispatch(setApplicantDetail(null));
-    //         setIsTrue(true);
-    //     } else {
-    //         const { id } = applicantDetail;
-    //         dispatch(callApplicantDelete(id)).then(() => {
-    //             dispatch(setApplicantDetail(null));
-    //             setIsTrue(true);
-    //         })
-    //     }
-    // }
+    const handlerCancelDeleteOnClick = () => {
+        if (isTrue) {
+            dispatch(setApplicantDetail(null));
+            setIsTrue(true);
+        } else {
+            const { id } = applicantDetail;
+            dispatch(callApplicantDelete(id)).then(() => {
+                dispatch(setApplicantDetail(null));
+                setIsTrue(true);
+            })
+        }
+    }
 
     /* 모달 랩 클릭 핸들러 (이벤트 버블링 방지) */
     const handlerModalWrapClick = (e) => {
@@ -189,11 +189,11 @@ const ApplicantModal = () => {
                         ></input>
                     </div>
                     <div className='modal-btn'>
-                        {/* <button className='cancel-btn' onClick={handlerCancelDeleteOnClick}>
+                        <button className='cancel-btn' onClick={handlerCancelDeleteOnClick}>
                             {
                                 isTrue? '닫기' : '삭제'
                             }
-                        </button> */}
+                        </button>
                         <button className='modyfi-btn' onClick={handlerModifyOnClick}>
                             {
                                 isTrue? '수정' : '수정완료'
