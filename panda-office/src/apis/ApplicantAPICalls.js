@@ -1,4 +1,4 @@
-import { getApplicant, setApplicantDetail } from '../modules/ApplicantModules';
+import { getApplicant, setApplicantDetail, setApplicantModify } from '../modules/ApplicantModules';
 import { authRequest } from './api';
 
 /* 면접자 전체 조회 API */
@@ -51,5 +51,31 @@ export const callApplicantDetail = (applicantId) => {
         } else {
             console.error('callApplicantDetailAPI error : ', result);
         }
+    }
+}
+
+/* 면접자 정보 수정 API */
+export const callApplicantModify = (formValues) => {
+    return async (dispatch, getState) => {
+
+        try {
+            const { id, ...data } = formValues
+            
+            const result = await authRequest.put(`/recruitment/applicant/modify/${id}`, data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+
+            if (result.status === 200 || result.status === 201) {
+                dispatch(setApplicantModify(result))
+                // console.log('API 수정 확인: ' + JSON.stringify(result));
+            } else {
+                console.error('else: callApplicantModify error : ', result);
+            }
+        } catch (error) {
+            console.error('catch: callApplicantModify error : ', error);
+        }
+        
     }
 }

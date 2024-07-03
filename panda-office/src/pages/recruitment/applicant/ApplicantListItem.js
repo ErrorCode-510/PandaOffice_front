@@ -1,6 +1,6 @@
 import { useDispatch} from 'react-redux';
-import { setApplicantId } from '../../../modules/ApplicantModules';
 import { callApplicantDetail } from '../../../apis/ApplicantAPICalls';
+import { useState } from 'react';
 
 const ApplicantListItem = ({ applicant: { id, name, birthDate, gender, phone, address, email } }) => {
 
