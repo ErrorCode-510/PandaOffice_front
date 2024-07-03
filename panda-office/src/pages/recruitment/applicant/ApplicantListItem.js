@@ -1,6 +1,5 @@
 import { useDispatch} from 'react-redux';
 import { callApplicantDetail } from '../../../apis/ApplicantAPICalls';
-import { useState } from 'react';
 
 const ApplicantListItem = ({ applicant: { id, name, birthDate, gender, phone, address, email } }) => {
 

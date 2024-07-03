@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setApplicantDetail } from '../../../modules/ApplicantModules';
 import { useEffect, useState } from 'react';
-import { callApplicantModify } from '../../../apis/ApplicantAPICalls';
+import { callApplicantModify, callApplicantDelete } from '../../../apis/ApplicantAPICalls';
 
 const ApplicantModal = () => {
 
     const { applicantDetail } = useSelector(state => state.applicantReducer)
+    const { applicantModify } = useSelector(state => state.applicantReducer)
 
     const dispatch = useDispatch();
 
@@ -20,11 +21,26 @@ const ApplicantModal = () => {
         email: '',
     });
 
-    /* 모달 닫기 버튼 클릭 시 값 비우기(값이 비워지면 if 문에서 return 됨) */
+    /* 모달 백그라운드 클릭 시 모달창 닫기 */
     const handlerCloseOnClick = () => {
         dispatch(setApplicantDetail(null));
         setIsTrue(true);
     }
+
+    /* 닫기 버튼: 버튼 클릭 시 값 비우기(값이 비워지면 if 문에서 return 됨) 
+    * 삭제 버튼: 버튼 클릭 시 해당 값 삭제(DB에서 사라짐) */
+    // const handlerCancelDeleteOnClick = () => {
+    //     if (isTrue) {
+    //         dispatch(setApplicantDetail(null));
+    //         setIsTrue(true);
+    //     } else {
+    //         const { id } = applicantDetail;
+    //         dispatch(callApplicantDelete(id)).then(() => {
+    //             dispatch(setApplicantDetail(null));
+    //             setIsTrue(true);
+    //         })
+    //     }
+    // }
 
     /* 모달 랩 클릭 핸들러 (이벤트 버블링 방지) */
     const handlerModalWrapClick = (e) => {
@@ -32,11 +48,11 @@ const ApplicantModal = () => {
     }
 
     /* 수정 버튼 클릭 시 상호작용 */
-    const handlerModifyOnClick = () => {
+    const handlerModifyOnClick = async () => {
         if (isTrue) {
             setIsTrue(false);
         } else {
-            dispatch(callApplicantModify(formValues))
+            await dispatch(callApplicantModify(formValues))
             // console.log('모달창 수정 확인: ' + JSON.stringify(formValues));
             setIsTrue(true);
         }
@@ -71,7 +87,7 @@ const ApplicantModal = () => {
                 window.removeEventListener('keydown', handlerButtonOff);
             }
         };
-    }, [applicantDetail]);
+    }, [applicantDetail, applicantModify]);
 
     // 입력 필드 변경 핸들러
     const handlerInputChange = (e) => {
@@ -173,7 +189,11 @@ const ApplicantModal = () => {
                         ></input>
                     </div>
                     <div className='modal-btn'>
-                        <button className='cancel-btn' onClick={handlerCloseOnClick}>닫기</button>
+                        {/* <button className='cancel-btn' onClick={handlerCancelDeleteOnClick}>
+                            {
+                                isTrue? '닫기' : '삭제'
+                            }
+                        </button> */}
                         <button className='modyfi-btn' onClick={handlerModifyOnClick}>
                             {
                                 isTrue? '수정' : '수정완료'

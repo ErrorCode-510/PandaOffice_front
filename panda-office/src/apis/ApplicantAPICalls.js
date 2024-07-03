@@ -1,4 +1,4 @@
-import { getApplicant, setApplicantDetail, setApplicantModify } from '../modules/ApplicantModules';
+import { getApplicant, setApplicantDetail, setApplicantModify, setApplicantDelete } from '../modules/ApplicantModules';
 import { authRequest } from './api';
 
 /* 면접자 전체 조회 API */
@@ -69,9 +69,11 @@ export const callApplicantModify = (formValues) => {
 
             if (result.status === 200 || result.status === 201) {
                 dispatch(setApplicantModify(result))
+                alert('수정 성공')
                 // console.log('API 수정 확인: ' + JSON.stringify(result));
             } else {
                 console.error('else: callApplicantModify error : ', result);
+                alert('수정 실패')
             }
         } catch (error) {
             console.error('catch: callApplicantModify error : ', error);
@@ -79,3 +81,22 @@ export const callApplicantModify = (formValues) => {
         
     }
 }
+
+/* 면접자 정보 삭제 API */
+// export const callApplicantDelete = (id) => {
+//     return async (dispatch, getState) => {
+//         try {
+//             const result = await authRequest.delete(`/recruitment/applicant/delete/${id}`)
+
+//             if (result.status === 204) {
+//                 dispatch(setApplicantDelete(result))
+//                 alert('삭제 성공')
+//             } else {
+//                 console.error('else: callApplicantDelete error : ', result);
+//                 alert('삭제 실패')
+//             }
+//         } catch (error) {
+//             console.error('catch: callApplicantDelete error : ', error);
+//         }
+//     }
+// }

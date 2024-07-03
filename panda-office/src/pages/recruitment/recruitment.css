@@ -138,6 +138,18 @@
     margin-left: 10px;
 }
 
+#criteriaSelect,
+#criteriaSubSelect {
+    width: 110px;
+    height: 30px;
+    padding-left: 10px;
+}
+
+.as-input-box {
+    height: 30px;
+    padding-left: 10px;
+}
+
 .as-search-btn {
     width: 80px;
     height: 35px;
@@ -186,10 +198,9 @@
 
 .modal-wrap input {
     width: 150px;
-}
-
-.modal-wrap input {
+    height: 30px;
     margin-bottom: 10px;
+    padding-left: 10px;
 }
 
 .applicant-info {

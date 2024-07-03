@@ -1,5 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
-import { callApplicantListAPI } from "../../../apis/ApplicantAPICalls";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { setCriteria } from "../../../modules/ApplicantModules";
 
