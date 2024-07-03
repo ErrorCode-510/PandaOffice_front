@@ -45,6 +45,11 @@ const ApplicantCreateModal = () => {
         }
     }
 
+    /* 모달 랩 클릭 핸들러 (이벤트 버블링 방지) */
+    const handlerModalWrapClick = (e) => {
+        e.stopPropagation();
+    }
+
     /* Esc 모달창 닫기 */
     useEffect(() => {
         window.addEventListener('keydown', handlerButtonOff);
@@ -59,7 +64,7 @@ const ApplicantCreateModal = () => {
             {
                 modalStatus &&
                 <div className='modal-bg' onClick={closeModalHandler}>
-                    <div className='modal-wrap'>
+                    <div className='modal-wrap' onClick={handlerModalWrapClick}>
                         <div className='applicant-info'>
                             <h1>면접자 인적사항 등록</h1>
                         </div>
