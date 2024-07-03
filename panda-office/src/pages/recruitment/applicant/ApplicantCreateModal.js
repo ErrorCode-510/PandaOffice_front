@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { setModalStatus } from '../../../modules/ApplicantModules';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { callApplicantRegist } from "../../../apis/ApplicantAPICalls"
 
 const ApplicantCreateModal = () => {
@@ -37,12 +37,28 @@ const ApplicantCreateModal = () => {
     const closeModalHandler = () => {
         dispatch(setModalStatus(false));
     }
+
+    /* Esc 키로 모달 닫기 핸들러 */
+    const handlerButtonOff = (e) => {
+        if (e.key === 'Escape') {
+            closeModalHandler();
+        }
+    }
+
+    /* Esc 모달창 닫기 */
+    useEffect(() => {
+        window.addEventListener('keydown', handlerButtonOff);
+
+        return () => {
+            window.removeEventListener('keydown', handlerButtonOff);
+        }
+    }, [modalStatus]);
     
     return (
         <>  
             {
                 modalStatus &&
-                    <div className='modal-bg'>
+                <div className='modal-bg' onClick={closeModalHandler}>
                     <div className='modal-wrap'>
                         <div className='applicant-info'>
                             <h1>면접자 인적사항 등록</h1>
