@@ -11,7 +11,6 @@ import Main from "./pages/main/Main";
 
 import Error from "./pages/error/Error";
 import Recruitment from "./pages/recruitment/RecruitmentLayout";
-import Notice from "./pages/notice/NoticeLayout";
 import Attendance from "./pages/attendance/AttendanceLayout";
 import E_ApprovalLayout from './pages/e_approval/E_ApprovalLayout';
 import E_ApprovalRoute from './pages/e_approval/E_ApprovalRoutes';
@@ -22,6 +21,7 @@ import Employee from './pages/Employee/EmployeeLayout';
 import EmployeeRoutes from './pages/Employee/EmployeeRoutes';
 import Welfare from './pages/welfare/WelfareLayout';
 import WelfareRoutes from './pages/welfare/WelfareRoutes';
+import NoticeLayout from "./pages/notice/NoticeLayout";
 
 function App() {
     return (
@@ -33,7 +33,7 @@ function App() {
                     </ProtectedRoute>
                 }>
                     <Route index element={<Main />} />
-                    <Route path="notice" element={<Notice />} >
+                    <Route path="notice" element={<NoticeLayout />} >
                         <Route path="*" element={<NoticeRoutes />} />
                     </Route>
                     <Route path="employee" element={<Employee />} >
