@@ -29,7 +29,7 @@ const ApplicantModal = () => {
 
     /* 닫기 버튼: 버튼 클릭 시 값 비우기(값이 비워지면 if 문에서 return 됨) 
     * 삭제 버튼: 버튼 클릭 시 해당 값 삭제(DB에서 사라짐) */
-    const handlerCancelDeleteOnClick = () => {
+    const handlerCancelDeleteOnClick = (isTrue) => {
         if (isTrue) {
             dispatch(setApplicantDetail(null));
             setIsTrue(true);
@@ -53,6 +53,10 @@ const ApplicantModal = () => {
             setIsTrue(false);
         } else {
             await dispatch(callApplicantModify(formValues))
+            /* 수정 후 모달창 닫기 */
+            .then(() => {
+                handlerCancelDeleteOnClick(true);
+            })
             // console.log('모달창 수정 확인: ' + JSON.stringify(formValues));
             setIsTrue(true);
         }

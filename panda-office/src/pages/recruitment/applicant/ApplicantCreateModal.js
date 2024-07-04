@@ -18,6 +18,7 @@ const ApplicantCreateModal = () => {
         email: ''
     })
 
+    /* 필드 입력 데이터 받기 */
     const handlerInputChange = (e) => {
         const { name, value } = e.target;
 
@@ -40,9 +41,13 @@ const ApplicantCreateModal = () => {
     };
 
     /* 면접자 등록 버튼 */
-    const handlerCreateOnClick = () => {
-        dispatch(callApplicantRegist(formValues))
-        console.log('면접 등록 데이터 확인: ' + JSON.stringify(formValues));
+    const handlerCreateOnClick = async () => {
+        await dispatch(callApplicantRegist(formValues))
+        /* 등록 후 모달창 닫기 */
+        .then(() => {
+            closeModalHandler();
+        })
+        // console.log('면접 등록 데이터 확인: ' + JSON.stringify(formValues));
     }
 
     /* 모달창 닫기 버튼 */
