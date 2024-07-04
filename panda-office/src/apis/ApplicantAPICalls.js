@@ -100,3 +100,31 @@ export const callApplicantDelete = (id) => {
         }
     }
 }
+
+/* 면접자 등록 API */
+export const callApplicantRegist = (formValues) => {
+    return async (dispatch, getState) => {
+
+        try {
+
+            const { ...data } = formValues;
+
+            const result = await authRequest.post('/recruitment/applicant/regist', data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+
+            if (result.status === 200 || result.status === 201) {
+                alert('등록 성공')
+                // console.log('API 등록 확인: ' + JSON.stringify(result));
+            } else {
+                console.error('else: callApplicantModify error : ', result);
+                alert('등록 실패')
+            }
+
+        } catch (error) {
+            console.error('catch: callApplicantRegist error : ', error);
+        }
+    }
+}
