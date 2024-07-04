@@ -3,7 +3,7 @@ import { IoIosArrowDown, IoMdSettings, IoIosArrowForward, IoIosArrowRoundForward
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSidebarStatus } from "../../modules/E_ApprovalModules";
-import { callDepartmentBox } from "../../apis/E_ApprovalAPICalls";
+import { callDepartmentBox } from "../../apis/e_approval/ApprovalDocumentFolderAPICalls";
 import './E_Approval.css';
 
 function E_ApprovalSidebar() {
@@ -65,16 +65,16 @@ function E_ApprovalSidebar() {
                                         <div className="sidebar-item" onClick={toggleHandler}>
                                             {sidebarStatus.Ab ? <IoIosArrowDown className="sidebar-icons ml-20" /> : <IoIosArrowForward className="sidebar-icons ml-20" />}
                                             <span className="icons-text fs-14 cursor-p" id="Ab">부서함</span>
-                                            <IoMdSettings className="setting-icon icons-text cursor-p"/>
+                                            <IoMdSettings className="setting-icon icons-text cursor-p" />
                                         </div>
                                         {sidebarStatus.Ab &&
                                             <ul className="mt-10">
                                                 {
                                                     departmentBox.data.map(box => (
                                                         <NavLink to={`department-box?boxId=${box.departmentBoxId}`}>
-                                                        <li key={box.departmentBoxId} className="icons-text fs-12 mt-10 ml-55 cursor-p">
-                                                            {box.name}
-                                                        </li>
+                                                            <li key={box.departmentBoxId} className="icons-text fs-12 mt-10 ml-55 cursor-p">
+                                                                {box.name}
+                                                            </li>
                                                         </NavLink>
                                                     ))
                                                 }
@@ -85,7 +85,11 @@ function E_ApprovalSidebar() {
                             )}
                         </li>
                     </ul>
-                    <div className="approval-setting-sidebar icons-text cursor-p"><IoMdSettings className="setting-icon"/>전자결재 양식 관리</div>
+                    <div className="approval-setting-sidebar icons-text cursor-p">
+                        <NavLink to="document-template">
+                            <IoMdSettings className="setting-icon" />전자결재 양식 관리
+                        </NavLink>
+                    </div>
                 </div>
             </div>
         </>

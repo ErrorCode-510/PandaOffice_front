@@ -50,11 +50,10 @@ function MyPay() {
                         <option value="payrollandbonus">급여 + 상여</option>
                     </select>
                     <span>대상자</span>
-                    <input type="text" value={employee.id} readOnly />
-                    <input type="text" value={employee.name} readOnly />
+                    <input type="text" value={employee.id} readOnly disabled />
+                    <input type="text" value={employee.name} readOnly disabled />
                     <button type="submit">조회</button>
                 </div>
-
 
                 <div className="table-combine">
                     <h3>지급항목</h3>
@@ -77,10 +76,10 @@ function MyPay() {
                         </table>
                     </div>
                     <div className="tfoot-container">
-                        <table className="foot-table">
-                            <tfoot>
+                        <table className="myPay-foot-table">
+                            <tfoot className="myPay-foot">
                                 <tr>
-                                    <td style={{ letterSpacing: '18px', paddingLeft:"22px" }}>과 세</td>
+                                    <td style={{ letterSpacing: '18px', paddingLeft: "22px" }}>과 세</td>
                                     <td>{totalSalary.toLocaleString()}</td>
                                 </tr>
                                 <tr>
@@ -120,10 +119,10 @@ function MyPay() {
                         </table>
                     </div>
                     <div className="tfoot-container">
-                        <table className="foot-table">
-                            <tfoot>
+                        <table className="myPay-foot-table">
+                            <tfoot className="myPay-foot">
                                 <tr>
-                                    <td style={{ letterSpacing: '1px', wordSpacing:"8px" }}>공제액 계</td>
+                                    <td style={{ letterSpacing: '1px', wordSpacing: "8px" }}>공제액 계</td>
                                     <td>{totalDeductions.toLocaleString()}</td>
                                 </tr>
                                 <tr>
@@ -140,7 +139,7 @@ function MyPay() {
                     <h3>계산결과</h3>
                     <div className="combine-container">
                         <table className="combine-table">
-                        <tbody>
+                            <tbody>
                                 <tr>
                                     <td className="pay-title">소속부서</td>
                                     <td className="pay-detail"><input type="text" /></td>
@@ -189,16 +188,14 @@ function MyPay() {
                                 </tr>
                                 <tr className="spacer-row"><td colSpan="2"></td></tr>
                                 <tr>
-                                    <td className="pay-title" style={{ textAlign: "center"}}>특이사항</td>
-                                    <td className="pay-detail" style={{ height: "127px"}}><input type="text" style={{ height: "90%"}} /></td>
+                                    <td className="pay-title" style={{ textAlign: "center" }}>특이사항</td>
+                                    <td className="pay-detail" style={{ height: "127px" }}><input type="text" style={{ height: "90%" }} /></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-
             </div>
-
         </>
     );
 };

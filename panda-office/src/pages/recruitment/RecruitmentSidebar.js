@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { IoIosArrowDown, IoIosArrowForward, IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { useEffect, useState } from "react";
 
 function RecruitmentSidebar() {
