@@ -92,10 +92,23 @@ const ApplicantModal = () => {
     // 입력 필드 변경 핸들러
     const handlerInputChange = (e) => {
         const { name, value } = e.target;
+
+        /* 전화번호 포맷팅 함수 */
+        const formatPhoneNumber = (number) => {
+            number = number.replace(/[^\d]/g, '');
+
+            if (number.length < 4) return number;
+            if (number.length < 8) {
+                return `${number.slice(0, 3)}-${number.slice(3)}`;
+            }
+            return `${number.slice(0, 3)}-${number.slice(3, 7)}-${number.slice(7, 11)}`;
+        };
+
         setFormValues(prevValues => ({
             ...prevValues,
-            [name]: value
+            [name]: name === 'phone' ? formatPhoneNumber(value) : value
         }));
+        console.log(value);
     };
 
     if (!applicantDetail) {
@@ -136,32 +149,36 @@ const ApplicantModal = () => {
                             </div>
                             <div className='applicant-gender'>
                                 <p>성별</p>
-                                <input 
-                                    type='text' 
-                                    name='gender' 
-                                    value={formValues.gender} 
-                                    readOnly={isTrue}
-                                    onChange={handlerInputChange}
-                                    ></input>
+                                <select
+                                        className='am-gender'
+                                        name='gender'
+                                        value={formValues.gender}
+                                        onChange={handlerInputChange}
+                                        disabled={isTrue}
+                                    >
+                                        <option value=''>선택</option>
+                                        <option value='남'>남</option>
+                                        <option value='여'>여</option>
+                                    </select>
                             </div>
                         </div>
                         <div className='applicant-flex-right'>
                             <div className='applicant-phone'>
                                 <p>연락처</p>
                                 <input 
-                                    type='text' 
+                                    type='tel' 
                                     name='phone' 
                                     value={formValues.phone} 
                                     readOnly={isTrue}
                                     onChange={handlerInputChange}
-                                    ></input>
+                                ></input>
                             </div>
                             <div className='applicant-age'>
                                 <p>나이</p>
                                 <input 
-                                type='text' 
+                                type={ isTrue ? 'text' : 'date'}
                                 name='age' 
-                                value={calculateAge(formValues.birthDate)} 
+                                value={ isTrue ? calculateAge(formValues.birthDate) : formValues.birthDate} 
                                 readOnly={isTrue}
                                 onChange={handlerInputChange}
                                 ></input>
@@ -171,7 +188,7 @@ const ApplicantModal = () => {
                     <div className='applicant-email wd-420'>
                         <p>이메일</p>
                         <input 
-                        type='text' 
+                        type='email' 
                         name='email' 
                         value={formValues.email} 
                         readOnly={isTrue}

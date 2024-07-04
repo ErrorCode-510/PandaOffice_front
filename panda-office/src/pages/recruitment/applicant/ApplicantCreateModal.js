@@ -15,17 +15,29 @@ const ApplicantCreateModal = () => {
         gender: '',
         address: '',
         phone: '',
-        email: '',
+        email: ''
     })
 
     const handlerInputChange = (e) => {
         const { name, value } = e.target;
+
+        /* 전화번호 포맷팅 함수 */
+        const formatPhoneNumber = (number) => {
+            number = number.replace(/[^\d]/g, '');
+
+            if (number.length < 4) return number;
+            if (number.length < 8) {
+                return `${number.slice(0, 3)}-${number.slice(3)}`;
+            }
+            return `${number.slice(0, 3)}-${number.slice(3, 7)}-${number.slice(7, 11)}`;
+        };
+
         setFormValues(prevValues => ({
             ...prevValues,
-            [name]: value
+            [name]: name === 'phone' ? formatPhoneNumber(value) : value
         }));
         console.log(value);
-    }
+    };
 
     /* 면접자 등록 버튼 */
     const handlerCreateOnClick = () => {
@@ -36,6 +48,16 @@ const ApplicantCreateModal = () => {
     /* 모달창 닫기 버튼 */
     const closeModalHandler = () => {
         dispatch(setModalStatus(false));
+
+        /* 모달창 닫고 다시 오픈 시 중간에 작성 됐던 값 초기화 */
+        setFormValues({
+            name: '',
+            birthDate: '',
+            gender: '',
+            address: '',
+            phone: '',
+            email: ''
+        });
     }
 
     /* Esc 키로 모달 닫기 핸들러 */
@@ -98,6 +120,7 @@ const ApplicantCreateModal = () => {
                                         type='tel' 
                                         name='phone' 
                                         onChange={handlerInputChange}
+                                        value={formValues.phone}
                                     ></input>
                                 </div>
                                 <div className='applicant-age'>

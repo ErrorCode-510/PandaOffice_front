@@ -117,7 +117,7 @@ export const callApplicantRegist = (formValues) => {
 
             if (result.status === 200 || result.status === 201) {
                 alert('등록 성공')
-                console.log('API 등록 확인: ' + JSON.stringify(result));
+                // console.log('API 등록 확인: ' + JSON.stringify(result));
             } else {
                 console.error('else: callApplicantModify error : ', result);
                 alert('등록 실패')
@@ -128,5 +128,3 @@ export const callApplicantRegist = (formValues) => {
         }
     }
 }
-
-/* 등록까지는 구현 함 그 뒤에 디테일 좀만 처리 하면 면접자 끝 */

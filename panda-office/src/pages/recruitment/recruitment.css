@@ -281,7 +281,8 @@
 } */
 
 /* applicant-create-modar ---------------------------------------------------------------------------------------------- */
-.acm-gender {
+.acm-gender,
+.am-gender {
     width: 150px;
     height: 30px;
     text-align: center;
