@@ -1,7 +1,18 @@
+import CalendarApi from "../../../utils/CalendarApi";
+
 const Schedule = () => {
     return (
         <>
-            면접일정 테스트
+            <div className="schedule-calendar">
+                <CalendarApi 
+                    height='735px'
+                    headerToolbar={{
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    }}
+                />
+            </div>
         </>
     )
 }
