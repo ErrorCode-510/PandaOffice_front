@@ -5,8 +5,7 @@ import { callApplicantModify, callApplicantDelete } from '../../../apis/Applican
 
 const ApplicantModal = () => {
 
-    const { applicantDetail } = useSelector(state => state.applicantReducer)
-    const { applicantModify } = useSelector(state => state.applicantReducer)
+    const { applicantDetail, applicantModify } = useSelector(state => state.applicantReducer)
 
     const dispatch = useDispatch();
 
@@ -27,19 +26,25 @@ const ApplicantModal = () => {
         setIsTrue(true);
     }
 
-    /* 닫기 버튼: 버튼 클릭 시 값 비우기(값이 비워지면 if 문에서 return 됨) 
-    * 삭제 버튼: 버튼 클릭 시 해당 값 삭제(DB에서 사라짐) */
-    const handlerCancelDeleteOnClick = (isTrue) => {
+    /* 모달창 닫기/취소 버튼 */
+    const handlerCancelOnClick = () => {
+        /* 참일 경우 모달창 닫기 및 상태 변화 */
         if (isTrue) {
             dispatch(setApplicantDetail(null));
             setIsTrue(true);
+            /* 거짓일 경우 상태 변화 */
         } else {
-            const { id } = applicantDetail;
-            dispatch(callApplicantDelete(id)).then(() => {
-                dispatch(setApplicantDetail(null));
-                setIsTrue(true);
-            })
+            setIsTrue(true)
         }
+    }
+
+    /* 모달창 면접자 삭제 버튼 */
+    const handlerDeleteOnClick = () => {
+        const { id } = applicantDetail;
+        dispatch(callApplicantDelete(id)).then(() => {
+            dispatch(setApplicantDetail(null));
+            setIsTrue(true);
+        })
     }
 
     /* 모달 랩 클릭 핸들러 (이벤트 버블링 방지) */
@@ -52,13 +57,42 @@ const ApplicantModal = () => {
         if (isTrue) {
             setIsTrue(false);
         } else {
+            // 데이터 유효성 검사: 이름 필드가 비어있는지 체크
+            if (formValues.name.trim() === '') {
+                alert('이름을 입력하세요');
+                return;
+            }
+            else if (formValues.gender.trim() === '') {
+                alert('성별을 입력하세요');
+                return;
+            }
+            else if (formValues.phone.trim() === '') {
+                alert('전화번호를 입력하세요');
+                return;
+            }
+            else if (formValues.birthDate.trim() === '') {
+                alert('생년월일을 입력하세요');
+                return;
+            }
+            else if (formValues.email.trim() === '') {
+                alert('이메일을 입력하세요');
+                return;
+            }
+            else if (formValues.address.trim() === '') {
+                alert('주소 입력하세요');
+                return;
+            }
+    
+            // callApplicantModify 호출 조건: formValues가 유효한 경우에만 호출
             await dispatch(callApplicantModify(formValues))
-            /* 수정 후 모달창 닫기 */
-            .then(() => {
-                handlerCancelDeleteOnClick(true);
-            })
-            // console.log('모달창 수정 확인: ' + JSON.stringify(formValues));
-            setIsTrue(true);
+                .then(() => {
+                    handlerCancelOnClick();
+                    setIsTrue(true);
+                })
+                .catch((error) => {
+                    console.error('수정 실패:', error);
+                    alert('수정 중 오류가 발생했습니다.');
+                });
         }
     }
 
@@ -70,7 +104,7 @@ const ApplicantModal = () => {
         }
     }
 
-    /* applicantDetail이 비어있지 않을 때 윈도우 개체에 keydown 이벤트 리스너를 추가한다. */
+    /* 면접자 로우 클릭 시 모달창에 정보 띄우기 */
     useEffect(() => {
         if (applicantDetail) {
 
@@ -84,14 +118,17 @@ const ApplicantModal = () => {
                 phone: applicantDetail.phone,
                 email: applicantDetail.email,
             })
+        }
+    }, [applicantDetail]);
 
-            window.addEventListener('keydown', handlerButtonOff);
+    /* 윈도우 개체에 keydown 이벤트 리스너를 추가한다. */
+    useEffect(() => {
+        window.addEventListener('keydown', handlerButtonOff);
 
-            return () => {
-                window.removeEventListener('keydown', handlerButtonOff);
-            }
-        };
-    }, [applicantDetail, applicantModify]);
+        return () => {
+            window.removeEventListener('keydown', handlerButtonOff);
+        }
+    }, [])
 
     // 입력 필드 변경 핸들러
     const handlerInputChange = (e) => {
@@ -181,7 +218,7 @@ const ApplicantModal = () => {
                                 <p>나이</p>
                                 <input 
                                 type={ isTrue ? 'text' : 'date'}
-                                name='age' 
+                                name='birthDate' 
                                 value={ isTrue ? calculateAge(formValues.birthDate) : formValues.birthDate} 
                                 readOnly={isTrue}
                                 onChange={handlerInputChange}
@@ -210,17 +247,21 @@ const ApplicantModal = () => {
                         ></input>
                     </div>
                     <div className='modal-btn'>
-                        <button className='cancel-btn' onClick={handlerCancelDeleteOnClick}>
+                        <button className='cancel-btn' onClick={handlerCancelOnClick}>
                             {
-                                isTrue? '닫기' : '삭제'
+                                isTrue ? '닫기' : '취소'
                             }
                         </button>
                         <button className='modyfi-btn' onClick={handlerModifyOnClick}>
                             {
-                                isTrue? '수정' : '수정완료'
+                                isTrue ? '수정' : '수정완료'
                             }
                         </button>
                     </div>
+                    <button className='delete-btn' style={{ display: isTrue ? 'block' : 'none' }}>
+                        { isTrue ? '삭제' : '' }
+                    </button>
+
                 </div>
             </div>
         </>

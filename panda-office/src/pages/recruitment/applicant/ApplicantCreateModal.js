@@ -42,11 +42,15 @@ const ApplicantCreateModal = () => {
 
     /* 면접자 등록 버튼 */
     const handlerCreateOnClick = async () => {
-        await dispatch(callApplicantRegist(formValues))
-        /* 등록 후 모달창 닫기 */
-        .then(() => {
-            closeModalHandler();
-        })
+        if (!formValues) {
+            await dispatch(callApplicantRegist(formValues))
+            /* 등록 후 모달창 닫기 */
+            .then(() => {
+                closeModalHandler();
+            })
+        } else {
+            alert('모든 필드를 입력하세요');
+        }
         // console.log('면접 등록 데이터 확인: ' + JSON.stringify(formValues));
     }
 

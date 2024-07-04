@@ -253,6 +253,20 @@
     margin-left: 5px;
 }
 
+.delete-btn {
+    width: 80px;
+    height: 35px;
+    background-color: #c02828;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: 5px;
+    position: absolute;
+    bottom: 27px;
+    right: 50px;
+}
+
 .wd-420 input {
     width: 420px;
 }
