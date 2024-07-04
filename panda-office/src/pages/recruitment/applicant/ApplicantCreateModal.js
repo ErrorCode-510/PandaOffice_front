@@ -41,17 +41,23 @@ const ApplicantCreateModal = () => {
     };
 
     /* 면접자 등록 버튼 */
-    const handlerCreateOnClick = async () => {
-        if (!formValues) {
-            await dispatch(callApplicantRegist(formValues))
-            /* 등록 후 모달창 닫기 */
-            .then(() => {
-                closeModalHandler();
-            })
+    const handlerCreateOnClick = () => {
+        const { name, birthDate, gender, address, phone, email } = formValues;
+
+        // 모든 필드가 채워져 있는지 확인
+        if (name.trim() && birthDate.trim() && gender.trim() && address.trim() && phone.trim() && email.trim()) {
+            dispatch(callApplicantRegist(formValues))
+                /* 등록 후 모달창 닫기 */
+                .then(() => {
+                    closeModalHandler();
+                })
+                .catch((error) => {
+                    console.error('등록 실패:', error);
+                    alert('등록 중 오류가 발생했습니다.');
+                });
         } else {
             alert('모든 필드를 입력하세요');
         }
-        // console.log('면접 등록 데이터 확인: ' + JSON.stringify(formValues));
     }
 
     /* 모달창 닫기 버튼 */

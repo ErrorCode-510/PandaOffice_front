@@ -13,11 +13,8 @@ const Applicant = () => {
     const dispatch = useDispatch();
     /* 페이지 번호 상태 저장하기: 디폴트 1 */
     const [currentPage, setCurrentPage] = useState(1);
-    const [isModalClose, setIsModalClose] = useState(true);
     
-    const { applicant, criteria, modalStatus, modalStatusClosed } = useSelector(state => state.applicantReducer)
-
-
+    const { applicant, criteria } = useSelector(state => state.applicantReducer)
 
     useEffect(() => {
         dispatch(callApplicantListAPI({ criteria, currentPage }))

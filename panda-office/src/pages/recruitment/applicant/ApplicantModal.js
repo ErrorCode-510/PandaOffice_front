@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setApplicantDetail } from '../../../modules/ApplicantModules';
 import { useEffect, useState } from 'react';
 import { callApplicantModify, callApplicantDelete } from '../../../apis/ApplicantAPICalls';
+import ConfirmationModal from '../ConfirmationModal';
 
 const ApplicantModal = () => {
 
@@ -11,7 +12,7 @@ const ApplicantModal = () => {
 
     const [isTrue, setIsTrue] = useState(true);
     const [formValues, setFormValues] = useState({
-        id:'',
+        id: '',
         name: '',
         birthDate: '',
         gender: '',
@@ -19,11 +20,13 @@ const ApplicantModal = () => {
         phone: '',
         email: '',
     });
+    const [confirmation, setConfirmation] = useState(false);
 
     /* 모달 백그라운드 클릭 시 모달창 닫기 */
     const handlerCloseOnClick = () => {
         dispatch(setApplicantDetail(null));
         setIsTrue(true);
+        // handlerConfirmCancel();
     }
 
     /* 모달창 닫기/취소 버튼 */
@@ -32,20 +35,42 @@ const ApplicantModal = () => {
         if (isTrue) {
             dispatch(setApplicantDetail(null));
             setIsTrue(true);
+            // handlerConfirmCancel();
             /* 거짓일 경우 상태 변화 */
         } else {
             setIsTrue(true)
+            // handlerConfirmCancel();
         }
     }
 
-    /* 모달창 면접자 삭제 버튼 */
+    /* 모달창 면접자 삭제 버튼 클릭 시 콘필름 모달창 출력 */
     const handlerDeleteOnClick = () => {
+        // setConfirmation(true);
         const { id } = applicantDetail;
-        dispatch(callApplicantDelete(id)).then(() => {
+        dispatch(callApplicantDelete(id))
+        .then(() => {
             dispatch(setApplicantDetail(null));
             setIsTrue(true);
         })
     }
+
+    /* Confirm 확인 */
+    // const handlerConfirm = () => {
+    //     const { id } = applicantDetail;
+    //     dispatch(callApplicantDelete(id))
+    //     .then(() => {
+    //         dispatch(setApplicantDetail(null));
+    //         setIsTrue(true);
+    //     })
+    //     .then(() => {
+    //         handlerConfirmCancel();
+    //     })
+    // }
+
+    /* Confirm 닫기 */
+    // const handlerConfirmCancel = () => {
+    //     setConfirmation(false);
+    // }
 
     /* 모달 랩 클릭 핸들러 (이벤트 버블링 방지) */
     const handlerModalWrapClick = (e) => {
@@ -82,7 +107,7 @@ const ApplicantModal = () => {
                 alert('주소 입력하세요');
                 return;
             }
-    
+
             // callApplicantModify 호출 조건: formValues가 유효한 경우에만 호출
             await dispatch(callApplicantModify(formValues))
                 .then(() => {
@@ -180,10 +205,10 @@ const ApplicantModal = () => {
                         <div className='applicant-flex-left'>
                             <div className='applicant-name'>
                                 <p>이름</p>
-                                <input 
-                                    type='text' 
-                                    name='name' 
-                                    value={formValues.name} 
+                                <input
+                                    type='text'
+                                    name='name'
+                                    value={formValues.name}
                                     readOnly={isTrue}
                                     onChange={handlerInputChange}
                                 ></input>
@@ -191,59 +216,59 @@ const ApplicantModal = () => {
                             <div className='applicant-gender'>
                                 <p>성별</p>
                                 <select
-                                        className='am-gender'
-                                        name='gender'
-                                        value={formValues.gender}
-                                        onChange={handlerInputChange}
-                                        disabled={isTrue}
-                                    >
-                                        <option value=''>선택</option>
-                                        <option value='남'>남</option>
-                                        <option value='여'>여</option>
-                                    </select>
+                                    className='am-gender'
+                                    name='gender'
+                                    value={formValues.gender}
+                                    onChange={handlerInputChange}
+                                    disabled={isTrue}
+                                >
+                                    <option value=''>선택</option>
+                                    <option value='남'>남</option>
+                                    <option value='여'>여</option>
+                                </select>
                             </div>
                         </div>
                         <div className='applicant-flex-right'>
                             <div className='applicant-phone'>
                                 <p>연락처</p>
-                                <input 
-                                    type='tel' 
-                                    name='phone' 
-                                    value={formValues.phone} 
+                                <input
+                                    type='tel'
+                                    name='phone'
+                                    value={formValues.phone}
                                     readOnly={isTrue}
                                     onChange={handlerInputChange}
                                 ></input>
                             </div>
                             <div className='applicant-age'>
                                 <p>나이</p>
-                                <input 
-                                type={ isTrue ? 'text' : 'date'}
-                                name='birthDate' 
-                                value={ isTrue ? calculateAge(formValues.birthDate) : formValues.birthDate} 
-                                readOnly={isTrue}
-                                onChange={handlerInputChange}
+                                <input
+                                    type={isTrue ? 'text' : 'date'}
+                                    name='birthDate'
+                                    value={isTrue ? calculateAge(formValues.birthDate) : formValues.birthDate}
+                                    readOnly={isTrue}
+                                    onChange={handlerInputChange}
                                 ></input>
                             </div>
                         </div>
                     </div>
                     <div className='applicant-email wd-420'>
                         <p>이메일</p>
-                        <input 
-                        type='email' 
-                        name='email' 
-                        value={formValues.email} 
-                        readOnly={isTrue}
-                        onChange={handlerInputChange}
+                        <input
+                            type='email'
+                            name='email'
+                            value={formValues.email}
+                            readOnly={isTrue}
+                            onChange={handlerInputChange}
                         ></input>
                     </div>
                     <div className='applicant-address wd-420'>
                         <p>주소</p>
-                        <input 
-                        type='text' 
-                        name='address' 
-                        value={formValues.address} 
-                        readOnly={isTrue}
-                        onChange={handlerInputChange}
+                        <input
+                            type='text'
+                            name='address'
+                            value={formValues.address}
+                            readOnly={isTrue}
+                            onChange={handlerInputChange}
                         ></input>
                     </div>
                     <div className='modal-btn'>
@@ -258,12 +283,16 @@ const ApplicantModal = () => {
                             }
                         </button>
                     </div>
-                    <button className='delete-btn' style={{ display: isTrue ? 'block' : 'none' }}>
-                        { isTrue ? '삭제' : '' }
+                    <button className='delete-btn' onClick={handlerDeleteOnClick} style={{ display: isTrue ? 'block' : 'none' }}>
+                        {isTrue ? '삭제' : ''}
                     </button>
 
                 </div>
             </div>
+            {/* {
+                confirmation &&
+                <ConfirmationModal message='면접자를 삭제하시겠습니까?' onConfirm={handlerConfirm} onCancel={handlerConfirmCancel} />
+            } */}
         </>
     )
 }

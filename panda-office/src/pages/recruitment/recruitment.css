@@ -294,10 +294,55 @@
     z-index: 1000;
 } */
 
-/* applicant-create-modar ---------------------------------------------------------------------------------------------- */
+/* applicant-create-modar -------------------------------------------------------------------------------------------------------------------- */
 .acm-gender,
 .am-gender {
     width: 150px;
     height: 30px;
     text-align: center;
+}
+
+/* confirmation-modal ---------------------------------------------------------------------------------------------------------------------- */
+.confirmation-modal {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 120px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    background-color: #1E1F31;
+    color: #fff;
+    z-index: 10;
+}
+
+.cm-confirm-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+}
+
+.cm-onCancel {
+    width: 60px;
+    height: 35px;
+    background-color: #e3e3e3;
+    color: #000;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.cm-onConfirm {
+    width: 60px;
+    height: 35px;
+    background-color: #2F3850;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-left: 5px;
 }
