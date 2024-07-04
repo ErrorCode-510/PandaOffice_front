@@ -32,7 +32,7 @@ function AddNewEmployee() {
         hanjaName : '',
         accountNumber: '',
         phone: '',
-        ssn: '',
+        personalId: '',
         gender: '',
         hireDate: '',
         address: '',
@@ -112,7 +112,7 @@ function AddNewEmployee() {
                 name: '',
                 accountNumber: '',
                 phone: '',
-                ssn: '',
+                personalId: '',
                 gender: '',
                 hireDate: '',
                 address: '',
@@ -189,7 +189,7 @@ function AddNewEmployee() {
                                         </td>
                                         <th>주민등록번호</th>
                                         <td>
-                                            <input type="text" id="ssn" name="ssn" value={formData.ssn}
+                                            <input type="text" id="personalId" name="personalId" value={formData.personalId}
                                                    onChange={handleChange}/>
                                         </td>
                                     </tr>

@@ -3,7 +3,8 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { formatDate } from '../../utils/DateUtils';
-import EmployeeSidebar from "./EmployeeSidebar"; // 날짜 유틸리티 임포트
+import EmployeeSidebar from "./EmployeeSidebar";
+import {getMemberId} from "../../utils/TokenUtils"; // 날짜 유틸리티 임포트
 
 function EmployeeEdit() {
 
@@ -35,7 +36,7 @@ function EmployeeEdit() {
     const [employee, setEmployee] = useState({
         employee: {
             name: '',
-            employeeId: '',
+            employeeId: getMemberId(),
             hireDate: '',
             phone: '',
             email: '',
@@ -46,7 +47,7 @@ function EmployeeEdit() {
             gender: '',
             nationality: '',
             address: '',
-            ssn: ''
+            personalId: ''
         },
         familyMember: [],
         careerHistory: [],
@@ -60,6 +61,7 @@ function EmployeeEdit() {
             try {
                 const response = await axios.get(`http://localhost:8001/api/v1/members/employees/${id}`);
                 setEmployee(response.data); // 가져온 직원 데이터를 설정
+
 
             } catch (error) {
                 console.error('Failed to fetch employee details:', error);
@@ -99,36 +101,46 @@ function EmployeeEdit() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`http://localhost:8001/api/v1/members/employees/${id}`, employee); // PUT 요청으로 데이터 업데이트
-            navigate(`/employees/${id}`); // 업데이트 후 직원 세부 정보 페이지로 이동
+            await axios.put(`http://localhost:8001/api/v1/members/updateEmployee`, employee); // PUT 요청으로 데이터 업데이트
+            // navigate(`/employees/${id}`); // 업데이트 후 직원 세부 정보 페이지로 이동
         } catch (error) {
             console.error('Failed to update employee details:', error);
         }
     };
-    const handleAddRow = () => {
-        setEmployee((prevEmployee) => ({
-            ...prevEmployee,
-            familyMember: [
-                ...prevEmployee.familyMember,
-                {
-                    name: '',
-                    relationship: '',
-                    dateOfBirth: ''
-                }
-            ]
-        }));
-    };
+
 
     const handleAddEmploymentRow = () => {
         setEmploymentRows([...employmentRows, { hireDate: '', endDate: '', companyName: '', department: '', lastPosition: '', jobDescription: '' }]);
     };
 
     const handleAddEducationRow = () => {
-        setEducationRows([...educationRows, { admissionDate: '', graduationDate: '', schoolName: '', major: '', degree: '' }]);
+        setEmployee(prevEmployee => ({
+            ...prevEmployee,
+            educationHistory: [
+                ...prevEmployee.educationHistory,
+                {
+                    admissionDate: '',
+                    graduationDate: '',
+                    schoolName: '',
+                    major: '',
+                    degree: ''
+                }
+            ]
+        }));
     };
 
     const handleAddCertificationRow = () => {
-        setLicenses([...licensesRows, { issuingOrganization: '', issueDate: '', name: '' }]);
+        setEmployee(prevEmployee => ({
+            ...prevEmployee,
+            licenses: [
+                ...prevEmployee.licenses,
+                {
+                    issuingOrganization: '',
+                    issueDate: '',
+                    name: ''
+                }
+            ]
+        }));
     };
 
     const handlePhotoChange = (e) => {
@@ -154,7 +166,7 @@ function EmployeeEdit() {
                 {
                     name: '',
                     relationship: '',
-                    dateOfBirth: ''
+                    birthDate: ''
                 }
             ]
         }));
@@ -183,10 +195,12 @@ function EmployeeEdit() {
             careerHistory: [
                 ...prevEmployee.careerHistory,
                 {
-                    company: '',
-                    position: '',
+                    companyName: '',
+                    department: '',
                     startDate: '',
-                    endDate: ''
+                    endDate: '',
+                    workDescription:'',
+                    lastPosition :''
                 }
             ]
         }));
@@ -262,7 +276,7 @@ function EmployeeEdit() {
                                         </td>
                                         <th>주민등록번호</th>
                                         <td>
-                                            <input type="text" id="ssn" name="ssn" value={employee.ssn}
+                                            <input type="text" id="personalId" name="personalId" value={employee.employee.personalId}
                                                    onChange={handleChange}/>
                                         </td>
                                     </tr>
@@ -412,17 +426,27 @@ function EmployeeEdit() {
                                     </tr>
                                     {employee.familyMember.map((member, index) => (
                                         <tr key={index}>
-                                            <td><input type="text" value={member.relationship} data-index={index} name="relationship" onChange={(e) => handleChange(e, 'familyMembers')} /></td>
-                                            <td><input type="text" value={member.name} data-index={index} name="name" onChange={(e) => handleChange(e, 'familyMembers')} /></td>
-                                            <td><input type="date" value={member.dateOfBirth} data-index={index} name="dateOfBirth" onChange={(e) => handleChange(e, 'familyMembers')} /></td>
-                                            <td><input type="text" value={member.job} data-index={index} name="job" onChange={(e) => handleChange(e, 'familyMembers')} /></td>
-                                            <td><input type="text" value={member.education} data-index={index} name="education" onChange={(e) => handleChange(e, 'familyMembers')} /></td>
-                                            <td><input type="text" value={member.note} data-index={index} name="note" onChange={(e) => handleChange(e, 'familyMembers')} /></td>
+
+                                            <td><input type="text" value={member.relationship} data-index={index}
+                                                       name="relationship"
+                                                       onChange={(e) => handleChange(e, 'familyMembers')}/></td>
+                                            <td><input type="text" value={member.name} data-index={index} name="name"
+                                                       onChange={(e) => handleChange(e, 'familyMembers')}/></td>
+                                            <td><input type="date" value={member.birthDate} data-index={index}
+                                                       name="birthDate"
+                                                       onChange={(e) => handleChange(e, 'familyMembers')}/></td>
+                                            <td><input type="text" value={member.job} data-index={index} name="job"
+                                                       onChange={(e) => handleChange(e, 'familyMembers')}/></td>
+                                            <td><input type="text" value={member.education} data-index={index}
+                                                       name="education"
+                                                       onChange={(e) => handleChange(e, 'familyMembers')}/></td>
+                                            <td><input type="text" value={member.note} data-index={index} name="note"
+                                                       onChange={(e) => handleChange(e, 'familyMembers')}/></td>
                                         </tr>
                                     ))}
                                     <tr>
                                         <td colSpan="6" style={{textAlign: 'center'}}>
-                                            <button type="button" onClick={handleAddRow} className="plus-button">+
+                                            <button type="button" onClick={handleAddFamilyMember} className="plus-button">+
                                             </button>
                                         </td>
                                     </tr>
@@ -438,6 +462,7 @@ function EmployeeEdit() {
                                         <th>업무내용</th>
                                     </tr>
                                     {employee.careerHistory.map((career, index) => (
+
                                         <tr key={index}>
                                             <td><input type="date" value={career.startDate} data-index={index}
                                                        name="startDate"
@@ -446,11 +471,17 @@ function EmployeeEdit() {
                                             <td><input type="date" value={career.endDate} data-index={index}
                                                        name="endDate"
                                                        onChange={(e) => handleChange(e, 'careerHistory')}/></td>
-                                            <td><input type="text" value={career.company} data-index={index}
-                                                       name="company"
+                                            <td><input type="text" value={career.companyName} data-index={index}
+                                                       name="companyName"
                                                        onChange={(e) => handleChange(e, 'careerHistory')}/></td>
-                                            <td><input type="text" value={career.position} data-index={index}
-                                                       name="position"
+                                            <td><input type="text" value={career.department} data-index={index}
+                                                       name="department"
+                                                       onChange={(e) => handleChange(e, 'careerHistory')}/></td>
+                                            <td><input type="text" value={career.lastPosition} data-index={index}
+                                                       name="lastPosition"
+                                                       onChange={(e) => handleChange(e, 'careerHistory')}/></td>
+                                            <td><input type="text" value={career.workDescription} data-index={index}
+                                                       name="workDescription"
                                                        onChange={(e) => handleChange(e, 'careerHistory')}/></td>
 
 
@@ -458,7 +489,7 @@ function EmployeeEdit() {
                                     ))}
                                     <tr>
                                         <td colSpan="6" style={{textAlign: 'center'}}>
-                                            <button type="button" onClick={handleChange}
+                                            <button type="button" onClick={handleAddCareer}
                                                     className="plus-button">+
                                             </button>
                                         </td>
@@ -474,34 +505,29 @@ function EmployeeEdit() {
                                         <th>학위</th>
                                         <th></th>
                                     </tr>
-                                    {educationRows.map((row, index) => (
+                                    {employee.educationHistory.map((education, index) => (
+
                                         <tr key={index}>
-                                            <td><input type="date" value={row.admissionDate} onChange={(e) => {
-                                                const newRows = [...educationRows];
-                                                newRows[index].admissionDate = e.target.value;
-                                                setEducationRows(newRows);
-                                            }}/></td>
-                                            <td><input type="date" value={row.graduationDate} onChange={(e) => {
-                                                const newRows = [...educationRows];
-                                                newRows[index].graduationDate = e.target.value;
-                                                setEducationRows(newRows);
-                                            }}/></td>
-                                            <td><input type="text" value={row.schoolName} onChange={(e) => {
-                                                const newRows = [...educationRows];
-                                                newRows[index].schoolName = e.target.value;
-                                                setEducationRows(newRows);
-                                            }}/></td>
-                                            <td><input type="text" value={row.major} onChange={(e) => {
-                                                const newRows = [...educationRows];
-                                                newRows[index].major = e.target.value;
-                                                setEducationRows(newRows);
-                                            }}/></td>
-                                            <td><input type="text" value={row.degree} onChange={(e) => {
-                                                const newRows = [...educationRows];
-                                                newRows[index].degree = e.target.value;
-                                                setEducationRows(newRows);
-                                            }}/></td>
-                                            <td></td>
+
+                                            <td><input type="date" value={education.admissionDate} data-index={index}
+                                                       name="admissionDate"
+                                                       onChange={(e) => handleChange(e, 'educationHistory')}/></td>
+
+                                            <td><input type="date" value={education.graduationDate} data-index={index}
+                                                       name="endDate"
+                                                       onChange={(e) => handleChange(e, 'educationHistory')}/></td>
+                                            <td><input type="text" value={education.schoolName} data-index={index}
+                                                       name="schoolName"
+                                                       onChange={(e) => handleChange(e, 'educationHistory')}/></td>
+                                            <td><input type="text" value={education.major} data-index={index}
+                                                       name="major"
+                                                       onChange={(e) => handleChange(e, 'educationHistory')}/></td>
+                                            <td><input type="text" value={education.degree} data-index={index}
+                                                       name="degree"
+                                                       onChange={(e) => handleChange(e, 'educationHistory')}/></td>
+                                            <td><input type="text"/></td>
+
+
                                         </tr>
                                     ))}
                                     <tr>
@@ -522,26 +548,23 @@ function EmployeeEdit() {
                                         <th></th>
                                         <th></th>
                                     </tr>
-                                    {licensesRows.map((row, index) => (
+                                    {employee.licenses.map((license, index) => (
                                         <tr key={index}>
-                                            <td><input type="text" value={row.issuingOrganization} onChange={(e) => {
-                                                const newRows = [...licensesRows];
-                                                newRows[index].issuingOrganization = e.target.value;
-                                                setLicenses(newRows);
-                                            }}/></td>
-                                            <td><input type="date" value={row.issueDate} onChange={(e) => {
-                                                const newRows = [...licensesRows];
-                                                newRows[index].issueDate = e.target.value;
-                                                setLicenses(newRows);
-                                            }}/></td>
-                                            <td><input type="text" value={row.name} onChange={(e) => {
-                                                const newRows = [...licensesRows];
-                                                newRows[index].name = e.target.value;
-                                                setLicenses(newRows);
-                                            }}/></td>
+                                            <td><input type="text" value={license.issuingOrganization} data-index={index}
+                                                       name="issuingOrganization"
+                                                       onChange={(e) => handleChange(e, 'licenses')}/></td>
+
+                                            <td><input type="date" value={license.issueDate} data-index={index}
+                                                       name="issueDate"
+                                                       onChange={(e) => handleChange(e, 'licenses')}/></td>
+                                            <td><input type="text" value={license.name} data-index={index}
+                                                       name="name"
+                                                       onChange={(e) => handleChange(e, 'licenses')}/></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
+
+
                                         </tr>
                                     ))}
                                     <tr>
