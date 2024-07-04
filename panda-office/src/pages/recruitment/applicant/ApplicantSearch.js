@@ -1,5 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
-import { callApplicantListAPI } from "../../../apis/ApplicantAPICalls";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { setCriteria } from "../../../modules/ApplicantModules";
 
@@ -10,13 +9,12 @@ const ApplicantSearch = () => {
     const [mainCriteria, setMainCriteria] = useState('all');
     const [subCriteria, setSubCriteria] = useState();
     const [searchCriteria, setSearchCriteria] = useState('');
-    // const [params, setParams] = useState('');
 
     /* 검색 조건 */
     const handlerCriteriaChange = (e) => {
         const selectedCriteria = e.target.value;
         setMainCriteria(selectedCriteria);
-        console.log('selectedCriteria: ' + selectedCriteria);
+        // console.log('selectedCriteria: ' + selectedCriteria);
     }
 
     /* 검색 조건2 */
@@ -30,14 +28,13 @@ const ApplicantSearch = () => {
     const handlerSearchChange = (e) => {
         const input = e.target.value;
         setSearchCriteria(input)
-        // console.log('searchText: ' + input);
+        console.log('searchText: ' + input);
     }
 
     /* 조건 취합 후 API 요청 */
     const handlerOnClink = () => {
         const params = {mainCriteria, subCriteria, searchCriteria};
-        // console.log('onClick LOG: ' + JSON.stringify(params))
-        console.log(JSON.stringify(searchCriteria))
+        // console.log(JSON.stringify(searchCriteria))
         dispatch(setCriteria(params))
     }
 
@@ -45,8 +42,6 @@ const ApplicantSearch = () => {
     const onSubmitSearch = (e) => {
         if (e.key === 'Enter') {
             handlerOnClink();
-        } else {
-            console.log('error')
         }
     }
 

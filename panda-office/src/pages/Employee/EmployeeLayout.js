@@ -14,7 +14,7 @@ function Employee() {
                 <Footer />
             </div>
         </>
-    )
+    );
 }
 
 export default Employee;

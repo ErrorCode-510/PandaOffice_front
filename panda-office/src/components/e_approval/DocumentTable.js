@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./E_Approval.css"
 
 function DocumentTable({ mainTitle, exceptColumn }) {
 

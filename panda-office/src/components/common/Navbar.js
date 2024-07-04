@@ -26,7 +26,7 @@ function Navbar() {
                     </div>
                     <ul className="department-list">
                         <li>
-                            <NavLink to="/notice" className="nav-link">
+                            <NavLink to="/notice/all-notice" className="nav-link">
                                 <RiMegaphoneLine className="side-icons"/>
                                 <p>공지사항</p>
                             </NavLink>
