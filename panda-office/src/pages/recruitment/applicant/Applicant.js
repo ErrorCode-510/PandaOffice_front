@@ -4,6 +4,7 @@ import { callApplicantListAPI } from "../../../apis/ApplicantAPICalls";
 import ApplicantList from "./ApplicantList";
 import PagingBar from "../PagingBar";
 import ApplicantSearch from "./ApplicantSearch";
+import ApplicantModal from "./ApplicantModal";
 
 const Applicant = () => {
 
@@ -16,16 +17,19 @@ const Applicant = () => {
         dispatch(callApplicantListAPI({ criteria, currentPage }))
     }, [currentPage, criteria]);
 
+
     return (
         <>
             {
                 applicant &&
                 <>
-                        <ApplicantSearch />
-                        <div className="applicant-wrap">
+                    <p className="applicant-title">면접자 목록</p>
+                    <ApplicantSearch />
+                    <div className="applicant-wrap">
                         <ApplicantList applicant={applicant.data} />
                         <PagingBar pageInfo={applicant.pageInfo} setCurrentPage={setCurrentPage} />
                     </div>
+                    <ApplicantModal />
                 </>
             }
         </>
