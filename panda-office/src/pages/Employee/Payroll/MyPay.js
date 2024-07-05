@@ -56,15 +56,15 @@ function MyPay() {
             <div className="common-comp">
                 <h2>급여조회</h2>
                 <div className="search-section">
-                    <span>지급연월</span>
+                    <span className="mypay-span">지급연월</span>
                     <input type="date" value={date} onChange={e => setDate(e.target.value)} />
-                    <span>지급구분</span>
+                    <span className="mypay-span">지급구분</span>
                     <select className="select-pay">
                         <option value="payroll">급여</option>
                         <option value="bonus">상여</option>
                         <option value="payrollandbonus">급여 + 상여</option>
                     </select>
-                    <span>대상자</span>
+                    <span className="mypay-span">대상자</span>
                     <input type="text" value={employeeId ? employeeId.employeeId : ''} readOnly disabled />
                     <input type="text" value={employeeId ? employeeId.name : ''} readOnly disabled />
                     <button type="submit">조회</button>
@@ -72,7 +72,7 @@ function MyPay() {
 
                 <div className="table-combine">
                     <h3>지급항목</h3>
-                    <div className="table-container">
+                    <div className="empl-table-container">
                         <table id="data-table" className="data-table">
                             <thead>
                                 <tr>
