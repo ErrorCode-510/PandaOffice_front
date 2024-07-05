@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -15,6 +15,8 @@ function RecruitmentSidebar() {
     const [isInterviewOpen, setIsInterviewOpen] = useState(false);
     const [isApplicantOpen, setIsApplicantOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const navigate = useNavigate();
 
     /* Main Handler ----------------------------------------------------------------------------------------------------------------------------------- */
     /* 로컬에 열림/닫힘 상태 값 boolean 형태로 저장하기 */
@@ -74,10 +76,16 @@ function RecruitmentSidebar() {
 
     /* 조건에 맞는 경로, 버튼 클릭 시 상호작용 */
     const handlerAddClick = () => {
-        if (location.pathname.includes("/recruitment/applicant")) {
-            handlerModarOpen();
-        } else {
-            console.log('경로 확인 불가능')
+        try {
+            if (location.pathname.includes("/recruitment/applicant")) {
+                handlerModarOpen();
+            } else if (location.pathname.includes("/recruitment/schedule")) {
+                navigate('/recruitment/schedule/create');
+            } else {
+                console.log('경로 확인 불가능')
+            }
+        } catch (error) {
+            console.error('handlerAddClick error : ', error);
         }
     }
 
@@ -107,12 +115,12 @@ function RecruitmentSidebar() {
                                         </div>
                                         {isInterviewOpen && (
                                             <ul className="mt-10">
-                                                <NavLink to="/recruitment">
+                                                <NavLink to="/recruitment/schedule">
                                                     <li className="icons-text fs-12 mt-10 ml-55 cursor-p">면접일정</li>
                                                 </NavLink>
-                                                <NavLink to="/recruitment/modify">
+                                                {/* <NavLink to="/recruitment/modify">
                                                     <li className="icons-text fs-12 mt-10 ml-55 cursor-p">면접일정 수정</li>
-                                                </NavLink>
+                                                </NavLink> */}
                                             </ul>
                                         )}
                                     </li>

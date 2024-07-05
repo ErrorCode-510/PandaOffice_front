@@ -30,7 +30,7 @@ export const isAdmin = () => {
 }
 
 export const getMemberId = () => {
-    return getDecodeAccessToken().memberId;
+    return getDecodeAccessToken().employeeId;
 }
 
 

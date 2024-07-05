@@ -1,5 +1,6 @@
 /* applicant-title ------------------------------------------------------------------------------------------------------------------------------- */
-.applicant-title {
+.applicant-title,
+.schedule-title {
     font-size: 34px;
     margin-bottom: 15px;
 }
@@ -303,7 +304,7 @@
 }
 
 /* confirmation-modal ---------------------------------------------------------------------------------------------------------------------- */
-.confirmation-modal {
+/* .confirmation-modal {
     position: absolute;
     top: 8%;
     left: 50%;
@@ -345,4 +346,121 @@
     border-radius: 50px;
     cursor: pointer;
     margin-left: 5px;
+} */
+
+/* schedule-calendar ------------------------------------------------------------------------------------------------------------------- */
+.schedule-calendar,
+.schedule-create {
+    width: 100%;
+    height: 100%;
+    /* background-color: #fff; */
+    /* padding: 30px 30px 0 30px; */
+    border-radius: 15px;
+}
+
+.schedule-create {
+    display: flex;
+}
+
+.schedule-form {
+    width: 620px;
+    height: 705px;
+    background-color: #fff;
+    margin-right: 40px;
+}
+
+.schedule-title-main {
+    background-color: #2F3850;
+    color: #fff;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px 15px 0 0;
+}
+
+.schedule-calendar-emp {
+    width: 940px;
+    height: 705px;
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.schedule-table th, .schedule-table td {
+    padding: 10px;
+    /* border: 1px solid #000; */
+    text-align: left;
+}
+
+.schedule-label {
+    width: 20%;
+}
+
+.schedule-title-name {
+    width: 100%;
+    height: 30px;
+    padding-left: 10px;
+}
+.schedule-date,
+.schedule-time,
+.schedule-place {
+    width: 50%;
+    text-align: center;
+    height: 30px;
+}
+
+/* .interviewer-list,
+.add-list,
+.applicant-list-modal,
+.applicant-add {
+    margin-top: 10px;
+} */
+
+.dis-flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.interviewer-list,
+.add-list {
+    width: 45%;
+    height: 150px;
+    overflow-y: scroll;
+    border: 1px solid #000;
+}
+
+.applicant-list {
+    width: 100%;
+    height: 150px;
+    border: 1px solid #000;
+}
+
+.schedule-btn {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.schedule-btn button:last-child {
+    width: 80px;
+    height: 35px;
+    background-color: #2F3850;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.schedule-btn button:first-child {
+    width: 80px;
+    height: 35px;
+    background-color: #e3e3e3;
+    color: #000;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 5px;
 }

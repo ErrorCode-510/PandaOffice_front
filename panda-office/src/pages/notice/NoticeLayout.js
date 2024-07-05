@@ -1,6 +1,10 @@
 import {Outlet} from "react-router-dom";
 import Footer from "../../components/common/Footer";
 import NoticeSidebar from "./NoticeSidebar";
+<<<<<<< HEAD
+=======
+// import Notice from "./Notice";
+>>>>>>> master
 
 function NoticeLayout() {
     return (
