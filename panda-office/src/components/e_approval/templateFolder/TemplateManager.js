@@ -1,6 +1,7 @@
 import { IoIosCheckbox, IoIosCheckboxOutline } from "react-icons/io"
 import { useDispatch, useSelector } from "react-redux"
 import { callUpdateTemplateStatusAPI } from "../../../apis/e_approval/ApprovalDocumentFolderAPICalls";
+import { NavLink } from "react-router-dom";
 
 export function TemplateManager(){
     const {currentFolder, selectTemplates} = useSelector(state=>state.e_approvalReducer)
@@ -20,7 +21,7 @@ export function TemplateManager(){
     <div className="folder-head">
         <div className="folder-title-text">{currentFolder.name}</div>
         <div className="template-manager-button">
-            <button className="template-button-navy">양식 추가</button>
+            <NavLink to="regist"><button className="template-button-navy">양식 추가</button></NavLink>
             <button className="template-button-gery"
             onClick={() => {updateTemplateStatus({status: true})}}>양식 사용</button>
             <button className="template-button-gery"
