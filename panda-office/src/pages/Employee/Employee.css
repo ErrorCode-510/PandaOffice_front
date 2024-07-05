@@ -184,3 +184,26 @@
         flex: 1 1 100%;
     }
 }
+.plus-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: transparent;
+    color: grey;
+    margin: 10px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 24px; /* Adjust font size as needed */
+    border-style: solid;
+    border-color: grey;
+}
+
+
+
+.plus-symbol {
+    font-weight: bold;
+    line-height: 1; /* Ensure the plus symbol is vertically centered */
+}

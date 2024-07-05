@@ -110,8 +110,8 @@ function EmployeeList() {
                                             <select id="employment_status" name="employment_status"
                                                     value={searchCriteria.employment_status}
                                                     onChange={handleInputChange}>
-                                                <option value="active">재직중</option>
-                                                <option value="inactive">퇴사</option>
+                                                <option value="재직">재직중</option>
+                                                <option value="퇴사">퇴사</option>
                                             </select>
                                         </td>
                                     </tr>

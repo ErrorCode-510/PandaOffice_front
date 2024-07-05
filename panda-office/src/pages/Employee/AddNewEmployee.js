@@ -76,6 +76,7 @@ function AddNewEmployee() {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPhoto({ name: file.name, path: reader.result });
+
             };
             reader.readAsDataURL(file);
         }
@@ -84,7 +85,42 @@ function AddNewEmployee() {
     const handlePhotoClick = () => {
         document.getElementById('photo').click();
     };
+    const sample6_execDaumPostcode = () => {
+        new window.daum.Postcode({
+            oncomplete: function (data) {
+                let addr = ''; // 주소 변수
+                let extraAddr = ''; // 참고항목 변수
 
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                if (data.userSelectedType === 'R') {
+                    if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                        extraAddr += data.bname;
+                    }
+                    if (data.buildingName !== '' && data.apartment === 'Y') {
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    if (extraAddr !== '') {
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                }
+
+                const fullAddress = `${data.zonecode} ${addr} ${extraAddr}`;
+
+                setFormData((prevState) => ({
+                    ...prevState,
+                    address: fullAddress,
+                    detailAddress: ''
+                }));
+
+                document.getElementById("sample6_detailAddress").focus();
+            }
+        }).open();
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -101,6 +137,7 @@ function AddNewEmployee() {
         try {
             const response = await axios.post('http://localhost:8001/api/v1/members/newEmployee', data);
             console.log('서버 응답:', response.data);
+
 
             alert('사원 정보가 성공적으로 저장되었습니다.');
             setRows([{ relationship: '', name: '', birthDate: '', job: '', education: '', note: '' }]);
@@ -143,7 +180,11 @@ function AddNewEmployee() {
                                     <tr>
                                         <th rowSpan="2">사진</th>
                                         <td rowSpan="2">
-                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                            <div style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center'
+                                            }}>
                                                 <input
                                                     type="file"
                                                     id="photo"
@@ -152,8 +193,7 @@ function AddNewEmployee() {
                                                     style={{display: 'none'}}
                                                 />
                                                 <button type="button" onClick={handlePhotoClick}
-                                                        className="photo-button">
-                                                    +
+                                                        className="plus-button">+
                                                 </button>
                                                 {photo && (
                                                     <img
@@ -197,10 +237,10 @@ function AddNewEmployee() {
                                         <th>성별</th>
                                         <td>
                                             <label htmlFor="male">남성</label>
-                                            <input type="radio" id="male" name="gender" value="male"
+                                            <input type="radio" id="male" name="gender" value="남"
                                                    checked={formData.gender === 'male'} onChange={handleChange}/>
                                             <label htmlFor="female">여성</label>
-                                            <input type="radio" id="female" name="gender" value="female"
+                                            <input type="radio" id="female" name="gender" value="여"
                                                    checked={formData.gender === 'female'} onChange={handleChange}/>
                                         </td>
                                         <th>입사일</th>
@@ -209,9 +249,16 @@ function AddNewEmployee() {
                                                    onChange={handleChange}/>
                                         </td>
                                         <th>주소</th>
-                                        <td>
-                                            <input type="text" id="address" name="address" value={formData.address}
-                                                   onChange={handleChange}/>
+                                        <td colSpan="3">
+                                            <input type="text" id="postcode" placeholder="우편번호"
+                                                   onClick={sample6_execDaumPostcode}
+                                                   readOnly/>
+                                            <input type="text" id="address" placeholder="주소" name="address"
+                                                   value={formData.address} onClick={sample6_execDaumPostcode}
+                                                   readOnly/>
+                                            <input type="text" id="sample6_detailAddress" placeholder="상세주소"
+                                                   name="detailAddress"
+                                                   value={formData.detailAddress} onChange={handleChange}/>
                                         </td>
                                     </tr>
                                     <tr>
