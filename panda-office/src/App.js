@@ -18,8 +18,8 @@ import E_ApprovalRoute from './pages/e_approval/E_ApprovalRoutes';
 import NoticeRoutes from './pages/notice/NoticeRoutes';
 import RecruitmentRoutes from './pages/recruitment/RecruitmentRoutes';
 import AttendanceRoutes from './pages/attendance/AttendanceRoutes';
-import Employee from './pages/Employee/EmployeeLayout';
-import EmployeeRoutes from './pages/Employee/EmployeeRoutes';
+import Employee from './pages/employee/EmployeeLayout';
+import EmployeeRoutes from './pages/employee/EmployeeRoutes';
 import Welfare from './pages/welfare/WelfareLayout';
 import WelfareRoutes from './pages/welfare/WelfareRoutes';
 

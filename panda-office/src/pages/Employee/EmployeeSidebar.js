@@ -60,12 +60,12 @@ function RecruitmentSidebar() {
                                 <span className="icons-text fs-18 cursor-p">급여 관리</span>
                             </div>
                             {isSubOpen && (
-                                <ul className="mt-10">
-                                    <li>
-                                        <NavLink to="/employee/payroll/MyPay" className="icons-text fs-12 ml-35 cursor-p">급여(개인) 조회</NavLink>
+                                <ul className>
+                                    <li className="icons-text fs-12 mt-10 ml-35 cursor-p">
+                                        <NavLink to="/employee/payroll/MyPay">급여(개인) 조회</NavLink>
                                     </li>
-                                    <li className="mt-10">
-                                        <NavLink to="/employee/payroll/EmplPayroll" className="icons-text fs-12 ml-35 cursor-p">급여자료입력</NavLink>
+                                    <li className="icons-text fs-12 mt-10 ml-35 cursor-p">
+                                        <NavLink to="/employee/payroll/EmplPayroll">급여자료입력</NavLink>
                                     </li>
                                 </ul>
                             )}

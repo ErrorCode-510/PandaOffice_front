@@ -72,8 +72,6 @@ export const callLogoutAPI = () => {
 export const callFindIdAPI = ({findIdRequest}) => {
     return async (dispatch, getState) => {
 
-
-
             const result = await request(
                 'POST',
                 '/api/v1/members/find-id',

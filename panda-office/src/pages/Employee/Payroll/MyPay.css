@@ -57,7 +57,7 @@ option {
     background: #3a4563;
 }
 
-span {
+.mypay-span {
     margin: 0 10px;
     font-size: 15px;
 }
@@ -77,9 +77,9 @@ span {
     border: 1px solid #ccc;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    height: 650px;
+    height: 516px;
     background: #fff;
-    max-height: 700px;
+    max-height: 600px;
 }
 
 
@@ -88,9 +88,9 @@ span {
     border: 1px solid #ccc;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    height: 687px;
+    height: 549px;
     background: #fff;
-    max-height: 700px;
+    max-height: 600px;
 }
 
 .data-table,
@@ -105,7 +105,7 @@ span {
     text-align: center;
     background: #2F3850;
     color: #fff;
-    line-height: 27px;
+    line-height: 25px;
 }
 
 .data-table th,
@@ -118,6 +118,7 @@ span {
 
 .data-table td {
     padding-left: 10px;
+    line-height: 15px;
 }
 
 .data-table th:first-child,
@@ -137,7 +138,7 @@ span {
 .myPay-foot {
     background: #CACACA;
     border-collapse: collapse;
-    line-height: 20px;
+    line-height: 15px;
 }
 
 .myPay-foot-table th,
@@ -182,14 +183,14 @@ span {
     /* margin-bottom: -30px; */
 }
 
-/* .combine-container {
+.combine-container {
     height: 700px;
-    max-height: 700px;
-} */
+    max-height: 750px;
+}
 
 .combine-table {
     width: 60%;
-    height: 762px;
+    height: 615px;
     border-collapse: collapse;
     table-layout: fixed;
 }
@@ -198,7 +199,7 @@ span {
 .combine-table td {
     border: 1px solid #ddd;
     padding: 8px;
-    line-height: 20px;
+    line-height: 15px;
 }
 
 /* 테이블 행 간격을 위한 스타일 */
