@@ -1,54 +1,7 @@
 .main-content {
     margin-top: 20px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-table, th, td {
-    border: 1px solid #ddd;
-}
-
-th, td {
-    padding: 15px;
-    text-align: center;
-}
-
-th {
-    background-color: #f4f4f4;
-}
-
-tbody tr td {
-    border-top: none;
-}
-
-tbody tr td:first-child, tbody tr td:last-child {
-    border-top: 1px solid #ddd;
-}
-
-.AttendanceStatusWeekSection {
-    margin-top: 20px;
-}
-
-.AttendanceStatusWeekSection .week {
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-    cursor: pointer;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.AttendanceStatusWeekSection .week-content {
-    display: none;
-    padding-left: 20px;
-}
-
-.AttendanceStatusWeekSection .week.open .week-content {
-    display: block;
+    justify-content: center; /* 상태 요약 섹션을 가운데 정렬 */
 }
 
 .status-summary {
@@ -59,10 +12,13 @@ tbody tr td:first-child, tbody tr td:last-child {
     border: 1px solid #ddd;
     background-color: #fff;
     text-align: center;
+    max-width: 1800px; /* 상태 요약 섹션의 최대 너비를 늘리기 */
+    width: 100%; /* 상태 요약 섹션의 너비를 부모에 맞추기 */
 }
 
 .status-item {
     flex: 1;
+    padding: 0 10px;
 }
 
 .status-title {
@@ -86,5 +42,68 @@ tbody tr td:first-child, tbody tr td:last-child {
     width: 1px;
     height: 40px;
     background-color: #ddd;
-    margin: 0 20px;
+    margin: 0 10px;
 }
+
+.AttendanceStatusWeekSection {
+    margin-top: 20px;
+}
+
+.AttendanceStatusWeekSection .week {
+    flex-direction: column;
+    align-items: flex-start;
+    border-bottom: none; /* 여기를 변경 */
+}
+
+.AttendanceStatusWeekSection .week > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd; /* 여기에 구분선 추가 */
+}
+
+.AttendanceStatusWeekSection .week-content {
+    width: 100%;
+    margin-top: 10px;
+    display: none;
+    padding-bottom: 10px;
+}
+
+.AttendanceStatusWeekSection .week.open .week-content {
+    display: block;
+}
+
+.week-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.week-table th, .week-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.week-table th {
+    background-color: #333;
+    color: #fff;
+}
+
+.icons-text {
+    margin-right: auto;
+}
+
+
+.week-summary {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+
