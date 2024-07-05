@@ -50,7 +50,7 @@ function Navbar() {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/recruitment" className="nav-link">
+                            <NavLink to="/recruitment/schedule" className="nav-link">
                                 <PiHandshakeLight className="side-icons"/>
                                 <p>채용면접</p>
                             </NavLink>
