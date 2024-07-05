@@ -366,10 +366,40 @@
     width: 620px;
     height: 675px;
     border: 1px solid #000;
+    /* padding-right: 20px; */
+}
+
+.schedule-form label {
+    display: flex;
+    /* border: 1px solid #000; */
+    align-items: center;
+    justify-content: center;
 }
 
 .schedule-calendar-emp {
     width: 940px;
     height: 675px;
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
+}
+
+.schedule-title-p p,
+.schedule-date p {
+    width: 15%;
+    /* border: 1px solid #ff0000; */
+}
+
+.schedule-title-p input,
+.schedule-date .date-box {
+    width: 75%;
+    /* border: 1px solid #ff00f7; */
+}
+
+.schedule-date .date-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.schedule-date .date-box input {
+    width: 45%;
+    text-align: center;
 }
