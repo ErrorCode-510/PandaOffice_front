@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import DocumentTable from "../../components/e_approval/DocumentTable";
 import { DocumentTemplateFolderPage } from "./documentTemplate/E_ApprovalTemplateFolder";
+import DocumentTemplateRegist from "./documentTemplate/E_ApprovalTemplateRegist";
 
 function E_ApprovalRoute() {
     return (
@@ -39,6 +40,11 @@ function E_ApprovalRoute() {
             <Route path="document-template"
                 element={<DocumentTemplateFolderPage
                 />}
+            ></Route>
+
+
+            <Route path="document-template/regist"
+            element={<DocumentTemplateRegist/>}
             ></Route>
         </Routes>
     );

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import React from 'react';
 import './notice.css'; // css 파일을 임포트
-import {callNoticeDetailAPI} from '../../apis/NoticeAPICalls'
+// import {callNoticeDetailAPI} from '../../apis/NoticeAPICalls'
 
 const NoticeListItem = ({notice: {noticeId, title, postedDate, viewCount, name, job}}) => {
 
