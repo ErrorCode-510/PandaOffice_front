@@ -1,11 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import React from 'react';
-<<<<<<< HEAD
-import './notice.css';
-=======
 import './notice.css'; // css 파일을 임포트
 // import {callNoticeDetailAPI} from '../../apis/NoticeAPICalls'
->>>>>>> master
 
 const NoticeListItem = ({ notice: { noticeId, title, postedDate, viewCount, name, job } }) => {
     const navigate = useNavigate();
