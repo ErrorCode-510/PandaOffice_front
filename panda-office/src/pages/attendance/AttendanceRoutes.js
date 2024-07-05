@@ -1,10 +1,18 @@
 import { Routes, Route } from "react-router-dom";
+import AttendanceStatus from './attendancestatus/AttendanceStatus';
+import AnnualLeaveRecord from './annualleaverecord/AnnualLeaveRecord';
+import AnnualLeaveCalendar from './annualLeaveCalendar/AnnualLeaveCalendar';
+import AttendanceRequestStatus from './attendancerequeststatus/AttendanceRequestStatus';
+
 
 function AttendanceRoutes() {
     return (
         <Routes>
-            <Route path="test" element={<div>근태 라우팅 테스트</div>} />
-            {/* 라우트 적용 */}
+            <Route path="management/status" element={<AttendanceStatus />} />
+            <Route path="management/annual_leave_record" element={<AnnualLeaveRecord />} />
+            <Route path="annualCalendar" element={<AnnualLeaveCalendar />} />
+            <Route path="request_status" element={<AttendanceRequestStatus />} />
+            
         </Routes>
     );
 }

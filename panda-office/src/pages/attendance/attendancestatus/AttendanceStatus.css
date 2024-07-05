@@ -1,0 +1,90 @@
+.main-content {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+tbody tr td {
+    border-top: none;
+}
+
+tbody tr td:first-child, tbody tr td:last-child {
+    border-top: 1px solid #ddd;
+}
+
+.AttendanceStatusWeekSection {
+    margin-top: 20px;
+}
+
+.AttendanceStatusWeekSection .week {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.AttendanceStatusWeekSection .week-content {
+    display: none;
+    padding-left: 20px;
+}
+
+.AttendanceStatusWeekSection .week.open .week-content {
+    display: block;
+}
+
+.status-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    text-align: center;
+}
+
+.status-item {
+    flex: 1;
+}
+
+.status-title {
+    display: block;
+    font-size: 14px;
+    color: #666;
+}
+
+.status-value {
+    display: block;
+    font-size: 18px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.status-value-gray {
+    color: #999;
+}
+
+.divider {
+    width: 1px;
+    height: 40px;
+    background-color: #ddd;
+    margin: 0 20px;
+}
