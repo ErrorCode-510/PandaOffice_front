@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setApplicantDetail } from '../../../modules/ApplicantModules';
 import { useEffect, useState } from 'react';
 import { callApplicantModify, callApplicantDelete } from '../../../apis/ApplicantAPICalls';
-import ConfirmationModal from '../ConfirmationModal';
 
 const ApplicantModal = () => {
 
