@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './MyPay.css';
 
 function MyPay() {
     const [rows, setRows] = useState([]);
     const [date, setDate] = useState('2024-07-15');
-    const [employee, setEmployee] = useState({ id: '2314012', name: '이다온' });
+    const [employeeId, setEmployeeId] = useState(null);
     const [salary, setSalary] = useState({ base: 2500000, meal: 100000 });
     const [deductions, setDeductions] = useState({ nationalPension: 112500, healthInsurance: 83370, employmentInsurance: 20000, longTermCare: 8540 });
 
     const totalSalary = salary.base + salary.meal;
     const totalDeductions = Object.values(deductions).reduce((acc, curr) => acc + curr, 0);
     const netSalary = totalSalary - totalDeductions;
+
+    /* 사원 정보 가져오기 */
+    useEffect(() => {
+        const fetchCurrentUser = async () => {
+            try {
+                const response = await fetch(`http://localhost:8001/payroll/${employeeId}`);
+                const data = await response.json();
+                setEmployeeId(data);
+            } catch (error) {
+                console.error('Error fetching current user data:', error);
+            }
+        };
+
+        fetchCurrentUser();
+    }, []);
 
     const generateRow = (category, amount, categoryType) => ({
         id: rows.length + 1,
@@ -50,8 +65,8 @@ function MyPay() {
                         <option value="payrollandbonus">급여 + 상여</option>
                     </select>
                     <span>대상자</span>
-                    <input type="text" value={employee.id} readOnly disabled />
-                    <input type="text" value={employee.name} readOnly disabled />
+                    <input type="text" value={employeeId ? employeeId.employeeId : ''} readOnly disabled />
+                    <input type="text" value={employeeId ? employeeId.name : ''} readOnly disabled />
                     <button type="submit">조회</button>
                 </div>
 
