@@ -12,8 +12,6 @@ function EmployeeRoutes() {
     console.log(getMemberId());
     return (
         <Routes>
-            <Route path="test" element={<div>인사관리 라우팅 테스트</div>} />
-            {/* 라우트 적용 */}
             <Route path="employeeList" element={<EmployeeList />} />
             <Route path="addNewEmployee" element={<AddNewEmployee />} />
             <Route path=":id" element={<EmployeeDetail />} />
