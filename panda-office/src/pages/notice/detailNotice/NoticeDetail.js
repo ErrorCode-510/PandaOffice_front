@@ -13,7 +13,7 @@ const NoticeDetail = () => {
         dispatch(callNoticeDetailAPI(noticeId));
     }, [dispatch, noticeId]);
 
-    if (!detail) return <div>Loading...</div>;
+    if (!detail) return <div>Loading.....</div>;
 
     const beforeOnClick = () => {
         navigate(`/notice/detail/${noticeId}` - 1)
