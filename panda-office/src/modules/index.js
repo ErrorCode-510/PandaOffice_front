@@ -4,7 +4,7 @@ import memberReducer from "./MemberModules";
 import e_approvalReducer from "./E_ApprovalModules";
 import applicantReducer from "./ApplicantModules";
 import payrollReducer from "./PayrollModules";
-// import noticeReducer from "./NoticeModules";
+import noticeReducer from "./NoticeModules";
 
 
 const rootReducer = combineReducers({
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
      e_approvalReducer,
      applicantReducer,
      payrollReducer,
-     // noticeReducer
+     noticeReducer
 });
 
 export default rootReducer;
