@@ -1,7 +1,7 @@
 import {Outlet} from "react-router-dom";
 import Footer from "../../components/common/Footer";
 import NoticeSidebar from "./NoticeSidebar";
-import Notice from "./Notice";
+// import Notice from "./Notice";
 
 function NoticeLayout() {
     return (
