@@ -424,11 +424,16 @@
     justify-content: space-between;
 }
 
-.interviewer-list,
-.add-list {
+.interviewer-list {
     width: 45%;
     height: 150px;
     overflow-y: scroll;
+    border: 1px solid #000;
+}
+
+.add-list {
+    width: 45%;
+    height: 150px;
     border: 1px solid #000;
 }
 

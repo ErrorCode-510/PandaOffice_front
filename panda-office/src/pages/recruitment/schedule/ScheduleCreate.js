@@ -4,7 +4,16 @@ import CalendarApi from "../../../utils/CalendarApi";
 const ScheduleCreate = () => {
 
     const [time, setTime ] = useState("");
+    const [formValues, setFormValues] = useState({
+        name: "",
+        startDate: "",
+        endDate: "",
+        startTime: "",
+        place: "",
+        memo: ""
+    })
 
+    /* 시작시간 24시간 계산 */
     useEffect(() => {
         const now = new Date();
         const hours = String(now.getHours()).padStart(2, "0");
@@ -12,8 +21,13 @@ const ScheduleCreate = () => {
         setTime(`${hours}:${minutes}`);
     }, []);
 
-    console.log('면접 시간: ' + time);
-    
+    /* 입력 필드 */
+    const handlerFormOnChange = (e) => {
+        const { name, value} = e.target;
+        setFormValues( prevState => ({ ...prevState, [name]: value}));
+        console.log(JSON.stringify(name))
+    }
+
     return (
         <>
             <h1 className="schedule-title">면접 일정 등록</h1>
@@ -25,7 +39,13 @@ const ScheduleCreate = () => {
                             <tbody>
                                 <tr>
                                     <td className="schedule-label"><label>일정명</label></td>
-                                    <td><input type="text" placeholder="일정명을 입력해 주세요." className="schedule-title-name" /></td>
+                                    <td><input
+                                    type="text"
+                                    placeholder="일정명을 입력해 주세요."
+                                    className="schedule-title-name"
+                                    onChange={handlerFormOnChange}
+                                    value={formValues.name}
+                                    /></td>
                                 </tr>
                                 <tr>
                                     <td className="schedule-label"><label>시작날짜</label></td>
@@ -52,12 +72,9 @@ const ScheduleCreate = () => {
                                     <td>
                                         <select className="schedule-place">
                                             <option>면접실 선택</option>
-                                            {/* <option value="">장소를 선택하세요</option>
-                                            {places.map(place => (
-                                                <option key={place.id} value={place.id}>
-                                                    {place.name}
-                                                </option>
-                                            ))} */}
+                                            <option>면접1실</option>
+                                            <option>면접2실</option>
+                                            <option>면접3실</option>
                                         </select>
                                     </td>
                                 </tr>
