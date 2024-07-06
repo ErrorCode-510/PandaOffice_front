@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-// import Notice from "./Notice";
+import Notice from "./Notice";
 import React from 'react';
 import NoticeDetail from './detailNotice/NoticeDetail';
 import NoticeList from "./NoticeList";
