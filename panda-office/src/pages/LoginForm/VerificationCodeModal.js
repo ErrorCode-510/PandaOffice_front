@@ -5,7 +5,7 @@ const VerificationCodeModal = ({
                                isOpen,
                                onRequestClose,
                                onChangeHandler,
-                               onClickFindPasswordHandler
+                                   onClickVerifyCodeHandler
                            }) => (
     <Modal
         isOpen={isOpen}
@@ -21,34 +21,18 @@ const VerificationCodeModal = ({
             <form>
                 <input
                     type="text"
-                    placeholder="이름 입력"
+                    placeholder="인증 코드 입력"
                     required
                     onChange={onChangeHandler}
-                    name="name"
+                    name="verificationCode"
                 />
 
-                <br/>
-                <input
-                    type="text"
-                    placeholder="아이디 입력"
-                    required
-                    onChange={onChangeHandler}
-                    name="employeeId"
-                />
-                <br/>
-                <input
-                    type="email"
-                    placeholder="이메일 입력"
-                    required
-                    onChange={onChangeHandler}
-                    name="email"
-                />
             </form>
             <div>
                 <button onClick={onRequestClose}>취소</button>
                 <button
                     style={{backgroundColor: "#1E1F31", color: "white"}}
-                    onClick={onClickFindPasswordHandler}
+                    onClick={onClickVerifyCodeHandler}
                 >
                     찾기
                 </button>

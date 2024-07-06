@@ -185,3 +185,145 @@
     font-size: 20px;
     text-align: center;
 }
+
+/* A4 컴포넌트 아우터 */
+.page-component-outer {
+    padding: 30px 30px 0px 30px;
+}
+
+/* A4 컴포넌트 이너 */
+.page-component-inner {
+    border: #000000 solid 1px;
+    width: 21cm;
+    min-height: 29.7cm;
+    padding: 1.5cm 1.5cm 2cm 1.5cm;
+}
+
+/* 템플릿 제목 */
+.template-title {
+    margin: 20px 0px 70px 0px;
+    font-size: 40px;
+    text-align: center;
+    width: 100%;
+}
+.template-title input {
+    font-size: 40px;
+    text-align: center;
+    width: 100%;
+    border: none;
+}
+
+/* 결재 영역 */
+.approval-area{
+    display: flex;
+    margin-left: auto;
+}
+
+
+/* 템플릿 기안정보 */
+.draft-info {
+    left: 0px;
+}
+.draft-info table {
+
+    font-size: 14px;
+    width: auto;
+    border-collapse: collapse;
+}
+
+.draft-info th, .draft-info td {
+    border: 1px solid black;
+    text-align: left;
+    padding: 4px 0 4px 8px;
+}
+
+.draft-info th {
+    width: 90px;
+}
+
+.draft-info td {
+    width: 130px;
+}
+
+
+
+/* 양식 설정 핸들러 */
+.template-set-component {
+    width: 400px;
+    padding-left: 20px;
+    font-size: 16px;
+}
+.template-set-component label {
+    font-size: 20px;
+}
+
+.template-set-component select {
+    margin-right: 10px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 0 5px;
+}
+.template-set-component button {
+    margin-right: 10px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    padding: 0 10px;
+    background-color: #1E1F31;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+
+/* 양식 결재선 박스 */
+.approval-box {
+    display: table;
+    border-collapse: collapse;
+    width:70px;
+    height:90px;
+    border-width: 1px 1px 1px 0px;
+    border-style: solid;
+    border-color: black;
+    flex-shrink: 0;
+    font-size: 12px;
+}
+.approval-box-cover {
+    display: table-row;
+    text-align: center;
+    height: 17px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.approval-box-content {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 10px;
+}
+.approval-box-description{
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 90px;
+    background-color: #C6C6C6;
+    margin-left: 10px;
+    border: 1px solid black;
+}
+
+.new-line-preview-area {
+    display: flex;
+    align-items: center;
+}
+.new-line-preview-area img {
+    width: 50px;
+    height: 50px;
+}
+.new-line-area {
+    padding: 15px 20px 15px 20px;
+}

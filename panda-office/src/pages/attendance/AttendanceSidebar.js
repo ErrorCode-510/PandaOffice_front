@@ -43,28 +43,41 @@ function AttendanceSidebar() {
         <>
             <div className={`side-wrap ${isRootPath ? 'collapsed' : ''}`}>
                 <div className="side-bar">
-                    <div className="title">채용/면접</div>
-                    <button className="add-btn">작성/등록</button>
+                    <div className="title">근태 관리</div>
                     <ul className="mt-30 txt-align-left">
                         <li>
                             <div className="sidebar-item" onClick={toggleMainHandler}>
                                 {isMainOpen ? <IoIosArrowDown className="sidebar-icons toggle-down"/> : <IoIosArrowUp className="sidebar-icons toggle-up"/>}
-                                <span className="icons-text fs-18 cursor-p">채용/면접 관리</span>
+                                <span className="icons-text fs-18 cursor-p">근태 관리</span>
                             </div>
                             {isMainOpen && (
                                 <ul className="mt-10">
                                     <li>
                                         <div className="sidebar-item" onClick={togglesubHandler}>
                                             {isSubOpen ? <IoIosArrowDown className="sidebar-icons ml-20"/> : <IoIosArrowUp className="sidebar-icons ml-20"/>}
-                                            <span className="icons-text fs-14 cursor-p">면접 일정 관리</span>
+                                            <span className="icons-text fs-14 cursor-p">내 근태 관리</span>
                                         </div>
                                         {isSubOpen && (
                                             <ul className="mt-10">
-                                                <li className="icons-text fs-12 mt-10 ml-55 cursor-p">면접 일정</li>
-                                                <li className="icons-text fs-12 mt-10 ml-55 cursor-p">면접 일정 등록</li>
-                                                <li className="icons-text fs-12 mt-10 ml-55 cursor-p">면접 일정 수정/삭제</li>
+
+                                                <NavLink to="/attendance/management/status">
+                                                    <li className="icons-text fs-12 mt-10 ml-55 cursor-p">내 근태 현황</li>
+                                                </NavLink>
+
+                                                <NavLink to="/attendance/management/annual_leave_record">
+                                                    <li className="icons-text fs-12 mt-10 ml-55 cursor-p">내 연차 내역</li>
+                                                </NavLink>
+
                                             </ul>
                                         )}
+
+                                        <NavLink to="/attendance/annualLeaveCalendar">
+                                        <li className="icons-text fs-14 mt-10 ml-55 cursor-p">연차 캘린더</li>
+                                        </NavLink>
+
+                                        <NavLink to="/attendance/request_status">
+                                        <li className="icons-text fs-14 mt-10 ml-55 cursor-p">근태 신청 현황</li>
+                                        </NavLink>
                                     </li>
                                 </ul>
                             )}
