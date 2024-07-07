@@ -1,6 +1,7 @@
 import NoticeListItem from "./NoticeListItem";
 import './notice.css';
-import { callNoticeListAPI, callNoticeByCategoryAPI } from "../../apis/NoticeAPICalls";
+import PagingBar from "./NoticePagingBar";
+import { callNoticeByCategoryAPI, callNoticeListAPI  } from "../../apis/NoticeAPICalls";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,25 +9,42 @@ import { useDispatch, useSelector } from "react-redux";
 const NoticeList = ({notice}) => {
     const { category, subCategory } = useParams();
     const dispatch = useDispatch();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);  // 현재 페이지 상태
+    const [totalPages, setTotalPages] = useState(1);  // 총 페이지 수 상태
 
-    // useEffect(() => {
-    //     if (category && subCategory) {
-    //         dispatch(callNoticeByCategoryAPI({ category, subCategory, currentPage }));
-    //     } else {
-    //         dispatch(callNoticeListAPI({ currentPage }));
-    //     }
-    // }, [category, subCategory, currentPage, dispatch]);
 
-    // useEffect(() => {
-    //     if (notice && notice.pagingButtonInfo) {
-    //         setTotalPages(notice.pagingButtonInfo.totalPages);
-    //     }
-    // }, [notice]);
+    // 페이지가 변경될 때마다 API 호출
+    useEffect(() => {
+        if (category && subCategory) {
+            // 카테고리와 서브카테고리가 있는 경우 해당 API 호출
+            dispatch(callNoticeByCategoryAPI({category, subCategory, currentPage}))
+                .then((response) => {
+                    if (response && response.totalPages) {
+                        setTotalPages(response.totalPages);  // API 응답에서 총 페이지 수를 totalPages 상태에 저장
+                    }
+                });
+        } else {
+            // 카테고리와 서브카테고리가 없는경우 전체 공지사항 API 호출
+            dispatch(callNoticeListAPI({currentPage}))
+                .then((response) => {
+                    if (response && response.totalPages) {
+                        setTotalPages(response.totalPages);
+                    }
+                });
+        }
+    }, [category, subCategory, currentPage, dispatch]);
+
 
     const handlePageChange = (page) => {
-        setCurrentPage(page);
+        setCurrentPage(page);  // 현재 페이지 변경
+    };
+
+    // 페이지네이션 정보를 계산
+    const pageInfo = {
+        startPage: Math.max(1, currentPage - 2),  // 시작 페이지 계산
+        endPage: Math.min(totalPages, currentPage + 2),  // 끝 페이지 계산
+        currentPage,
+        maxPage: totalPages
     };
 
     return (
@@ -42,19 +60,10 @@ const NoticeList = ({notice}) => {
             </div>
             <div>
                 {notice && notice.map(notice => (
-                    <NoticeListItem key={notice.noticeId} notice={notice} />
+                    <NoticeListItem key={notice.noticeId} notice={notice} />  // 공지사항 항목을 렌더링
                 ))}
             </div>
-            {/* <div className="pagination">
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => handlePageChange(index + 1)}
-                        disabled={currentPage === index + 1}
-                    >
-                    </button>
-                ))}
-            </div> */}
+            
         </div>
     );
 };

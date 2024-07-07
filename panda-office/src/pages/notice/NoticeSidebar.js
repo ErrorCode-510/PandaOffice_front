@@ -4,16 +4,15 @@ import {useEffect, useState} from "react";
 
 function NoticeSidebar() {
 
-    // 현재 경로를 확인하기 위해 location 훅 사용
-    const location = useLocation();
-    const isRootPath = location.pathname === "/";
+    const location = useLocation();  // 현재 경로를 확인하기 위해 useLocation 훅 사용
+    const isRootPath = location.pathname === "/";  // 루트 경로 확인
 
     // 메인, 서브, 이벤트 섹션의 열림/닫힘 상태를 관리하는 상태 훅
     const [isMainOpen, setIsMainOpen] = useState(false);
     const [isSubOpen, setIsSubOpen] = useState(false);
     const [isEventOpen, setIsEventOpen] = useState(false);
 
-    /* 로컬에 열림/닫힘 상태 값 boolean 형태로 저장하기 */
+    /* 공지사항 섹션 열림/닫힘 상태를 토글하고 로컬 스토리지에 저장 */
     const toggleMainHandler = () => {
         const newMainState = !isMainOpen;
         setIsMainOpen(newMainState);
@@ -21,8 +20,8 @@ function NoticeSidebar() {
         localStorage.setItem("mainHandler", JSON.stringify(newMainState));
     };
 
-    /* 렌더링 후 마운트 될 떄 로컬에 저장 된 상태 값을 가져와서 파싱 된 문자열을 set 
-    * 애플리케이션 재실행해도 저장 값이 남아있음 */
+    /* 렌더링 후 마운트 될 때 로컬에 저장 된 상태 값을 가져와서 파싱 된 문자열을 set 
+    * 애플리케이션 재실행 해도 저장 값이 남아있음 */
     useEffect(() => {
         const savedMainStorage = localStorage.getItem("mainHandler")
         if (savedMainStorage !== null) {
@@ -30,6 +29,7 @@ function NoticeSidebar() {
         }
     }, []);
 
+    // 그룹공지 섹션 열림/닫힘 상태를 토글하고 로컬 스토리지에 저장
     const toggleSubHandler = () => {
         const newSubState = !isSubOpen;
         setIsSubOpen(newSubState);
@@ -37,12 +37,14 @@ function NoticeSidebar() {
     };
 
     useEffect(() => {
+        // 로컬 스토리지에서 그룹공지 섹션 상태를 가져와 설정
         const savedSubStorage = localStorage.getItem("subHandler")
         if (savedSubStorage !== null) {
             setIsSubOpen(JSON.parse(savedSubStorage));
         }
     }, []);
 
+    // 경조사 섹션 열림/닫힘 상태를 토글하고 로컬 스토리지에 저장
     const toggleEventHandler = () => {
         const newEventStatue = !isEventOpen;
         setIsEventOpen(newEventStatue);
@@ -50,6 +52,7 @@ function NoticeSidebar() {
     };
 
     useEffect(() => {
+        // 로컬 스토리지에서 경조사 섹션 상태를 가져와 설정
         const savedEventStorage = localStorage.getItem("eventHandler");
         if (savedEventStorage != null) {
             setIsEventOpen(JSON.parse(savedEventStorage));
@@ -58,7 +61,7 @@ function NoticeSidebar() {
 
     return (
         <>
-            <div className={`side-wrap ${isRootPath ? 'collapsed' : ''}`}>
+            <div className={`side-wrap ${isRootPath ? 'collapsed' : ''}`}> {/* 루트 경로에 따라 사이드바 스타일 적용 */}
                 <div className="side-bar">
                     <div className="title">게시판</div>
                     <button className="add-btn">글쓰기</button>
@@ -83,19 +86,19 @@ function NoticeSidebar() {
                                         </div>
                                         {isSubOpen && (
                                             <ul>
-                                                <NavLink to={"/accounting"}>
+                                                <NavLink to={"/category/group/accounting"}>
                                                     <li className="icons-text fs-12 mt-10 ml-55 cursor-p">회계</li>
                                                 </NavLink>
-                                                <NavLink to={"/sales"}>
+                                                <NavLink to={"/category/group/sales"}>
                                                     <li className="icons-text fs-12 mt-10 ml-55 cursor-p">영업</li>
                                                 </NavLink>
-                                                <NavLink to={"/hr"}>
+                                                <NavLink to={"/category/group/hr"}>
                                                     <li className="icons-text fs-12 mt-10 ml-55 cursor-p">인사</li>
                                                 </NavLink>
-                                                <NavLink to={"/marketing"}>
+                                                <NavLink to={"/category/group/marketing"}>
                                                     <li className="icons-text fs-12 mt-10 ml-55 cursor-p">마케팅</li>
                                                 </NavLink>
-                                                <NavLink to={"/planning"}>
+                                                <NavLink to={"/category/group/planning"}>
                                                     <li className="icons-text fs-12 mt-10 ml-55 cursor-p">기획</li>
                                                 </NavLink>
                                             </ul>
@@ -112,9 +115,15 @@ function NoticeSidebar() {
                             </div>
                             {isEventOpen && (
                                 <ul className="mt-10">
-                                    <li className="icons-text fs-12 mt-10 ml-35 cursor-p">결혼</li>
-                                    <li className="icons-text fs-12 mt-10 ml-35 cursor-p">부고</li>
-                                    <li className="icons-text fs-12 mt-10 ml-35 cursor-p">돌잔치</li>
+                                    <NavLink to="/category/event/marriage">
+                                        <li className="icons-text fs-12 mt-10 ml-35 cursor-p">결혼</li>
+                                    </NavLink>
+                                    <NavLink to="/category/event/funeral">
+                                        <li className="icons-text fs-12 mt-10 ml-35 cursor-p">부고</li>
+                                    </NavLink>
+                                    <NavLink to="/category/event/first_birthday">
+                                        <li className="icons-text fs-12 mt-10 ml-35 cursor-p">돌잔치</li>
+                                    </NavLink>
                                 </ul>
                             )}
                         </li>

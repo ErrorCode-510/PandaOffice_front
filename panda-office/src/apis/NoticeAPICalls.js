@@ -6,10 +6,11 @@ export const callNoticeListAPI = ({ currentPage }) => {
     return async (dispatch, getState) => {
 
         const result = await authRequest.get(`/notice/notices?page=${currentPage}`);
-        console.log("Fetching all notices for page: " + currentPage);
+        console.log(`Fetching all notices for page: ${currentPage}`);
 
         if (result.status === 200) {
             dispatch(getNotice(result));
+            return result.data;  // tatalPages 값을 얻기 위해 반환
         } else {
             console.error('callNoticeListAPI error : ', result);
         }
@@ -29,13 +30,16 @@ export const callNoticeDetailAPI = (noticeId) => {
     };
 }
 
-/* 카테고리 별 공지사항 조회 API */
+/* 카테고리 별 공지사항 조회 API (사이드바) */
 export const callNoticeByCategoryAPI = ({ category, subCategory, currentPage }) => {
     return async (dispatch, getState) => {
+
         const result = await authRequest.get(`/notice/category/${category}/${subCategory}?page=${currentPage}`);
         console.log(`Fetching notice for category: ${category}, subCategory: ${subCategory}, page: ${currentPage}`);
+
         if (result.status === 200) {
             dispatch(getNoticeByCategory(result));
+            return result.data;  // totalPages 값을 얻기 위해 반환
         } else {
             console.error('callNoticeByCategoryAPI error : ', result);
         }
