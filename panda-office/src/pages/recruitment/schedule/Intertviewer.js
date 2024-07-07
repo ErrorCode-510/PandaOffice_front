@@ -16,7 +16,7 @@ const Interviewer = () => {
 
     /* 사원 ID 취득 핸들러 */
     const handlerEmployeeId = (employeeId) => {
-        console.log('고용자 ID 확인: ' + JSON.stringify(employeeId))
+        console.log('사원 ID 확인: ' + JSON.stringify(employeeId))
     }
 
     return (
