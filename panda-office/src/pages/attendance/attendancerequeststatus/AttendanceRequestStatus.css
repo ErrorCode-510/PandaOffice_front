@@ -1,0 +1,157 @@
+.attendance-request-status {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header span {
+    font-size: 20px;
+}
+
+.current-date {
+    font-size: 14px;
+    color: gray;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-top: 45px solid #1E1F31;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.user-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.leave-stats {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    flex: 1;
+    border-left: 1px solid #e0e0e0;
+}
+
+.stat:first-child {
+    border-left: none;
+}
+
+.stat span:first-child {
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.stat span:last-child {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* AttendanceSearch styles */
+.attendance-search {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.attendance-search label {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.attendance-search input[type="date"] {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 0 5px;
+}
+
+.attendance-search button {
+    background-color: #2F3850;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.attendance-search button:hover {
+    background-color: #333;
+}
+
+/* Leave history styles */
+.leave-history {
+    margin-top: 20px;
+}
+
+.leave-history h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: left; /* 왼쪽 정렬 */
+}
+
+.leave-history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: white; /* 배경색 흰색으로 설정 */
+}
+
+.leave-history th, .leave-history td {
+    border: none; /* 세로 테두리 삭제 */
+    padding: 8px;
+    text-align: center; /* 가운데 정렬 */
+}
+
+.leave-history th {
+    background-color: #1E1F31;
+    color: white;
+}
+
+.leave-history thead th:first-child {
+    border-top-left-radius: 15px;
+}
+
+.leave-history thead th:last-child {
+    border-top-right-radius: 15px;
+}
+
+.leave-history tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 15px;
+}
+
+.leave-history tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 15px;
+}
