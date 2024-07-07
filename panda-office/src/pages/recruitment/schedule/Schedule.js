@@ -1,11 +1,13 @@
 import CalendarApi from "../../../utils/CalendarApi";
+import ScheduleModal from "./ScheduleModal";
 
 const Schedule = () => {
+
     return (
         <>
             <div className="schedule-calendar">
                 <CalendarApi 
-                    height='735px'
+                    height='665px'
                     headerToolbar={{
                         left: 'prev,next today',
                         center: 'title',
@@ -13,6 +15,7 @@ const Schedule = () => {
                     }}
                 />
             </div>
+            <ScheduleModal />
         </>
     )
 }

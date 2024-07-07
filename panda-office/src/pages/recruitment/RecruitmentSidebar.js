@@ -3,6 +3,7 @@ import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setModalStatus } from "../../modules/ApplicantModules";
+import { getScheduleStatus } from "../../modules/InterviewScheduleModules";
 
 function RecruitmentSidebar() {
 
@@ -80,7 +81,7 @@ function RecruitmentSidebar() {
             if (location.pathname.includes("/recruitment/applicant")) {
                 handlerModarOpen();
             } else if (location.pathname.includes("/recruitment/schedule")) {
-                navigate('/recruitment/schedule/create');
+                handlerScheduleOpen();
             } else {
                 console.log('경로 확인 불가능')
             }
@@ -92,6 +93,12 @@ function RecruitmentSidebar() {
     /* 면접자 목록 경로 일 경우 면접자 등록 핸들러 */
     const handlerModarOpen = () => {
         dispatch(setModalStatus(true))
+    }
+
+    /* 면접일정 경로 일 경우 면접일정 등록 핸들러 */
+    const handlerScheduleOpen = () => {
+        dispatch(getScheduleStatus(true))
+        // console.log('사이드바 값 전달 확인')
     }
 
     return (

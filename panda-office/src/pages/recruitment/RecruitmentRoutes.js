@@ -7,10 +7,7 @@ function RecruitmentRoutes() {
     return (
         <Routes>
             <Route path="applicant" element={<Applicant />} />
-            <Route path="schedule">
-                <Route index element={<Schedule />} />
-                <Route path="create" element={<ScheduleCreate />} />
-            </Route>
+            <Route path="schedule" element={<Schedule/>}/>
         </Routes>
     );
 }

@@ -4,15 +4,15 @@ import memberReducer from "./MemberModules";
 import e_approvalReducer from "./E_ApprovalModules";
 import applicantReducer from "./ApplicantModules";
 import noticeReducer from "./NoticeModules";
-// import interviewScheduleReducer from "./InterviewScheduleModules";
+import interviewScheduleReducer from "./InterviewScheduleModules";
 
 
 const rootReducer = combineReducers({
      memberReducer,
      e_approvalReducer,
      applicantReducer,
-     noticeReducer
-     // interviewScheduleReducer
+     noticeReducer,
+     interviewScheduleReducer
 });
 
 export default rootReducer;

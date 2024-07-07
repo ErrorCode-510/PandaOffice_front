@@ -348,18 +348,30 @@
     margin-left: 5px;
 } */
 
-/* schedule-calendar ------------------------------------------------------------------------------------------------------------------- */
+/* schedule ------------------------------------------------------------------------------------------------------------------- */
+.schedule-calendar {
+    background-color: #fff;
+    /* border: 1px solid #ff0000; */
+    padding: 20px 15px 0 15px;
+}
+
+/* schedule-create ------------------------------------------------------------------------------------------------------------------- */
 .schedule-calendar,
 .schedule-create {
     width: 100%;
     height: 100%;
     /* background-color: #fff; */
     /* padding: 30px 30px 0 30px; */
-    border-radius: 15px;
+    /* border-radius: 15px; */
 }
 
 .schedule-create {
     display: flex;
+    background-color: rgba(0, 0, 0, 0.50);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
 }
 
 .schedule-form {
@@ -367,6 +379,12 @@
     height: 705px;
     background-color: #fff;
     margin-right: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 11;
+    border-radius: 15px 15px 0 0;
 }
 
 .schedule-title-main {

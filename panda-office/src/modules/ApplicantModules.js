@@ -53,9 +53,7 @@ export const { applicant: {
 
 /* 리듀서 함수 */
 const applicantReducer = handleActions({
-    [GET_APPLICANT]: (state, { payload }) => ({
-         ...state, applicant: payload.applicant
-        }),
+    [GET_APPLICANT]: (state, { payload }) => ({...state, applicant: payload.applicant}),
     [SET_CRITERIA]: (state, { payload }) => ({
         ...state, criteria: payload.criteria
     }),
