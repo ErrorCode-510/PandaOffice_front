@@ -4,6 +4,11 @@ import { authRequest } from './api';
 /* 면접자 전체 조회 API */
 export const callApplicantListAPI = ({ criteria, currentPage = 1 }) => {
 
+    if (!criteria) {
+        console.error('criteria is undefined');
+        return;
+    }
+
     // console.log('api params 호출 : ' + JSON.stringify(params))
     
     let endpoint = `/recruitment/applicant/search?page=${currentPage}`

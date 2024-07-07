@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getScheduleStatus } from "../../../modules/InterviewScheduleModules";
 import Interviewer from "./Intertviewer";
 import InterviewereAddList from "./InterviewerAddList";
+import { callApplicantListAPI } from "../../../apis/ApplicantAPICalls";
+import { callApplicantAllAPI } from "../../../apis/InterviewScheduleAPICalls";
 
 const ScheduleModal = () => {
 
@@ -17,7 +19,8 @@ const ScheduleModal = () => {
         endDate: "",
         startTime: "",
         place: "",
-        memo: ""
+        interviewer: "",
+        applicantList: []  // 면접자 목록을 저장할 배열
     })
 
     /* 시작시간 24시간 계산 */
@@ -35,7 +38,6 @@ const ScheduleModal = () => {
             ...prevState,
             [name]: value
         }));
-        console.log(value)
     }
 
     /* 취소 버튼 모달 상태 값 변경 */
@@ -67,7 +69,34 @@ const ScheduleModal = () => {
         return () => {
             window.removeEventListener('keydown', handlerButtonOff);
         }
-    }, [getScheduleStatus])
+    }, []);
+
+    /* 면접자 목록 불러오기 핸들러 */
+    const handleApplicantList = () => {
+        dispatch(callApplicantAllAPI());
+    }
+
+    /* 면접자 목록 상태 가져오기 */
+    const { applicantList } = useSelector(state => state.interviewScheduleReducer);
+
+    /* 면접관 변경 핸들러 */
+    const handleInterviewerChange = (interviewerId) => {
+        setFormValues(prevState => ({
+            ...prevState,
+            interviewer: interviewerId
+        }));
+    };
+
+    /* 면접자 선택 핸들러 */
+    const handleSelectApplicant = (applicantId) => {
+        // 이미 선택된 applicantId인지 확인
+        if (!formValues.applicantList.includes(applicantId)) {
+            setFormValues(prevState => ({
+                ...prevState,
+                applicantList: [...prevState.applicantList, applicantId]
+            }));
+        }
+    };
 
     return (
         <>
@@ -146,17 +175,39 @@ const ScheduleModal = () => {
                                         <td className="schedule-label"><label>면접관</label></td>
                                         <td className="dis-flex">
                                             <div className="interviewer-list">
-                                                <Interviewer/>
+                                            <div className="interviewer-job-name">직급</div>
+                                            <Interviewer onInterviewerChange={handleInterviewerChange}/>
                                             </div>
                                             <div className="add-list">
-                                                <InterviewereAddList/>
+                                                <InterviewereAddList />
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="schedule-label"><label>면접자<br /><button>면접자목록</button></label></td>
+                                        <td className="schedule-label">
+                                            <label>
+                                                면접자<br />
+                                                <button onClick={handleApplicantList}>면접자목록</button>
+                                            </label>
+                                        </td>
                                         <td>
-                                            <div className="applicant-list"></div>
+                                            <div className="applicant-list">
+                                                <div className="applicant-item applicant-fixed">
+                                                    <div>이름</div>
+                                                    <div>생년월일</div>
+                                                    <div>성별</div>
+                                                </div>
+                                                {
+                                                    applicantList.data &&
+                                                    applicantList.data.map(applicant => (
+                                                        <div key={applicant.id} className="applicant-item applicant-hover ">
+                                                            <div>{applicant.name}</div>
+                                                            <div>{applicant.birthDate}</div>
+                                                            <div>{applicant.gender}</div>
+                                                        </div>
+                                                    ))
+                                                }
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -169,7 +220,6 @@ const ScheduleModal = () => {
                     </div>
                 </div>
             }
-
         </>
     )
 }

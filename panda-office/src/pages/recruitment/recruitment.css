@@ -430,13 +430,6 @@
     height: 30px;
 }
 
-/* .interviewer-list,
-.add-list,
-.applicant-list-modal,
-.applicant-add {
-    margin-top: 10px;
-} */
-
 .dis-flex {
     display: flex;
     justify-content: space-between;
@@ -456,10 +449,36 @@
     /* padding-right: 20px; */
 }
 
+.applicant-item {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+.applicant-fixed {
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #2F3850;
+    color: #fff;
+}
+
+.applicant-item div {
+    width: 25%;
+    margin-bottom: 5px;
+}
+
+.applicant-hover:hover {
+    background-color: rgba(0, 0, 0, 0.10);
+    cursor: pointer;
+}
+
 .applicant-list {
     width: 100%;
     height: 150px;
     border: 1px solid #000;
+    overflow-y: scroll;
 }
 
 .schedule-btn {
@@ -489,8 +508,17 @@
     margin-right: 5px;
 }
 
+.interviewer-job-name {
+    background-color: #2F3850;
+    color: #fff;
+    padding-left: 30px;
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
 .job-wrap {
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     padding-left: 30px;
 }
 
