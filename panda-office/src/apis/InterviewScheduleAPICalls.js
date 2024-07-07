@@ -1,21 +1,21 @@
-import { getPlace } from "../modules/InterviewScheduleModules"
+import { getInterviewer } from "../modules/InterviewScheduleModules"
 import { authRequest } from "./api"
 
-/* 면접 장소 호출 API */
-export const callPlaceListAPI = () => {
+/* 면접관 호출 API */
+export const callInterviewerAPI = () => {
     return async (dispatch, getState) => {
 
         try {
-            const result = await authRequest.get('/recruitment/place')
+            const result = await authRequest.get('/payroll/allemplpayroll')
 
             if (result.status === 200) {
-                dispatch(getPlace(result))
-                console.log('면접장소 api 확인: ' + JSON.stringify(result))
+                dispatch(getInterviewer(result))
+                // console.log('면접관 api 확인: ' + JSON.stringify(result))
             } else {
-                console.error('CallPlaceListAPI error : ', result);
+                console.error('CallInterviewerAPI error : ', result);
             }
         } catch (error) {
-            console.error('catch: CallPlaceListAPI error : ', error);
+            console.error('catch: CallInterviewerAPI error : ', error);
         }
     }
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getScheduleStatus } from "../../../modules/InterviewScheduleModules";
+import Interviewer from "./Intertviewer";
 
 const ScheduleModal = () => {
 
@@ -36,9 +37,10 @@ const ScheduleModal = () => {
         console.log(value)
     }
 
-    /* 닫기 버튼 모달 상태 값 변경 */
+    /* 취소 버튼 모달 상태 값 변경 */
     const handlerCancelModal = () => {
         dispatch(getScheduleStatus(false));
+        setFormValues({})
     }
 
     /* Esc 키로 모달 닫기 핸들러 */
@@ -142,7 +144,9 @@ const ScheduleModal = () => {
                                     <tr>
                                         <td className="schedule-label"><label>면접관</label></td>
                                         <td className="dis-flex">
-                                            <div className="interviewer-list"></div>
+                                            <div className="interviewer-list">
+                                                <Interviewer/>
+                                            </div>
                                             <div className="add-list"></div>
                                         </td>
                                     </tr>
