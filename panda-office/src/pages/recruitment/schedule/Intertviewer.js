@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { callInterviewerAPI } from "../../../apis/InterviewScheduleAPICalls";
 import { GoPlus } from "react-icons/go";
+import { getInterviewerId } from "../../../modules/InterviewScheduleModules";
 
 const Interviewer = () => {
 
@@ -16,7 +17,8 @@ const Interviewer = () => {
 
     /* 사원 ID 취득 핸들러 */
     const handlerEmployeeId = (employeeId) => {
-        console.log('사원 ID 확인: ' + JSON.stringify(employeeId))
+        // console.log('사원 ID 확인: ' + JSON.stringify(employeeId))
+        dispatch(getInterviewerId(employeeId));
     }
 
     return (

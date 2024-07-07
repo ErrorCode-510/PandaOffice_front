@@ -10,13 +10,13 @@ const initialState = {
 /* 액션 타입 */
 const GET_SCHEDULE_STATUS = 'schedule/GET_SCHEDULE_STATUS'
 const GET_INTERVIEWER = 'schedule/GET_INTERVIEWER'
-const GET_INTERVIEWE_ID = 'schedule/GET_INTERVIEWE_ID'
+const GET_INTERVIEWER_ID = 'schedule/GET_INTERVIEWER_ID'
 
 /* 액션 생성 함수 */
 export const { schedule: { getScheduleStatus, getInterviewer, getInterviewerId }} = createActions({
     [GET_SCHEDULE_STATUS]: state => ({ scheduleStatus: state }),
     [GET_INTERVIEWER]: data => ({ interviewer: data }),
-    [GET_INTERVIEWE_ID]: id => ({ interviewerId: id })
+    [GET_INTERVIEWER_ID]: id => ({ interviewerId: id })
 })
 
 /* 리듀서 */
@@ -29,8 +29,8 @@ const interviewScheduleReducer = handleActions({
         // console.log('면접관 리듀서 확인: ' + JSON.stringify(payload.interviewer))
         return {...state, interviewer: payload.interviewer }
     },
-    [GET_INTERVIEWE_ID]: (state, { payload }) => {
-        console.log('면접관 아이디 리듀서 확인: ' + JSON.stringify(payload.interviewerId))
+    [GET_INTERVIEWER_ID]: (state, { payload }) => {
+        // console.log('면접관 아이디 리듀서 확인: ' + JSON.stringify(payload.interviewerId))
         return {...state, interviewerId: payload.interviewerId }
     }
 }, initialState)
