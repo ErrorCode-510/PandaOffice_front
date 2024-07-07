@@ -1,5 +1,5 @@
 import {createActions, handleActions} from "redux-actions";
-import produce from 'immer';
+import { produce } from 'immer';
 
 /* 초기값 */
 const initialState = {
