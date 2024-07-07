@@ -33,14 +33,45 @@ function EmplPayroll() {
     const [categoryAmounts, setCategoryAmounts] = useState({});
 
     const handleAmountChange = (categoryId, amount) => {
+        const intAmount = amount === '' ? 0 : Math.floor(Number(amount));
         setCategoryAmounts(prevAmounts => ({
             ...prevAmounts,
-            [categoryId]: amount
+            [categoryId]: intAmount
         }));
     };
 
+    useEffect(() => {
+        if (selectedEmployeeId && rows.earnings) {
+            const selectedEmployee = employees.find(emp => emp.employeeId === selectedEmployeeId);
+            if (selectedEmployee) {
+                const newCategoryAmounts = { ...categoryAmounts };
+
+                // 기본급 (카테고리 ID: 101)
+                const baseSalaryCategory = rows.earnings.find(cat => cat.earningCategoryId === 101);
+                if (baseSalaryCategory) {
+                    newCategoryAmounts[101] = Math.floor(selectedEmployee.annualSalary / 12);
+                }
+
+                // 식대 (카테고리 ID: 200)
+                const mealAllowanceCategory = rows.earnings.find(cat => cat.earningCategoryId === 206);
+                if (mealAllowanceCategory) {
+                    newCategoryAmounts[200] = 100000;
+                }
+
+                // 직책수당 (카테고리 ID: 205)
+                const jobAllowanceCategory = rows.earnings.find(cat => cat.earningCategoryId === 205);
+                if (jobAllowanceCategory) {
+                    newCategoryAmounts[205] = Math.floor(selectedEmployee.jobAllowance || 0);
+                }
+
+                setCategoryAmounts(newCategoryAmounts);
+            }
+        }
+    }, [selectedEmployeeId, employees, rows.earnings]);
+
+    /* 총 지급액 계산 */
     const calculateTotal = () => {
-        return Object.values(categoryAmounts).reduce((sum, amount) => sum + Number(amount || 0), 0);
+        return Math.floor(Object.values(categoryAmounts).reduce((sum, amount) => sum + (Number(amount) || 0), 0));
     };
 
     useEffect(() => {
@@ -56,12 +87,30 @@ function EmplPayroll() {
         setFilteredCategories(filtered);
     }, [e_category, option]);
 
+
     const handleRowClick = (emp) => {
         setSelectedEmployeeId(emp.employeeId);
         setRows({
             earnings: earningCategories.filter(category => category.employeeId === emp.employeeId),
             deductions: deductionCategories.filter(category => category.employeeId === emp.employeeId),
         });
+        
+        const newCategoryAmounts = {...categoryAmounts};
+        
+        // 기본급 (카테고리 ID: 101)
+        if (emp.annualSalary) {
+            newCategoryAmounts[101] = Math.floor(emp.annualSalary / 12);
+        }
+
+        // 식대 (카테고리 ID: 200)
+        newCategoryAmounts[200] = 100000;
+
+        // 직책수당 (카테고리 ID: 205)
+        if (emp.jobAllowance) {
+            newCategoryAmounts[205] = Math.floor(emp.jobAllowance);
+        }
+        
+        setCategoryAmounts(newCategoryAmounts);
     };
 
     const handleSearch = () => {
@@ -120,7 +169,7 @@ function EmplPayroll() {
                                     key={emp.employeeId}
                                     onClick={() => handleRowClick(emp)}
                                     className={emp.employeeId === selectedEmployeeId ? 'selected-row' : ''}>
-                                    {console.log(emp)}
+                                    {/* {console.log(emp)} */}
                                     <td>{emp.employeeId}</td>
                                     <td>{emp.name}</td>
                                     <td>{emp.jobTitle}</td>
@@ -154,14 +203,9 @@ function EmplPayroll() {
                         <tbody>
                             {rows.earnings && filteredCategories.map((category) => (
                                 <tr key={`filtered-category-${category.earningCategoryId}`}>
-                                    {console.log('e_category:', e_category)}
                                     <td>{category.name}</td>
                                     <td>
-                                        <input
-                                            type="number"
-                                            value={categoryAmounts[category.earningCategoryId] || ''}
-                                            onChange={(e) => handleAmountChange(category.earningCategoryId, e.target.value)}
-                                        />
+                                        {(categoryAmounts[category.earningCategoryId] ?? 0).toLocaleString()}
                                     </td>
                                 </tr>
                             ))}
@@ -199,15 +243,26 @@ function EmplPayroll() {
                             </tr>
                         </thead>
                         <tbody>
-                            {rows.deductions && d_category.map((category, index) => (
-                                <tr key={`d_category-${index}`}>
-                                    {/* {console.log('d_category:', d_category)} */}
-                                    <td>{category.name}</td>
-                                    <td>{category.deducationRate}</td>
-                                </tr>
-                            ))}
-                        </tbody>
+                            {rows.deductions && d_category.map((category, index) => {
+                                // 기본급여 (101번 카테고리의 금액)
+                                const baseSalary = categoryAmounts[101] || 0;
 
+                                // 공제율을 소수점으로 변환 (예: 4.5% -> 0.045)
+                                const deductionRate = category.deductionRate / 100;
+
+                                // 공제 금액 계산 (기본급여 * 공제율)
+                                const deductionAmount = Math.floor(baseSalary * deductionRate);
+
+                                return (
+                                    <tr key={`d_category-${index}`}>
+                                        <td>{category.name}</td>
+                                        <td style={{ textAlign: 'right' }}>
+                                            {isNaN(deductionAmount) ? 'NaN' : deductionAmount.toLocaleString()}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
                     </table>
                 </div>
                 <div className="tfoot-container">
