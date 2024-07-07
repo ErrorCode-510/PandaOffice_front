@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getScheduleStatus } from "../../../modules/InterviewScheduleModules";
 import Interviewer from "./Intertviewer";
+import InterviewereAddList from "./InterviewerAddList";
 
 const ScheduleModal = () => {
 
@@ -147,7 +148,9 @@ const ScheduleModal = () => {
                                             <div className="interviewer-list">
                                                 <Interviewer/>
                                             </div>
-                                            <div className="add-list"></div>
+                                            <div className="add-list">
+                                                <InterviewereAddList/>
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>

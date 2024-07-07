@@ -4,7 +4,7 @@ import { createActions, handleActions } from "redux-actions";
 const initialState = {
     scheduleStatus: false,
     interviewer: {},
-    interviewerId: null
+    interviewerId: []
 }
 
 /* 액션 타입 */

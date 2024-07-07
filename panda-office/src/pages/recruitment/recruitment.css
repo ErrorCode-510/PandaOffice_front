@@ -453,6 +453,7 @@
     width: 45%;
     height: 150px;
     border: 1px solid #000;
+    /* padding-right: 20px; */
 }
 
 .applicant-list {
@@ -512,5 +513,19 @@
 }
 
 .emp-name:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* interviewer-add-list ------------------------------------------------------------------------------------------------------------------- */
+.ial-li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 0 20px;
+    margin-top: 20px;
+}
+
+.ial-li:hover {
     background-color: rgba(0, 0, 0, 0.1);
 }
