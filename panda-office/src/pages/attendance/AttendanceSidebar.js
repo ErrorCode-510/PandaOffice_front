@@ -78,6 +78,10 @@ function AttendanceSidebar() {
                                         <NavLink to="/attendance/request_status">
                                         <li className="icons-text fs-14 mt-10 ml-55 cursor-p">근태 신청 현황</li>
                                         </NavLink>
+
+                                        <NavLink to="/attendance/annual_leave_adjustment">
+                                        <li className="icons-text fs-14 mt-10 ml-55 cursor-p">연차 조정</li>
+                                        </NavLink>
                                     </li>
                                 </ul>
                             )}
