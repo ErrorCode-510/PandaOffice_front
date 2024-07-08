@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-
+import "./Employee.css";
 import { formatDate } from '../../utils/DateUtils';
 import EmployeeSidebar from "./EmployeeSidebar";
 import {getMemberId} from "../../utils/TokenUtils"; // 날짜 유틸리티 임포트
@@ -52,9 +52,45 @@ function EmployeeEdit() {
         familyMember: [],
         careerHistory: [],
         educationHistory: [],
-        licenses: []
+        licenses: [],
+        photoName: photo ? photo.name : '',
+        photoPath: photo ? photo.path : ''
     });
-
+    const handleAddRow = (category) => {
+        if (category === 'familyMembers') {
+            setEmployee(prevEmployee => ({
+                ...prevEmployee,
+                familyMember: [
+                    ...prevEmployee.familyMember,
+                    { relationship: '', name: '', birthDate: '', job: '', education: '', note: '' }
+                ]
+            }));
+        } else if (category === 'careerHistory') {
+            setEmployee(prevEmployee => ({
+                ...prevEmployee,
+                careerHistory: [
+                    ...prevEmployee.careerHistory,
+                    { startDate: '', endDate: '', companyName: '', department: '', lastPosition: '', workDescription: '' }
+                ]
+            }));
+        } else if (category === 'educationHistory') {
+            setEmployee(prevEmployee => ({
+                ...prevEmployee,
+                educationHistory: [
+                    ...prevEmployee.educationHistory,
+                    { admissionDate: '', graduationDate: '', schoolName: '', major: '', degree: '' }
+                ]
+            }));
+        } else if (category === 'licenses') {
+            setEmployee(prevEmployee => ({
+                ...prevEmployee,
+                licenses: [
+                    ...prevEmployee.licenses,
+                    { issuingOrganization: '', issueDate: '', name: '' }
+                ]
+            }));
+        }
+    };
     useEffect(() => {
         // 직원 데이터를 가져오는 비동기 함수
         const fetchEmployee = async () => {
@@ -74,17 +110,34 @@ function EmployeeEdit() {
     // 입력 필드 변경을 처리하는 핸들러
     const handleChange = (e, category) => {
         const { name, value, dataset } = e.target;
-        if (category === 'familyMembers') {
-            const index = dataset.index;
+        const index = dataset.index ? Number(dataset.index) : null;
+        if (category === 'familyMembers' && index !== null) {
             setEmployee(prevEmployee => ({
                 ...prevEmployee,
-                familyMember: prevEmployee.familyMember.map((member, idx) => idx === index ? { ...member, [name]: value } : member)
+                familyMember: prevEmployee.familyMember.map((member, idx) =>
+                    idx === index ? { ...member, [name]: value } : member
+                )
             }));
-        } else if (category === 'careerHistory') {
-            const index = dataset.index;
+        } else if (category === 'careerHistory' && index !== null) {
             setEmployee(prevEmployee => ({
                 ...prevEmployee,
-                careerHistory: prevEmployee.careerHistory.map((career, idx) => idx === index ? { ...career, [name]: value } : career)
+                careerHistory: prevEmployee.careerHistory.map((career, idx) =>
+                    idx === index ? { ...career, [name]: value } : career
+                )
+            }));
+        } else if (category === 'educationHistory' && index !== null) {
+            setEmployee(prevEmployee => ({
+                ...prevEmployee,
+                educationHistory: prevEmployee.educationHistory.map((education, idx) =>
+                    idx === index ? { ...education, [name]: value } : education
+                )
+            }));
+        } else if (category === 'licenses' && index !== null) {
+            setEmployee(prevEmployee => ({
+                ...prevEmployee,
+                licenses: prevEmployee.licenses.map((license, idx) =>
+                    idx === index ? { ...license, [name]: value } : license
+                )
             }));
         } else {
             setEmployee(prevEmployee => ({
@@ -96,13 +149,41 @@ function EmployeeEdit() {
             }));
         }
     };
-
+    const handleRemoveRow = (category, index) => {
+        setEmployee(prevEmployee => {
+            switch (category) {
+                case 'familyMembers':
+                    return {
+                        ...prevEmployee,
+                        familyMember: prevEmployee.familyMember.filter((_, i) => i !== index)
+                    };
+                case 'careerHistory':
+                    return {
+                        ...prevEmployee,
+                        careerHistory: prevEmployee.careerHistory.filter((_, i) => i !== index)
+                    };
+                case 'educationHistory':
+                    return {
+                        ...prevEmployee,
+                        educationHistory: prevEmployee.educationHistory.filter((_, i) => i !== index)
+                    };
+                case 'licenses':
+                    return {
+                        ...prevEmployee,
+                        licenses: prevEmployee.licenses.filter((_, i) => i !== index)
+                    };
+                default:
+                    return prevEmployee;
+            }
+        });
+    };
     // 폼 제출을 처리하는 핸들러
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await axios.put(`http://localhost:8001/api/v1/members/updateEmployee`, employee); // PUT 요청으로 데이터 업데이트
             // navigate(`/employees/${id}`); // 업데이트 후 직원 세부 정보 페이지로 이동
+            console.log(employee);
         } catch (error) {
             console.error('Failed to update employee details:', error);
         }
@@ -148,7 +229,13 @@ function EmployeeEdit() {
             const file = e.target.files[0];
             const reader = new FileReader();
             reader.onloadend = () => {
-                setPhoto({ name: file.name, path: reader.result });
+                const updatedPhoto = { name: file.name, path: reader.result };
+                setPhoto(updatedPhoto);
+                setEmployee(prevState => ({
+                    ...prevState,
+                    photoName: updatedPhoto.name,
+                    photoPath: updatedPhoto.path
+                }));
             };
             reader.readAsDataURL(file);
         }
@@ -214,7 +301,7 @@ function EmployeeEdit() {
                 </div>
                 <div className="common-comp">
                     <div className="table-container">
-                        <h1>사원 등록</h1>
+                        <h1>사원 수정</h1>
                         <form onSubmit={handleSubmit}>
                             <div className="flex-container">
                                 <table>
@@ -222,7 +309,11 @@ function EmployeeEdit() {
                                     <tr>
                                         <th rowSpan="2">사진</th>
                                         <td rowSpan="2">
-                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                            <div style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center'
+                                            }}>
                                                 <input
                                                     type="file"
                                                     id="photo"
@@ -231,8 +322,7 @@ function EmployeeEdit() {
                                                     style={{display: 'none'}}
                                                 />
                                                 <button type="button" onClick={handlePhotoClick}
-                                                        className="photo-button">
-                                                    +
+                                                        className="plus-button">+
                                                 </button>
                                                 {photo && (
                                                     <img
@@ -425,28 +515,19 @@ function EmployeeEdit() {
                                         <th>비고</th>
                                     </tr>
                                     {employee.familyMember.map((member, index) => (
-                                        <tr key={index}>
-
-                                            <td><input type="text" value={member.relationship} data-index={index}
-                                                       name="relationship"
-                                                       onChange={(e) => handleChange(e, 'familyMembers')}/></td>
-                                            <td><input type="text" value={member.name} data-index={index} name="name"
-                                                       onChange={(e) => handleChange(e, 'familyMembers')}/></td>
-                                            <td><input type="date" value={member.birthDate} data-index={index}
-                                                       name="birthDate"
-                                                       onChange={(e) => handleChange(e, 'familyMembers')}/></td>
-                                            <td><input type="text" value={member.job} data-index={index} name="job"
-                                                       onChange={(e) => handleChange(e, 'familyMembers')}/></td>
-                                            <td><input type="text" value={member.education} data-index={index}
-                                                       name="education"
-                                                       onChange={(e) => handleChange(e, 'familyMembers')}/></td>
-                                            <td><input type="text" value={member.note} data-index={index} name="note"
-                                                       onChange={(e) => handleChange(e, 'familyMembers')}/></td>
+                                        <tr key={index} onDoubleClick={() => handleRemoveRow('familyMembers', index)}>
+                                            <td><input type="text" value={member.relationship} name="relationship" onChange={(e) => handleChange(e, 'familyMembers', index)} /></td>
+                                            <td><input type="text" value={member.name} name="name" onChange={(e) => handleChange(e, 'familyMembers', index)} /></td>
+                                            <td><input type="date" value={member.birthDate} name="birthDate" onChange={(e) => handleChange(e, 'familyMembers', index)} /></td>
+                                            <td><input type="text" value={member.job} name="job" onChange={(e) => handleChange(e, 'familyMembers', index)} /></td>
+                                            <td><input type="text" value={member.education} name="education" onChange={(e) => handleChange(e, 'familyMembers', index)} /></td>
+                                            <td><input type="text" value={member.note} name="note" onChange={(e) => handleChange(e, 'familyMembers', index)} /></td>
                                         </tr>
                                     ))}
                                     <tr>
                                         <td colSpan="6" style={{textAlign: 'center'}}>
-                                            <button type="button" onClick={handleAddFamilyMember} className="plus-button">+
+                                            <button type="button" onClick={handleAddFamilyMember}
+                                                    className="plus-button">+
                                             </button>
                                         </td>
                                     </tr>
@@ -463,7 +544,8 @@ function EmployeeEdit() {
                                     </tr>
                                     {employee.careerHistory.map((career, index) => (
 
-                                        <tr key={index}>
+                                        <tr key={index} onDoubleClick={() => handleRemoveRow('careerHistory', index)}>
+
                                             <td><input type="date" value={career.startDate} data-index={index}
                                                        name="startDate"
                                                        onChange={(e) => handleChange(e, 'careerHistory')}/></td>
@@ -507,7 +589,7 @@ function EmployeeEdit() {
                                     </tr>
                                     {employee.educationHistory.map((education, index) => (
 
-                                        <tr key={index}>
+                                        <tr key={index} onDoubleClick={() => handleRemoveRow('educationHistory', index)}>
 
                                             <td><input type="date" value={education.admissionDate} data-index={index}
                                                        name="admissionDate"
@@ -549,8 +631,10 @@ function EmployeeEdit() {
                                         <th></th>
                                     </tr>
                                     {employee.licenses.map((license, index) => (
-                                        <tr key={index}>
-                                            <td><input type="text" value={license.issuingOrganization} data-index={index}
+                                        <tr key={index}
+                                            onDoubleClick={() => handleRemoveRow('licenses', index)}>
+                                            <td><input type="text" value={license.issuingOrganization}
+                                                       data-index={index}
                                                        name="issuingOrganization"
                                                        onChange={(e) => handleChange(e, 'licenses')}/></td>
 
@@ -568,11 +652,12 @@ function EmployeeEdit() {
                                         </tr>
                                     ))}
                                     <tr>
-                                        <td colSpan="6" style={{textAlign: 'center'}}>
-                                            <button type="button" onClick={handleAddCertificationRow}
-                                                    className="plus-button">+
-                                            </button>
-                                        </td>
+                                    <td colSpan="6" style={{textAlign: 'center'}}>
+                                        <button type="button" onClick={handleAddCertificationRow}
+                                                className="plus-button">
+                                            <span style={{fontSize: '20px', fontWeight: 'bold'}}>+</span>
+                                        </button>
+                                    </td>
                                     </tr>
                                     </tbody>
                                 </table>
