@@ -330,6 +330,10 @@
     border-radius: 15px 15px 0 0;
 }
 
+.schedule-input-wrap {
+    padding: 10px 20px 0 20px;
+}
+
 .schedule-calendar-emp {
     width: 940px;
     height: 705px;
@@ -443,13 +447,15 @@
     margin-right: 5px;
 }
 
-.interviewer-job-name {
+.interviewer-job-name,
+.ial-p {
     background-color: #2F3850;
     color: #fff;
-    padding-left: 30px;
     position: sticky;
     top: 0;
     left: 0;
+    text-align: center;
+    font-size: 16px;
 }
 
 .job-wrap {
@@ -486,9 +492,14 @@
     align-items: center;
     cursor: pointer;
     padding: 0 20px;
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 .ial-li:hover {
     background-color: rgba(0, 0, 0, 0.1);
 }
+
+    /* 텍스트 숨기기 */
+/* .fc-daygrid-day-number {
+    color: transparent;
+} */

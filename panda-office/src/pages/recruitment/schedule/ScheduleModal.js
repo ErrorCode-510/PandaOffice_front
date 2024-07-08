@@ -5,7 +5,7 @@ import Interviewer from "./Intertviewer";
 import InterviewereAddList from "./InterviewerAddList";
 import { callApplicantAllAPI } from "../../../apis/InterviewScheduleAPICalls";
 
-const ScheduleModal = () => {
+const ScheduleModal = ({ onAddEvent }) => {
 
     const { scheduleStatus } = useSelector(state => state.interviewScheduleReducer)
     const { applicantList } = useSelector(state => state.interviewScheduleReducer);
@@ -93,24 +93,21 @@ const ScheduleModal = () => {
 
     /* 이벤트 추가 핸들러 */
     const handleAddEvent = () => {
-        // const newEvent = {
-        //     title: formValues.name,
-        //     start: `${formValues.startDate}T${formValues.startTime}`,
-        //     end: `${formValues.endDate}T${formValues.startTime}`,
-        //     extendedProps: {
-        //         interviewer: formValues.interviewer,
-        //         place: formValues.place,
-        //         applicantList: formValues.applicantList
-        //     }
-        // };
+        const newEvent = {
+            title: formValues.name,
+            start: `${formValues.startDate}T${formValues.startTime}`,
+            end: `${formValues.endDate}T${formValues.startTime}`,
+            extendedProps: {
+                interviewer: formValues.interviewer,
+                place: formValues.place,
+                applicantList: formValues.applicantList
+            }
+        };
 
-        // const calendar = CalendarApi.getInstance();
-        // if (calendar) {
-        //     calendar.addEvent(newEvent);
-        // }
+        onAddEvent(newEvent);
         handlerCancelModal();
-        alert("면접일정 등록 완료")
-        console.log('데이터 확인: ' + JSON.stringify(formValues))
+        alert("면접일정 등록 완료");
+        console.log('데이터 확인: ' + JSON.stringify(formValues));
     };
 
     return (
@@ -198,7 +195,7 @@ const ScheduleModal = () => {
                                         <td className="schedule-label"><label>면접관</label></td>
                                         <td className="dis-flex">
                                             <div className="interviewer-list">
-                                                <div className="interviewer-job-name">직급</div>
+                                                <p className="interviewer-job-name">면접관 추가</p>
                                                 <Interviewer onInterviewerChange={handleInterviewerChange} />
                                             </div>
                                             <div className="add-list">
