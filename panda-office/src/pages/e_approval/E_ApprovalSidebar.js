@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSidebarStatus } from "../../modules/E_ApprovalModules";
 import { callDepartmentBox } from "../../apis/e_approval/ApprovalDocumentFolderAPICalls";
 import './E_Approval.css';
+import { DraftModal } from "../../components/e_approval/modal/DraftModal";
 
 function E_ApprovalSidebar() {
 
     const dispatch = useDispatch();
+    const [draftModal, setDraftModal] = useState(false)
 
     const { sidebarStatus, departmentBox } = useSelector(state => state.e_approvalReducer)
 
@@ -34,7 +36,8 @@ function E_ApprovalSidebar() {
             <div className={`side-wrap no-select`}>
                 <div className="side-bar">
                     <div className="title">전자 결재</div>
-                    <button className="add-btn">결재 기안</button>
+                    <button className="add-btn"
+                    onClick={() => {setDraftModal(true)}}>결재 기안</button>
                     <ul className="mt-30 txt-align-left">
                         <li>
                             <div className="sidebar-item" onClick={toggleHandler}>
@@ -92,6 +95,7 @@ function E_ApprovalSidebar() {
                     </div>
                 </div>
             </div>
+            {draftModal&&<DraftModal setDraftModal={setDraftModal}/>}
         </>
     )
 }

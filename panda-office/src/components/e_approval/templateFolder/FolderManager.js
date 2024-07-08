@@ -1,66 +1,66 @@
-import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDocumentTemplateSearch, fetchSearchWord, setFolderEditMode } from "../../../modules/E_ApprovalModules";
+import {  setFolderEditMode } from "../../../modules/E_ApprovalModules";
 import { callCreateDocumentFolderAPI, callRemoveDocumentFolderAPI } from "../../../apis/e_approval/ApprovalDocumentFolderAPICalls";
 
-export function FolderManager() {
+export function FolderManager({setFolderSearchResult}) {
 
 
 
     const dispatch = useDispatch();
-
     const { documentTemplateFolder, searchWord, folderEditMode, currentFolder } = useSelector(state => state.e_approvalReducer);
 
-    const filterFolders = (folders, word) => {
-        return folders
-            .map(folder => {
-                if (folder.name.includes(word)) {
-                    return folder;
+    const onChangeSearch = (e) => {
+        const keyword = e.target.value;
+        const searchResult = new Set();
+        const addParentFolders = (folders, folderIdSet) => {
+            let added = false;
+            for (const folder of folders) {
+                if (folderIdSet.has(folder.folderId) && folder.refFolderId !== null && !folderIdSet.has(folder.refFolderId)) {
+                    folderIdSet.add(folder.refFolderId);
+                    added = true;
                 }
-
-                const filteredSubFolders = filterFolders(folder.subFolderList, word);
-                const filteredDocuments = folder.documentList.filter(doc => doc.title.includes(word));
-
-                if (filteredSubFolders.length > 0 || filteredDocuments.length > 0) {
-                    return {
-                        ...folder,
-                        subFolderList: filteredSubFolders,
-                        documentList: filteredDocuments
-                    };
-                }
-
-                return null;
-            })
-            .filter(folder => folder !== null);
-    };
-
-    useEffect(() => {
-        if (documentTemplateFolder && documentTemplateFolder.data) {
-            if (searchWord === '') {
-                dispatch(fetchDocumentTemplateSearch(documentTemplateFolder.data));
-            } else {
-                const filteredFolders = filterFolders(documentTemplateFolder.data, searchWord);
-                dispatch(fetchDocumentTemplateSearch(filteredFolders));
+            }
+            if (added) {
+                addParentFolders(folders, folderIdSet);
             }
         }
-    }, [searchWord, documentTemplateFolder])
+
+        for (const folder of documentTemplateFolder) {
+            // 폴더 이름 검색
+            if (folder.name.includes(keyword)) {
+                searchResult.add(folder.folderId);
+            }
+
+            // 문서 제목 검색
+            for (const document of folder.documentList) {
+                if (document.title.includes(keyword)) {
+                    searchResult.add(folder.folderId);
+                    break; // 문서가 검색되면 폴더를 추가하고 다음 폴더로 넘어감
+                }
+            }
+        }
+        addParentFolders(documentTemplateFolder, searchResult);
+        const resultFolders = Array.from(searchResult).map(folderId =>
+            documentTemplateFolder.find(folder => folder.folderId === folderId)
+        );
+        setFolderSearchResult(resultFolders);
+    }
 
     return (
-        <div className="align-c" style={{height: '120px'}}>
+        <div className="align-c" style={{ height: '120px' }}>
             <span className="flex-center">
                 <button className="folder-button-navy"
-                onClick={() => {dispatch(callCreateDocumentFolderAPI(currentFolder))}}>폴더 추가</button>
-                <button className="folder-button-grey" onClick={() => {dispatch(setFolderEditMode(!folderEditMode))}}>
-                    {folderEditMode?"종료":"수정"}
+                    onClick={() => { dispatch(callCreateDocumentFolderAPI(currentFolder)) }}>폴더 추가</button>
+                <button className="folder-button-grey" onClick={() => { dispatch(setFolderEditMode(!folderEditMode)) }}>
+                    {folderEditMode ? "종료" : "수정"}
                 </button>
                 <button className="folder-button-grey"
-                onClick={() => {dispatch(callRemoveDocumentFolderAPI(currentFolder))}}>삭제</button>
+                    onClick={() => { dispatch(callRemoveDocumentFolderAPI(currentFolder)) }}>삭제</button>
             </span>
             <input className="folder-search-input"
                 placeholder="검색어를 입력해주세요."
                 value={searchWord}
-                onChange={(e) => {dispatch(fetchSearchWord(e.target.value))}}>
-
+                onChange={onChangeSearch}>
             </input>
         </div>
     )

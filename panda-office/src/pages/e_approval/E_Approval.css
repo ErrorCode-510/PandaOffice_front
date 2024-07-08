@@ -25,6 +25,7 @@
 .flex-center {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 .flex {
     display: flex;
@@ -68,17 +69,30 @@
     width: 20px;
     height: 20px;
 }
-.folder-name{
+.folder-name {
     font-size: 16px;
     cursor: pointer;
     margin-left: 5px;
+    white-space: nowrap; /* 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 내용 숨기기 */
+    text-overflow: ellipsis; /* 넘치는 내용 말줄임표 처리 */
+    width: auto; /* 폴더 이름에 맞춰 너비 자동 조정 */
+    max-width: 200px; /* 최대 너비 설정 (필요에 따라 조정) */
 }
-.selected-folder-name{
+
+.selected-folder-name {
     font-size: 16px;
     cursor: pointer;
     margin-left: 5px;
     color: #2076B4;
+    white-space: nowrap; /* 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 내용 숨기기 */
+    text-overflow: ellipsis; /* 넘치는 내용 말줄임표 처리 */
+    width: auto; /* 폴더 이름에 맞춰 너비 자동 조정 */
+    max-width: 200px; /* 최대 너비 설정 (필요에 따라 조정) */
+    font-weight: bold;
 }
+
 .template-name{
     font-size: 16px;
     margin-left: 5px;
@@ -319,6 +333,7 @@
 .new-line-preview-area {
     display: flex;
     align-items: center;
+    position: relative
 }
 .new-line-preview-area img {
     width: 50px;
@@ -326,4 +341,13 @@
 }
 .new-line-area {
     padding: 15px 20px 15px 20px;
+}
+.approval-line-list {
+    margin: 10px 20px 5px;
+}
+.close-button {
+    font-size: 30px;
+    position: absolute;
+    right: 0;
+    margin-right: 50px;
 }

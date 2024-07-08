@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TemplateEditor from "../../../components/e_approval/template/TemplateEditor";
 import { useEffect } from "react";
 import { callGetInfoForCreateTemplate } from "../../../apis/e_approval/ApprovalDocumentTemplateAPICalls";
-import { ApprovalDocumentSetting } from "../../../components/e_approval/template/components/ApprovalDocumentSetting";
+import { ApprovalDocumentSetting } from "../../../components/e_approval/template/ApprovalDocumentSetting";
 import { setCreateTemplateForm } from "../../../modules/E_ApprovalModules";
 
 function DocumentTemplateRegist() {

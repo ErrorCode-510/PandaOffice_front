@@ -8,12 +8,20 @@ export function ApprovalBox({ lineRequest }) {
     if(lineRequest.employeeId){
         employee = infoForCreate.employeeList.find(emp=>emp.employeeId == lineRequest.employeeId);
     } else if (lineRequest.departmentId == 0 && lineRequest.jobId){
-        employee = {name: '@@', job: infoForCreate.jobList.find(job=>job.id == lineRequest.jobId), department: {id: 0, name: '기안부서'}}
+        employee = {
+            name: '', 
+            job: infoForCreate.jobList.find(job=>job.id == lineRequest.jobId), 
+            department: {id: 0, name: '기안부서'}}
     } else if (lineRequest.departmentId && lineRequest.jobId){
-        employee = infoForCreate.employeeList.find(emp=>emp.job.id == lineRequest.jobId && emp.department.id == lineRequest.departmentId)
+        employee = {
+            name: '', 
+            job: infoForCreate.jobList.find(job=>job.id == lineRequest.jobId),
+            department: infoForCreate.departmentList.find(dept=>dept.id == lineRequest.departmentId)
+        }
     } else {
         employee = infoForCreate.employeeList.find(emp=>emp.job.title = '사장')
     }
+    console.log(lineRequest.departmentId)
     return (
         employee&&
         <div className="approval-box">

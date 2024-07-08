@@ -1,10 +1,21 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setCreateTemplateForm } from '../../../../modules/E_ApprovalModules';
 
 export function WebEditor() {
+    const dispatch = useDispatch();
     const editorRef = useRef(null);
     const [fontSize, setFontSize] = useState('16px');
     const [color, setColor] = useState('#000000');
-
+    const onInputHandler = (e) => {
+        if (editorRef.current) {
+            const htmlContent = editorRef.current.innerHTML;
+            dispatch(setCreateTemplateForm({
+                name: 'document',
+                value: htmlContent
+            }));
+        }
+    }
     useEffect(() => {
         if (editorRef.current) {
             editorRef.current.focus();
@@ -98,6 +109,7 @@ export function WebEditor() {
                 <button onClick={insertTable}>테이블 삽입</button>
             </div>
             <div
+                name="document"
                 ref={editorRef}
                 contentEditable={true}
                 style={{
@@ -107,6 +119,7 @@ export function WebEditor() {
                     whiteSpace: 'pre-wrap',
                     wordBreak: 'break-word'
                 }}
+                onInput={onInputHandler}
             />
         </div>
     );

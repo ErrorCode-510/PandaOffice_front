@@ -16,7 +16,7 @@ export const callDocumentFolderAPI = () => {
     return async (dispatch, getState)=>{
         const response = await authRequest.get('/approval-document-template-folders')
         if(response.status === 200){
-            dispatch(setDocumentTemplateFolder(response))
+            dispatch(setDocumentTemplateFolder(response.data))
         }
     }
 }
@@ -25,9 +25,11 @@ export const callCreateDocumentFolderAPI = (currentFolder) => {
     return async (dispatch, getState)=>{
         const request = currentFolder?{name: '새로운 폴더', refFolderId: currentFolder.folderId}:{name: '새로운 폴더'}
         const response = await authRequest.post('approval-document-template-folder', request)
-        if(response.status === 201){
+        if(response.status === 200){
+            dispatch(fetchCurrentFolder(response.data))
             dispatch(success());
             dispatch(callDocumentFolderAPI());
+            console.log(JSON.stringify(response.data))
         }
     }
 }
@@ -61,5 +63,6 @@ export const callUpdateTemplateStatusAPI = ({request})=>{
             dispatch(success());
         }
         dispatch(callDocumentFolderAPI());
+        dispatch(fetchCurrentFolder(response.data));
     }
 }

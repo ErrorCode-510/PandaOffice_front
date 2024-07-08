@@ -141,7 +141,7 @@ export function AddNewLine() {
                         name="departmentId"
                         onChange={onChangeHandler}
                     >
-                        <option value={null}>기안 부서</option>
+                        <option value={0}>기안 부서</option>
                         {infoForCreate.departmentList
                             .map(dep =>
                                 <option

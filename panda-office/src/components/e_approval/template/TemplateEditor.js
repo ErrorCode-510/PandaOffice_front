@@ -30,18 +30,18 @@ function TemplateEditor({ draftSample }) {
                     <div className="approval-area">
                         <div className="approval-box-description">기안</div>
                         <DraftBox draftSample={draftSample} />
-                        <div className="approval-box-description">결재</div>
                         {autoApprovalLineRequestList && autoApprovalLineRequestList.length != 0 &&
-                            autoApprovalLineRequestList.map(lineRequest => {
-                                console.log(autoApprovalLineRequestList.indexOf(lineRequest))
-                                return <ApprovalBox key={autoApprovalLineRequestList.indexOf(lineRequest)} lineRequest={lineRequest} />
-                            }
-                            )
+                            <>
+                                <div className="approval-box-description">결재</div>
+                                {autoApprovalLineRequestList.map(lineRequest => {
+                                    return <ApprovalBox key={autoApprovalLineRequestList.indexOf(lineRequest)} lineRequest={lineRequest} />
+                                })}
+                            </>
                         }
                     </div>
                 </div>
                 <div>
-                    <WebEditor/>
+                    <WebEditor />
                 </div>
             </div>
         </div>
