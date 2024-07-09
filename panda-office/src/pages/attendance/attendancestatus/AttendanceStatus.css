@@ -164,3 +164,11 @@
 .date-navigation .navigation-icon:hover {
     color: #007bff;
 }
+
+.sunday {
+    color: red;
+}
+
+.saturday {
+    color: blue;
+}
