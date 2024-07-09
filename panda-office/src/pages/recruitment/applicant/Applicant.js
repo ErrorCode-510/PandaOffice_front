@@ -6,7 +6,6 @@ import PagingBar from "../PagingBar";
 import ApplicantSearch from "./ApplicantSearch";
 import ApplicantModal from "./ApplicantModal";
 import ApplicantCreateModal from "./ApplicantCreateModal";
-import { getModalStatusClosed } from '../../../modules/ApplicantModules';
 
 const Applicant = () => {
 
