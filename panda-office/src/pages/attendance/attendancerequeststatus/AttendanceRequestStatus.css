@@ -155,3 +155,8 @@
 .leave-history tbody tr:last-child td:last-child {
     border-bottom-right-radius: 15px;
 }
+
+.user-info span {
+    display: inline-block;
+    white-space: nowrap;
+}
