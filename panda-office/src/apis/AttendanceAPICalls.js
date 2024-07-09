@@ -1,7 +1,8 @@
 import { authRequest } from './api';
 import {
     getAttendanceStatus,
-    getAnnualLeaveRecord,
+    getCurrentYearAnnualLeaveRecord, 
+    getSearchAnnualLeaveRecord,
     getAnnualLeaveCalendar,
     getAttendanceRequestStatus,
     getAllLeaveAdjustment,
@@ -44,19 +45,21 @@ export const callAttendanceStatusAPI = (searchDate) => {
     };
 };
 
-export const callAnnualLeaveRecordAPI = (startDate, endDate) => {
+export const callAnnualLeaveRecordAPI = (startDate, endDate, type) => {
     return async (dispatch) => {
         try {
             const response = await authRequest.get(`/attendance/management/annual_leave_record?startDate=${startDate}&endDate=${endDate}`);
             if (response.status === 200) {
-                dispatch(getAnnualLeaveRecord(response.data));
+                if (type === 'currentYear') {
+                    dispatch(getCurrentYearAnnualLeaveRecord(response.data));
+                } else {
+                    dispatch(getSearchAnnualLeaveRecord(response.data));
+                }
             } else {
                 console.error('API 호출 실패:', response);
-                // 에러 처리 로직 추가
             }
         } catch (error) {
             console.error('연차 내역 조회 에러:', error);
-            // 에러 처리 로직 추가
         }
     };
 };
