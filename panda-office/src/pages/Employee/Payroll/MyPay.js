@@ -23,9 +23,11 @@ function MyPay() {
                 console.error('Error fetching current user data:', error);
             }
         };
-
-        fetchCurrentUser();
-    }, []);
+    
+        if (employeeId) {
+            fetchCurrentUser();
+        }
+    }, [employeeId]);
 
     const generateRow = (category, amount, categoryType) => ({
         id: rows.length + 1,
