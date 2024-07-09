@@ -1,9 +1,7 @@
-import { getPayroll, getEarningCategories, getDeductionCategories, success, setPayroll, requestStart, requestFail } from "../modules/PayrollModules";
-import { request } from "./api";
-import { getMemberId } from "../utils/TokenUtils";
+import { getPayroll, getEarningCategories, getDeductionCategories, success, saveEmplPay, requestStart, requestFail } from "../modules/PayrollModules";
+import { authRequest, request } from "./api";
 
 export const callEmplPayAPI = () => {
-
     return async (dispatch, getState) => {
         try {
             // EmplPay
@@ -15,16 +13,16 @@ export const callEmplPayAPI = () => {
             }
 
             // 지급항목 카테고리
-            const earningCategoryResult  = await request('GET', `/payroll/earning-category`);
-            console.log('earningCategoryResult:', earningCategoryResult );
+            const earningCategoryResult = await request('GET', `/payroll/earning-category`);
+            console.log('earningCategoryResult:', earningCategoryResult);
 
             if (earningCategoryResult.status === 200 || earningCategoryResult.status === 201) {
                 dispatch(getEarningCategories(earningCategoryResult.data));
             }
 
             // 공제항목 카테고리
-            const deductionCategoryResult  = await request('GET', `/payroll/deduction-category`);
-            console.log('deductionCategoryResult :', deductionCategoryResult );
+            const deductionCategoryResult = await request('GET', `/payroll/deduction-category`);
+            console.log('deductionCategoryResult :', deductionCategoryResult);
 
             if (deductionCategoryResult.status === 200 || deductionCategoryResult.status === 201) {
                 dispatch(getDeductionCategories(deductionCategoryResult.data));
@@ -37,26 +35,30 @@ export const callEmplPayAPI = () => {
     };
 };
 
-export const callSaveEmplPayAPI = (payrollRequest) => {
+/* 사원 급여 등록 */
+export const callSaveEmplPayAPI = (payrollData) => {
     return async (dispatch, getState) => {
-        dispatch(requestStart());  // 요청 시작 상태 설정
-        try {
-            const response = await request('POST', `/payroll/save-emplpay`, payrollRequest);
-            console.log('saveEmplPay response:', response);
+        dispatch(requestStart());
 
-            if (response.status === 201 || response.status === 200) {
+        try {
+            const response = await authRequest.post('/payroll/save-emplpay', payrollData);
+
+            if (response.status === 201) {
+                const result = await response.json();
+                console.log('[PayrollAPICalls] callSaveEmplPayAPI RESULT:', result);
+                dispatch(saveEmplPay(result));
                 dispatch(success());
-                dispatch(setPayroll(response.data));
-                return true;  // 성공 시 true 반환
+                return { success: true, data: result }; // 호출자에게 성공 여부와 데이터 반환
             } else {
-                console.error('Failed to save payroll:', response);
-                dispatch(requestFail('Failed to save payroll'));
-                return false;  // 실패 시 false 반환
+                const errorText = await response.text(); // 다른 상태 코드의 경우 텍스트로 오류 메시지를 읽어올 수 있음
+                console.error('Unexpected status:', response.status, errorText);
+                dispatch(requestFail(`Unexpected status: ${response.status}`));
+                return { success: false, error: `Unexpected status: ${response.status}` };
             }
         } catch (error) {
-            console.error('Error saving payroll:', error);
-            dispatch(requestFail(error.message || 'Unknown error occurred'));
-            return false;  // 에러 발생 시 false 반환
+            console.error('Error in callSaveEmplPayAPI:', error);
+            dispatch(requestFail(error.message));
+            return { success: false, error: error.message }; // 호출자에게 실패 이유 반환
         }
     };
 };

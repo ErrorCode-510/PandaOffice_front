@@ -32,7 +32,7 @@ function Navbar() {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/employee" className="nav-link">
+                            <NavLink to="/employee/employeeList" className="nav-link">
                                 <FaRegUser className="side-icons"/>
                                 <p>인사</p>
                             </NavLink>
