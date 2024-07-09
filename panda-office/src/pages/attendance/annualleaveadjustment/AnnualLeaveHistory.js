@@ -1,11 +1,10 @@
 import React from 'react';
 import './AnnualLeaveHistory.css';
-import LeaveAdjustment from './LeaveAdjustment';
 
-const AnnualLeaveHistory = () => {
+const AnnualLeaveHistory = ({ employee }) => {
     return (
         <div className="annual-leave-history">
-            <h3><span className="employee-name">윤승희 슈퍼바이저</span>의 연차 변경이력</h3>
+            <h3><span className="employee-name">{employee.employeeName} {employee.jobName}</span>의 연차 변경이력</h3>
             <hr />
             <div className="leave-section">
                 <div className="leave-details">
@@ -26,61 +25,49 @@ const AnnualLeaveHistory = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>15</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>2024-01-01</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>1</td>
-                                <td></td>
-                                <td>2024-06-23</td>
-                            </tr>
+                            {/* 부여 연차 데이터 매핑 */}
+                            {employee.grantRecords.map((grant, index) => (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>{grant.defaultGrant}</td>
+                                    <td>{grant.additionalGrant}</td>
+                                    <td>{grant.underOneYearGrant}</td>
+                                    <td>{grant.rewardGrant}</td>
+                                    <td>{grant.replaceGrant}</td>
+                                    <td>{grant.date}</td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
-                <LeaveAdjustment />
-            </div>
-            <div className="leave-section full-width">
-                <h4>소진 연차</h4>
-                <table className="leave-table rounded-table">
-                    <thead>
-                        <tr>
-                            <th className="rounded-left-top">번호</th>
-                            <th>신청(조정)일</th>
-                            <th>사용기간</th>
-                            <th>근태항목</th>
-                            <th>사용일수</th>
-                            <th className="rounded-right-top">사용 내용</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>2023-03-30</td>
-                            <td>2023-03-30 ~ 2023-03-30</td>
-                            <td>연차</td>
-                            <td>1</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>2023-03-31</td>
-                            <td>2023-03-31 ~ 2023-03-31</td>
-                            <td>연차</td>
-                            <td>1</td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div className="leave-section full-width">
+                    <h4>소진 연차</h4>
+                    <table className="leave-table rounded-table">
+                        <thead>
+                            <tr>
+                                <th className="rounded-left-top">번호</th>
+                                <th>신청(조정)일</th>
+                                <th>사용기간</th>
+                                <th>근태항목</th>
+                                <th>사용일수</th>
+                                <th className="rounded-right-top">사용 내용</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {/* 소진 연차 데이터 매핑 */}
+                            {employee.usedRecords.map((used, index) => (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>{used.usedStartDate}</td>
+                                    <td>{`${used.usedStartDate} ~ ${used.usedEndDate}`}</td>
+                                    <td>{used.leaveSession}</td>
+                                    <td>{used.usedAmount}</td>
+                                    <td>{used.description}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

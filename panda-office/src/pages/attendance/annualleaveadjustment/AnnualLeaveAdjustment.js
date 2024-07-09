@@ -1,15 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import './AnnualLeaveAdjustment.css';
+import { callAllLeaveAdjustmentAPI, callLeaveAdjustmentSearchAPI } from '../../../apis/AttendanceAPICalls';
 import AnnualLeaveHistory from './AnnualLeaveHistory';
+import './AnnualLeaveAdjustment.css';
 
 const AnnualLeaveAdjustment = () => {
+    const dispatch = useDispatch();
     const [selectedYear, setSelectedYear] = useState(new Date());
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const allLeaveRecords = useSelector(state => state.attendanceReducer.allLeaveAdjustment) || []; // 기본값을 빈 배열로 설정
+
+    useEffect(() => {
+        dispatch(callAllLeaveAdjustmentAPI());
+    }, [dispatch]);
 
     const handleYearChange = (date) => {
         setSelectedYear(date);
     };
+
+    const handleSearch = () => {
+        const year = selectedYear.getFullYear();
+        dispatch(callLeaveAdjustmentSearchAPI(year));
+    };
+
+    const handleRowClick = (employee) => {
+        setSelectedEmployee(employee);
+    };
+
+    if (!Array.isArray(allLeaveRecords)) {
+        // allLeaveRecords가 배열이 아닌 경우 빈 배열로 설정
+        return <div>로딩 중...</div>;
+    }
 
     return (
         <div className="annual-leave-adjustment">
@@ -25,7 +48,7 @@ const AnnualLeaveAdjustment = () => {
                     dateFormat="yyyy"
                     className="year-picker"
                 />
-                <button type="button" className="search-button">조회</button>
+                <button type="button" className="search-button" onClick={handleSearch}>조회</button>
             </div>
             <div className="leave-info">
                 <h2>연차 정보</h2>
@@ -57,90 +80,35 @@ const AnnualLeaveAdjustment = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>인사팀</td>
-                            <td>부장</td>
-                            <td>박지연</td>
-                            <td>2020-01-01</td>
-                            <td>4년</td>
-                            <td>15</td>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>16</td>
-                            <td>2</td>
-                            <td></td>
-                            <td></td>
-                            <td>2</td>
-                            <td>4</td>
-                            <td>4</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>인사팀</td>
-                            <td>슈퍼바이저</td>
-                            <td>윤승희</td>
-                            <td>2021-01-01</td>
-                            <td>3년</td>
-                            <td>15</td>
-                            <td></td>
-                            <td></td>
-                            <td>1</td>
-                            <td></td>
-                            <td>16</td>
-                            <td>2</td>
-                            <td></td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>5</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>인사팀</td>
-                            <td>매니저</td>
-                            <td>이나라</td>
-                            <td>2021-01-01</td>
-                            <td>1년 미만</td>
-                            <td>11</td>
-                            <td></td>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td>12</td>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>2</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>인사팀</td>
-                            <td>팀장</td>
-                            <td>최용수</td>
-                            <td>2021-11-01</td>
-                            <td>2년 2개월</td>
-                            <td>15</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>15</td>
-                            <td>2</td>
-                            <td></td>
-                            <td></td>
-                            <td>2</td>
-                            <td>4</td>
-                            <td>4</td>
-                        </tr>
+                        {allLeaveRecords.map((record, index) => (
+                            <tr key={index} onClick={() => handleRowClick(record)}>
+                                <td>{index + 1}</td>
+                                <td>{record.departmentName}</td>
+                                <td>{record.jobName}</td>
+                                <td>{record.employeeName}</td>
+                                <td>{record.hireDate}</td>
+                                <td>{record.yearsOfService}</td>
+                                <td>{record.defaultGrant}</td>
+                                <td>{record.underOneYearGrant}</td>
+                                <td>{record.rewardGrant}</td>
+                                <td>{record.replaceGrant}</td>
+                                <td>{record.totalGrantedLeave}</td>
+                                <td>{record.defaultUsed}</td>
+                                <td>{record.underOneYearUsed}</td>
+                                <td>{record.rewardUsed}</td>
+                                <td>{record.replaceUsed}</td>
+                                <td>{record.totalUsedLeave}</td>
+                                <td>{record.remainingLeave}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
-            <AnnualLeaveHistory />
+            {selectedEmployee && (
+                <>
+                    <AnnualLeaveHistory selectedEmployee={selectedEmployee} />
+                </>
+            )}
         </div>
     );
 };

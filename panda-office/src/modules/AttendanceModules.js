@@ -14,7 +14,7 @@ const initialState = {
     annualLeaveCalendar: null,
     currentYearAttendanceRequestStatus: null,
     searchAttendanceRequestStatus: null,
-    allLeaveAdjustment: null,
+    allLeaveAdjustment: [], // 초기값을 빈 배열로 설정
     leaveAdjustmentSearch: null
 };
 
@@ -47,45 +47,7 @@ export const { attendance: {
     [GET_LEAVE_ADJUSTMENT_SEARCH]: (searchResult) => ({ searchResult })
 });
 
-
 /* 리듀서 */
-/* reducer:{
-  "attendanceRecordResponse": {
-    "calculatedAttendanceRecords": [
-      {
-        "weeklyTotalTime": "9시간 0분",
-        "monthlyTotalTime": "9시간 0분",
-        "remainingTime": "31시간 0분",
-        "weeklyStartEndTimes": {
-          "2024-6-W4: 4": [
-            {
-              "date": "30",
-              "dayDuration": "9시간 0분",
-              "week": "4",
-              "start": "09:00",
-              "end": "18:00",
-              "day": "일"
-            }
-          ]
-        }
-      }
-    ]
-  },
-  "calculatedOverTimeAndLatenessRecordResponse": {
-    "calculatedOverTimeAndLatenessRecords": [
-      {
-        "weeklyOverTime": "3시간 0분",
-        "monthlyOverTime": "3시간 0분"
-      }
-    ]
-  }
-},
-    annualLeaveRecord: null,
-    annualLeaveCalendar: null,
-    attendanceRequestStatus: null,
-    allLeaveAdjustment: null,
-    leaveAdjustmentSearch: null
-} */
 const attendanceReducer = handleActions({
     [GET_ATTENDANCE_STATUS]: (state, { payload }) => ({ ...state, attendanceStatus: payload.status }),
     [GET_ANNUAL_LEAVE_RECORD]: (state, { payload }) => ({ ...state, annualLeaveRecord: payload.record }),

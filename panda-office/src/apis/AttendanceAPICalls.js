@@ -3,11 +3,10 @@ import {
     getAttendanceStatus,
     getAnnualLeaveRecord,
     getAnnualLeaveCalendar,
-    getAttendanceRequestStatus,
-    getAllLeaveAdjustment,
-    getLeaveAdjustmentSearch,
     getCurrentYearAttendanceRequestStatus,
-    getSearchAttendanceRequestStatus
+    getSearchAttendanceRequestStatus,
+    getAllLeaveAdjustment,
+    getLeaveAdjustmentSearch
 } from '../modules/AttendanceModules';
 
 export const callAttendanceStatusAPI = (searchDate) => {
