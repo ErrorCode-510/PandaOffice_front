@@ -1,4 +1,4 @@
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -15,9 +15,6 @@ function RecruitmentSidebar() {
     const [isRecruitmentOpen, setIsRecruitmentOpen] = useState(false);
     const [isInterviewOpen, setIsInterviewOpen] = useState(false);
     const [isApplicantOpen, setIsApplicantOpen] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const navigate = useNavigate();
 
     /* Main Handler ----------------------------------------------------------------------------------------------------------------------------------- */
     /* 로컬에 열림/닫힘 상태 값 boolean 형태로 저장하기 */

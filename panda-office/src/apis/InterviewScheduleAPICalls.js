@@ -1,4 +1,4 @@
-import { getApplicantList, getInterviewer } from "../modules/InterviewScheduleModules"
+import { getApplicantList, getCalendar, getInterviewer, setRegistCalendar } from "../modules/InterviewScheduleModules"
 import { authRequest } from "./api"
 
 /* 면접관 호출 API */
@@ -29,6 +29,51 @@ export const callApplicantAllAPI = () => {
 
             if (result.status === 200) {
                 dispatch(getApplicantList(result.data))
+                // console.log('API 호출 확인: ' + JSON.stringify(result))
+            } else {
+                console.error('CallApplicantAllAPI error : ', result);
+            }
+        } catch (error) {
+            console.error('catch: CallApplicantAllAPI error : ', error);
+        }
+    }
+}
+
+/* 면접 일정 전체 조회 API */
+export const callEventsAPI = () => {
+    return async (dispatch, getState) => {
+
+        try {
+            const result = await authRequest.get('/recruitment/interview-schedule')
+
+            if (result.status === 200) {
+                dispatch(getCalendar(result.data))
+                // console.log('API 호출 확인: ' + JSON.stringify(result))
+            } else {
+                console.error('CallApplicantAllAPI error : ', result);
+            }
+        } catch (error) {
+            console.error('catch: CallApplicantAllAPI error : ', error);
+        }
+    }
+}
+/* 면접 일정 등록 API */
+export const callEventsRegitstAPI = (event) => {
+    return async (dispatch, getState) => {
+
+        const { ...data } = event;
+        console.log('API 호출 확인: ' + JSON.stringify(data))
+
+        try {
+
+            const result = await authRequest.post('/recruitment/interview-schedule/regist', data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+
+            if (result.status === 200 || result.status === 201) {
+                // dispatch(setRegistCalendar(result.data))
                 // console.log('API 호출 확인: ' + JSON.stringify(result))
             } else {
                 console.error('CallApplicantAllAPI error : ', result);

@@ -1,30 +1,20 @@
-import { useRef } from "react";
+import { useState } from "react";
 import CalendarApi from "../../../utils/CalendarApi";
 import ScheduleModal from "./ScheduleModal";
 
 const Schedule = () => {
 
-    const calendarRef = useRef(null);
-
-    const handleAddEvent = (event) => {
-        if (calendarRef.current) {
-            calendarRef.current.addEvent(event);
-        }
-    };
+    const [onAddEvent, setOnAddEvent] = useState();
 
     return (
         <>
             <div className="schedule-calendar">
                 <CalendarApi 
-                    height='665px'
-                    headerToolbar={{
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                    }}
+                    height='745px'
+                    events={onAddEvent}
                 />
             </div>
-            <ScheduleModal onAddEvent={handleAddEvent} />
+            <ScheduleModal setOnAddEvent={setOnAddEvent} />
         </>
     )
 }
