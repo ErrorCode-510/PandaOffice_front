@@ -5,14 +5,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import ko from 'date-fns/locale/ko';
 import './EmplPayroll.css';
-import './MyPay';
-import { callEmplPayAPI } from '../../../apis/PayrollAPICalls';
+import { callEmplPayAPI, callSaveEmplPayAPI } from '../../../apis/PayrollAPICalls';
 
 registerLocale('ko', ko);
 setDefaultLocale('ko');
 
-function EmplPayroll() {
+/* 식대 고정값 */
+const MEAL_ALLOWANCE = 100000;
 
+function EmplPayroll() {
     const dispatch = useDispatch();
     const { payroll, earningCategories, deductionCategories } = useSelector(state => state.payrollReducer);
 
@@ -20,9 +21,51 @@ function EmplPayroll() {
         dispatch(callEmplPayAPI());
     }, [dispatch]);
 
-    const employees = payroll;
-    const e_category = earningCategories;
-    const d_category = deductionCategories;
+    // 지급일 : 선택한 달의 25일을 payrollDate로 설정
+    const getPayrollDate = (selectedDate) => {
+        const payrollDate = new Date(Date.UTC(selectedDate.getFullYear(), selectedDate.getMonth(), 25));
+        return payrollDate.toISOString().split('T')[0];
+    };
+
+    const handleSavePayroll = () => {
+        if (!selectedEmployeeId || !date || Object.values(earningAmounts).some(amount => amount === undefined)) {
+            alert("모든 필수 항목을 입력해주세요.");
+            return;
+        }
+    
+        const earningRecordList = Object.entries(earningAmounts).map(([categoryId, amount]) => ({
+            earningCategoryId: parseInt(categoryId),
+            amount: amount
+        }));
+    
+        const deductionRecordList = deductionCategories.map(category => ({
+            deductionCategoryId: category.deductionCategoryId,
+            amount: calculateDeductionAmount(category)
+        }));
+
+        const payrollDateString = getPayrollDate(date);
+
+        const payrollData = {
+            employeeId: selectedEmployeeId,
+            payrollDate: payrollDateString,
+            payStubPath: "",
+            earningRecordList: earningRecordList,
+            deductionRecordList: deductionRecordList
+        };
+
+        console.log("Sending payroll data:", payrollData); // 디버깅용 로그
+
+        // API 호출 및 응답 처리
+        dispatch(callSaveEmplPayAPI(payrollData))
+            .then(response => {
+                if (response.success) {
+                    console.log("저장된 데이터:", response.data);
+                }
+            })
+            .catch(error => {
+                console.error("API 호출 중 예상치 못한 오류가 발생했습니다:", error);
+            });
+    };
 
     const [option, setOption] = useState('payroll');
     const [rows, setRows] = useState([]);
@@ -30,96 +73,144 @@ function EmplPayroll() {
     const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
     const [isSearchClicked, setIsSearchClicked] = useState(false);
     const [filteredCategories, setFilteredCategories] = useState([]);
-    const [categoryAmounts, setCategoryAmounts] = useState({});
+    const [earningAmounts, setEarningAmounts] = useState({});
+    const [deductionAmounts, setDeductionAmounts] = useState({});
 
-    const handleAmountChange = (categoryId, amount) => {
+    const handleAmountChange = (categoryId, amount, isDeduction = false) => {
         const intAmount = amount === '' ? 0 : Math.floor(Number(amount));
-        setCategoryAmounts(prevAmounts => ({
-            ...prevAmounts,
-            [categoryId]: intAmount
-        }));
+        if (isDeduction) {
+            setDeductionAmounts(prevAmounts => ({
+                ...prevAmounts,
+                [categoryId]: intAmount
+            }));
+        } else {
+            setEarningAmounts(prevAmounts => ({
+                ...prevAmounts,
+                [categoryId]: intAmount
+            }));
+        }
     };
 
     useEffect(() => {
         if (selectedEmployeeId && rows.earnings) {
-            const selectedEmployee = employees.find(emp => emp.employeeId === selectedEmployeeId);
+            const selectedEmployee = payroll.find(emp => emp.employeeId === selectedEmployeeId);
             if (selectedEmployee) {
-                const newCategoryAmounts = { ...categoryAmounts };
-
-                // 기본급 (카테고리 ID: 101)
-                const baseSalaryCategory = rows.earnings.find(cat => cat.earningCategoryId === 101);
-                if (baseSalaryCategory) {
-                    newCategoryAmounts[101] = Math.floor(selectedEmployee.annualSalary / 12);
-                }
-
-                // 식대 (카테고리 ID: 200)
-                const mealAllowanceCategory = rows.earnings.find(cat => cat.earningCategoryId === 206);
-                if (mealAllowanceCategory) {
-                    newCategoryAmounts[200] = 100000;
-                }
-
-                // 직책수당 (카테고리 ID: 205)
-                const jobAllowanceCategory = rows.earnings.find(cat => cat.earningCategoryId === 205);
-                if (jobAllowanceCategory) {
-                    newCategoryAmounts[205] = Math.floor(selectedEmployee.jobAllowance || 0);
-                }
-
-                setCategoryAmounts(newCategoryAmounts);
+                const newEarningAmounts = { ...earningAmounts };
+                newEarningAmounts[101] = Math.floor(selectedEmployee.annualSalary / 12);
+                newEarningAmounts[200] = MEAL_ALLOWANCE;
+                newEarningAmounts[205] = Math.floor(selectedEmployee.jobAllowance || 0);
+                setEarningAmounts(newEarningAmounts);
             }
         }
-    }, [selectedEmployeeId, employees, rows.earnings]);
-
-    /* 총 지급액 계산 */
-    const calculateTotal = () => {
-        return Math.floor(Object.values(categoryAmounts).reduce((sum, amount) => sum + (Number(amount) || 0), 0));
-    };
+    }, [selectedEmployeeId, payroll, rows.earnings]);
 
     useEffect(() => {
-        const filtered = e_category.filter(category => {
-            if (option === 'payroll') {
-                return category.earningCategoryId !== 102 && category.earningCategoryId !== 204;
-            } else if (option === 'bonus') {
-                return category.earningCategoryId === 102 || category.earningCategoryId === 204;
-            } else if (option === 'payrollandbonus') {
-                return true;
-            }
+        if (selectedEmployeeId && rows.deductions) {
+            const newDeductionAmounts = {};
+            rows.deductions.forEach(category => {
+                newDeductionAmounts[category.deductionCategoryId] = calculateDeductionAmount(category);
+            });
+            setDeductionAmounts(newDeductionAmounts);
+        }
+    }, [selectedEmployeeId, rows.deductions, earningAmounts[101]]);
+
+
+
+    const calculateTotal = (amountsObj) => {
+        return Math.floor(Object.values(amountsObj).reduce((sum, amount) => sum + (Number(amount) || 0), 0));
+    };
+
+    /* 개인사원 지급/공제 항목 총 금액 */
+    const calculateTotalEarnings = () => calculateTotal(earningAmounts);
+    const calculateDeductionAmount = (category) => {
+        const baseSalary = earningAmounts[101] || 0;
+        const deductionRate = category.deductionRate / 100;
+        return Math.floor(baseSalary * deductionRate);
+    };
+    const calculateTotalDeductions = () => {
+        if (!rows.deductions) return 0;
+
+        return deductionCategories.reduce((total, category) => {
+            const deductionAmount = calculateDeductionAmount(category);
+            return total + (isNaN(deductionAmount) ? 0 : deductionAmount);
+        }, 0);
+    };
+
+    /* 전체사원 지급/공제 항목 총 금액 */
+    const calculateTotalEarningsForAllEmployees = () => {
+        return payroll.reduce((total, emp) => {
+            filteredCategories.forEach(category => {
+                let amount = 0;
+                if (category.earningCategoryId === 101) {
+                    amount = Math.floor(emp.annualSalary / 12);
+                } else if (category.earningCategoryId === 200) {
+                    amount = MEAL_ALLOWANCE;
+                } else if (category.earningCategoryId === 205) {
+                    amount = Math.floor(emp.jobAllowance || 0);
+                }
+                if (category.isTax === 'Y') {
+                    total.taxable[category.earningCategoryId] = (total.taxable[category.earningCategoryId] || 0) + amount;
+                } else {
+                    total.nonTaxable[category.earningCategoryId] = (total.nonTaxable[category.earningCategoryId] || 0) + amount;
+                }
+            });
+            return total;
+        }, { taxable: {}, nonTaxable: {} });
+    };
+    const calculateTotalDeductionsForAllEmployees = () => {
+        return payroll.reduce((total, emp) => {
+            const baseSalary = Math.floor(emp.annualSalary / 12);
+            deductionCategories.forEach(category => {
+                const deductionAmount = Math.floor(baseSalary * (category.deductionRate / 100));
+                total[category.deductionCategoryId] = (total[category.deductionCategoryId] || 0) + deductionAmount;
+            });
+            return total;
+        }, {});
+    };
+    const [totalEarnings, setTotalEarnings] = useState({ taxable: {}, nonTaxable: {} });
+    const [totalDeductions, setTotalDeductions] = useState({});
+
+    useEffect(() => {
+        if (isSearchClicked) {
+            setTotalEarnings(calculateTotalEarningsForAllEmployees());
+            setTotalDeductions(calculateTotalDeductionsForAllEmployees());
+        }
+    }, [isSearchClicked, payroll, filteredCategories, deductionCategories]);
+
+
+
+    /* 옵션: 급여 & 상여 & 급여/상여 */
+    useEffect(() => {
+        const filtered = earningCategories.filter(category => {
+            if (option === 'payroll') return category.earningCategoryId !== 102 && category.earningCategoryId !== 204;
+            if (option === 'bonus') return category.earningCategoryId === 102 || category.earningCategoryId === 204;
+            return true;
         });
         setFilteredCategories(filtered);
-    }, [e_category, option]);
+    }, [earningCategories, option]);
 
+    /* 조회 버튼 */
+    const handleSearch = () => setIsSearchClicked(true);
 
+    /* 지급/공제 row 클릭 핸들러 */
     const handleRowClick = (emp) => {
         setSelectedEmployeeId(emp.employeeId);
         setRows({
             earnings: earningCategories.filter(category => category.employeeId === emp.employeeId),
             deductions: deductionCategories.filter(category => category.employeeId === emp.employeeId),
         });
-        
-        const newCategoryAmounts = {...categoryAmounts};
-        
-        // 기본급 (카테고리 ID: 101)
-        if (emp.annualSalary) {
-            newCategoryAmounts[101] = Math.floor(emp.annualSalary / 12);
-        }
 
-        // 식대 (카테고리 ID: 200)
-        newCategoryAmounts[200] = 100000;
-
-        // 직책수당 (카테고리 ID: 205)
-        if (emp.jobAllowance) {
-            newCategoryAmounts[205] = Math.floor(emp.jobAllowance);
-        }
-        
-        setCategoryAmounts(newCategoryAmounts);
+        const newEarningAmounts = {
+            // 기본급 (카테고리 ID: 101)
+            101: Math.floor(emp.annualSalary / 12),
+            // 식대 (카테고리 ID: 200)
+            200: MEAL_ALLOWANCE,
+            // 직책수당 (카테고리 ID: 205)
+            205: Math.floor(emp.jobAllowance || 0),
+        };
+        setEarningAmounts(newEarningAmounts);
     };
 
-    const handleSearch = () => {
-        setIsSearchClicked(true);
-    };
-
-
-    const fixedPaymentDate = new Date(date.getFullYear(), date.getMonth(), 26);
-    const displayDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
 
     return (
         <div className="common-comp">
@@ -128,7 +219,7 @@ function EmplPayroll() {
                 <div className="button-container">
                     <button>수당/공제등록</button>
                     <button>재계산</button>
-                    <button>완료</button>
+                    <button onClick={handleSavePayroll}>완료</button>
                 </div>
             </div>
             <div className="search-section">
@@ -148,7 +239,7 @@ function EmplPayroll() {
                     <option value="payrollandbonus">급여 + 상여</option>
                 </select>
                 <span className="mypay-span">지급일</span>
-                <input type="date" value={fixedPaymentDate.toISOString().split('T')[0]} disabled />
+                <input type="date" value={getPayrollDate(date)} disabled />
                 <button type="submit" onClick={handleSearch}>조회</button>
             </div>
 
@@ -164,7 +255,7 @@ function EmplPayroll() {
                             </tr>
                         </thead>
                         <tbody style={{ display: isSearchClicked ? 'table-row-group' : 'none' }}>
-                            {employees.map(emp => (
+                            {payroll.map(emp => (
                                 <tr
                                     key={emp.employeeId}
                                     onClick={() => handleRowClick(emp)}
@@ -183,7 +274,7 @@ function EmplPayroll() {
                         <tfoot className="emplPay-foot">
                             <tr>
                                 <td style={{ letterSpacing: '18px', paddingLeft: "22px" }}>인원</td>
-                                <td>{employees.length}</td>
+                                <td>{payroll.length}</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -205,7 +296,7 @@ function EmplPayroll() {
                                 <tr key={`filtered-category-${category.earningCategoryId}`}>
                                     <td>{category.name}</td>
                                     <td>
-                                        {(categoryAmounts[category.earningCategoryId] ?? 0).toLocaleString()}
+                                        {(earningAmounts[category.earningCategoryId] ?? 0).toLocaleString()}
                                     </td>
                                 </tr>
                             ))}
@@ -217,15 +308,25 @@ function EmplPayroll() {
                         <tfoot className="myPay-foot">
                             <tr>
                                 <td style={{ letterSpacing: '18px', paddingLeft: "22px" }}>과 세</td>
-                                <td></td>
+                                <td>
+                                    {filteredCategories
+                                        .filter(category => category.isTax === 'Y')
+                                        .reduce((total, category) => total + (earningAmounts[category.earningCategoryId] ?? 0), 0)
+                                        .toLocaleString()}
+                                </td>
                             </tr>
                             <tr>
                                 <td style={{ letterSpacing: '3.5px' }}>비 과 세</td>
-                                <td></td>
+                                <td>
+                                    {filteredCategories
+                                        .filter(category => category.isTax === 'N')
+                                        .reduce((total, category) => total + (earningAmounts[category.earningCategoryId] ?? 0), 0)
+                                        .toLocaleString()}
+                                </td>
                             </tr>
                             <tr>
                                 <td style={{ letterSpacing: '1px' }}>지급액 계</td>
-                                <td>{calculateTotal()}</td>
+                                <td>{calculateTotalEarnings().toLocaleString()}</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -243,15 +344,8 @@ function EmplPayroll() {
                             </tr>
                         </thead>
                         <tbody>
-                            {rows.deductions && d_category.map((category, index) => {
-                                // 기본급여 (101번 카테고리의 금액)
-                                const baseSalary = categoryAmounts[101] || 0;
-
-                                // 공제율을 소수점으로 변환 (예: 4.5% -> 0.045)
-                                const deductionRate = category.deductionRate / 100;
-
-                                // 공제 금액 계산 (기본급여 * 공제율)
-                                const deductionAmount = Math.floor(baseSalary * deductionRate);
+                            {rows.deductions && deductionCategories.map((category, index) => {
+                                const deductionAmount = calculateDeductionAmount(category);
 
                                 return (
                                     <tr key={`d_category-${index}`}>
@@ -270,11 +364,15 @@ function EmplPayroll() {
                         <tfoot className="myPay-foot">
                             <tr>
                                 <td style={{ letterSpacing: '1px', wordSpacing: "8px" }}>공제액 계</td>
-                                <td></td>
+                                <td style={{ textAlign: 'right' }}>
+                                    {calculateTotalDeductions().toLocaleString()}
+                                </td>
                             </tr>
                             <tr>
                                 <td style={{ letterSpacing: '1px' }}>차인지급액</td>
-                                <td></td>
+                                <td style={{ textAlign: 'right' }}>
+                                    {(calculateTotalEarnings() - calculateTotalDeductions()).toLocaleString()}
+                                </td>
                             </tr>
                         </tfoot>
                     </table>
@@ -293,11 +391,17 @@ function EmplPayroll() {
                             </tr>
                         </thead>
                         <tbody style={{ display: isSearchClicked ? 'table-row-group' : 'none' }}>
-                            <tr>
-                                <td>sdf</td>
-                                <td>sdf</td>
-                                <td style={{ textAlign: "right" }}>sdf</td>
-                            </tr>
+                            {filteredCategories.map((category) => (
+                                <tr key={`all-category-${category.earningCategoryId}`}>
+                                    <td>{category.name}</td>
+                                    <td>{category.isTax === 'Y' ? '과세' : '비과세'}</td>
+                                    <td style={{ textAlign: "right" }}>
+                                        {(
+                                            (category.isTax === 'Y' ? totalEarnings.taxable : totalEarnings.nonTaxable)[category.earningCategoryId] ?? 0
+                                        ).toLocaleString()}
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
@@ -306,15 +410,24 @@ function EmplPayroll() {
                         <tfoot className="myPay-foot">
                             <tr>
                                 <td style={{ letterSpacing: '18px', paddingLeft: "22px" }}>과 세</td>
-                                <td></td>
+                                <td>
+                                    {Object.values(totalEarnings.taxable).reduce((a, b) => a + b, 0).toLocaleString()}
+                                </td>
                             </tr>
                             <tr>
                                 <td style={{ letterSpacing: '3.5px' }}>비 과 세</td>
-                                <td>0</td>
+                                <td>
+                                    {Object.values(totalEarnings.nonTaxable).reduce((a, b) => a + b, 0).toLocaleString()}
+                                </td>
                             </tr>
                             <tr>
                                 <td style={{ letterSpacing: '1px' }}>지급액 계</td>
-                                <td></td>
+                                <td>
+                                    {(
+                                        Object.values(totalEarnings.taxable).reduce((a, b) => a + b, 0) +
+                                        Object.values(totalEarnings.nonTaxable).reduce((a, b) => a + b, 0)
+                                    ).toLocaleString()}
+                                </td>
                             </tr>
                         </tfoot>
                     </table>
@@ -329,10 +442,14 @@ function EmplPayroll() {
                             </tr>
                         </thead>
                         <tbody style={{ display: isSearchClicked ? 'table-row-group' : 'none' }}>
-                            <tr>
-                                <td>sdf</td>
-                                <td style={{ textAlign: "right" }}>sdf</td>
-                            </tr>
+                            {deductionCategories.map((category, index) => (
+                                <tr key={`all-deduction-${index}`}>
+                                    <td>{category.name}</td>
+                                    <td style={{ textAlign: "right" }}>
+                                        {(totalDeductions[category.deductionCategoryId] ?? 0).toLocaleString()}
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
@@ -341,11 +458,17 @@ function EmplPayroll() {
                         <tfoot className="myPay-foot">
                             <tr>
                                 <td style={{ letterSpacing: '1px', wordSpacing: "8px" }}>공제액 계</td>
-                                <td></td>
+                                <td>{Object.values(totalDeductions).reduce((a, b) => a + b, 0).toLocaleString()}</td>
                             </tr>
                             <tr>
                                 <td style={{ letterSpacing: '1px' }}>차인지급액</td>
-                                <td></td>
+                                <td>
+                                    {(
+                                        Object.values(totalEarnings.taxable).reduce((a, b) => a + b, 0) +
+                                        Object.values(totalEarnings.nonTaxable).reduce((a, b) => a + b, 0) -
+                                        Object.values(totalDeductions).reduce((a, b) => a + b, 0)
+                                    ).toLocaleString()}
+                                </td>
                             </tr>
                         </tfoot>
                     </table>
