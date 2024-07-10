@@ -44,6 +44,10 @@
     margin-right: 10px;
 }
 
+.user-info span {
+    white-space: nowrap; /* 줄 바꿈 없이 한 줄로 표시 */
+}
+
 .leave-stats {
     display: flex;
     justify-content: space-around;

@@ -10,7 +10,8 @@ const initialState = {
         monthlyOvertime: '0h 0m 0s',
         weeklyDetails: []
     },
-    annualLeaveRecord: null,
+    currentYearAnnualLeaveRecord: null,
+    searchAnnualLeaveRecord: null,
     annualLeaveCalendar: null,
     currentYearAttendanceRequestStatus: null,
     searchAttendanceRequestStatus: null,
@@ -20,7 +21,8 @@ const initialState = {
 
 /* 액션 타입 */
 const GET_ATTENDANCE_STATUS = 'attendance/GET_ATTENDANCE_STATUS';
-const GET_ANNUAL_LEAVE_RECORD = 'attendance/GET_ANNUAL_LEAVE_RECORD';
+const GET_CURRENT_YEAR_ANNUAL_LEAVE_RECORD = 'attendance/GET_CURRENT_YEAR_ANNUAL_LEAVE_RECORD';
+const GET_SEARCH_ANNUAL_LEAVE_RECORD = 'attendance/GET_SEARCH_ANNUAL_LEAVE_RECORD';
 const GET_ANNUAL_LEAVE_CALENDAR = 'attendance/GET_ANNUAL_LEAVE_CALENDAR';
 const GET_CURRENT_YEAR_ATTENDANCE_REQUEST_STATUS = 'attendance/GET_CURRENT_YEAR_ATTENDANCE_REQUEST_STATUS';
 const GET_SEARCH_ATTENDANCE_REQUEST_STATUS = 'attendance/GET_SEARCH_ATTENDANCE_REQUEST_STATUS';
@@ -30,7 +32,8 @@ const GET_LEAVE_ADJUSTMENT_SEARCH = 'attendance/GET_LEAVE_ADJUSTMENT_SEARCH';
 /* 액션 생성 함수 */
 export const { attendance: {
     getAttendanceStatus,
-    getAnnualLeaveRecord,
+    getCurrentYearAnnualLeaveRecord, 
+    getSearchAnnualLeaveRecord,
     getAnnualLeaveCalendar,
     getCurrentYearAttendanceRequestStatus,
     getSearchAttendanceRequestStatus,
@@ -39,7 +42,8 @@ export const { attendance: {
 }
 } = createActions({
     [GET_ATTENDANCE_STATUS]: (status) => ({ status }),
-    [GET_ANNUAL_LEAVE_RECORD]: (record) => ({ record }),
+    [GET_CURRENT_YEAR_ANNUAL_LEAVE_RECORD]: (record) => ({ record }),
+    [GET_SEARCH_ANNUAL_LEAVE_RECORD]: (record) => ({ record }),
     [GET_ANNUAL_LEAVE_CALENDAR]: (calendar) => ({ calendar }),
     [GET_CURRENT_YEAR_ATTENDANCE_REQUEST_STATUS]: (status) => ({ status }),
     [GET_SEARCH_ATTENDANCE_REQUEST_STATUS]: (status) => ({ status }),
@@ -88,7 +92,8 @@ export const { attendance: {
 } */
 const attendanceReducer = handleActions({
     [GET_ATTENDANCE_STATUS]: (state, { payload }) => ({ ...state, attendanceStatus: payload.status }),
-    [GET_ANNUAL_LEAVE_RECORD]: (state, { payload }) => ({ ...state, annualLeaveRecord: payload.record }),
+    [GET_CURRENT_YEAR_ANNUAL_LEAVE_RECORD]: (state, { payload }) => ({...state,currentYearAnnualLeaveRecord: payload.record,}),
+    [GET_SEARCH_ANNUAL_LEAVE_RECORD]: (state, { payload }) => ({...state,searchAnnualLeaveRecord: payload.record,}),
     [GET_ANNUAL_LEAVE_CALENDAR]: (state, { payload }) => ({ ...state, annualLeaveCalendar: payload.calendar }),
     [GET_CURRENT_YEAR_ATTENDANCE_REQUEST_STATUS]: (state, { payload }) => ({ ...state, currentYearAttendanceRequestStatus: payload.status }),
     [GET_SEARCH_ATTENDANCE_REQUEST_STATUS]: (state, { payload }) => ({ ...state, searchAttendanceRequestStatus: payload.status }),
