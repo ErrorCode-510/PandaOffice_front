@@ -5,7 +5,7 @@ import Interviewer from "./Intertviewer";
 import InterviewereAddList from "./InterviewerAddList";
 import { callApplicantAllAPI, callEventsRegitstAPI } from "../../../apis/InterviewScheduleAPICalls";
 
-const ScheduleModal = ({ setOnAddEvent }) => {
+const ScheduleModal = () => {
 
     const { scheduleStatus } = useSelector(state => state.interviewScheduleReducer)
     const { applicantList } = useSelector(state => state.interviewScheduleReducer);

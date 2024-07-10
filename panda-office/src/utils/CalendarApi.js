@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { callEventsAPI } from "../apis/InterviewScheduleAPICalls";
 import { setScheduleModal } from "../modules/InterviewScheduleModules";
 
-const CalendarApi = ({ height, events }) => {
+const CalendarApi = ({ height }) => {
 
     const dispatch = useDispatch();
 
