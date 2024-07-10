@@ -37,28 +37,24 @@ export const callEmplPayAPI = () => {
 
 /* 사원 급여 등록 */
 export const callSaveEmplPayAPI = (payrollData) => {
-    return async (dispatch, getState) => {
+    return async (dispatch) => {
         dispatch(requestStart());
-
         try {
-            const response = await authRequest.post('/payroll/save-emplpay', payrollData);
+            const result = await authRequest.post('/payroll/save-emplpay', payrollData);
 
-            if (response.status === 201) {
-                const result = await response.json();
-                console.log('[PayrollAPICalls] callSaveEmplPayAPI RESULT:', result);
-                dispatch(saveEmplPay(result));
+            console.log('[PayrollAPICalls] callSaveEmplPayAPI RESULT : ', result);
+
+            if (result.status === 201) {
+                dispatch(saveEmplPay(result.data));
                 dispatch(success());
-                return { success: true, data: result }; // 호출자에게 성공 여부와 데이터 반환
+                return { success: true, data: result.data };
             } else {
-                const errorText = await response.text(); // 다른 상태 코드의 경우 텍스트로 오류 메시지를 읽어올 수 있음
-                console.error('Unexpected status:', response.status, errorText);
-                dispatch(requestFail(`Unexpected status: ${response.status}`));
-                return { success: false, error: `Unexpected status: ${response.status}` };
+                dispatch(requestFail({ error: 'Unexpected result status' }));
+                return { success: false, error: 'Unexpected result status' };
             }
         } catch (error) {
-            console.error('Error in callSaveEmplPayAPI:', error);
-            dispatch(requestFail(error.message));
-            return { success: false, error: error.message }; // 호출자에게 실패 이유 반환
+            dispatch(requestFail(error));
+            return { success: false, error: error.message };
         }
     };
 };
