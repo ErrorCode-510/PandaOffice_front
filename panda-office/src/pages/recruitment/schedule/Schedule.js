@@ -1,4 +1,3 @@
-import { useState } from "react";
 import CalendarApi from "../../../utils/CalendarApi";
 import ScheduleModal from "./ScheduleModal";
 
