@@ -4,17 +4,14 @@ import ScheduleModal from "./ScheduleModal";
 
 const Schedule = () => {
 
-    const [onAddEvent, setOnAddEvent] = useState();
-
     return (
         <>
             <div className="schedule-calendar">
-                <CalendarApi 
+                <CalendarApi
                     height='745px'
-                    events={onAddEvent}
                 />
             </div>
-            <ScheduleModal setOnAddEvent={setOnAddEvent} />
+            <ScheduleModal />
         </>
     )
 }

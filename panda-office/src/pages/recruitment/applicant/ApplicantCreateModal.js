@@ -161,10 +161,10 @@ const ApplicantCreateModal = () => {
                         <div className='applicant-address'>
                             <p>주소</p>
                             <select
-                            className="acm-address"
-                            name="address"
-                            onChange={handlerInputChange}
-                            value={formValues.address}
+                                className="acm-address"
+                                name="address"
+                                onChange={handlerInputChange}
+                                value={formValues.address}
                             >
                                 <option value="">선택</option>
                                 {cities.map((city, index) => (
