@@ -16,12 +16,25 @@ const CalendarApi = ({ height }) => {
         dispatch(callEventsAPI());
     }, [dispatch])
 
+    /* end 날짜를 하루 더하는 함수 */
+    const addOneDay = (dateString) => {
+        const date = new Date(dateString);
+        date.setDate(date.getDate() + 1);
+        return date.toISOString().split('T')[0];
+    };
+
     const formattedEvents = calendar.map((calendarEvent) => ({
         title: calendarEvent.name,
-        start: calendarEvent.startDate,
-        end: calendarEvent.endDate,
-        extendedProps: calendarEvent.extendedProps
-      }));
+        start: `${calendarEvent.startDate}T${calendarEvent.startTime}`,
+        end: addOneDay(calendarEvent.endDate),
+        extendedProps: {
+            memo: calendarEvent.memo,
+            endTime: calendarEvent.endTime,
+            employee: calendarEvent.employee,
+            place: calendarEvent.place,
+            applicantList: calendarEvent.applicantList.map(applicantId => applicantId)
+        }
+    }));
 
     // FullCalendar의 글로벌 로케일 설정 배열 초기화
     if (!FullCalendar.globalLocales) {
@@ -46,7 +59,7 @@ const CalendarApi = ({ height }) => {
         noEventsText: '일정이 없습니다',
     });
 
-    // 날짜 셀의 내용을 커스터마이즈하는 함수
+    /* 날짜 셀의 내용을 커스터마이즈하는 함수 */
     const customDayCellContent = ({ date }) => {
         return <span>{date.getDate()}</span>;
     };
@@ -55,7 +68,7 @@ const CalendarApi = ({ height }) => {
     const handleEventClick = () => {
         dispatch(setScheduleModal(true))
     }
-    
+
     return (
         <div>
             <FullCalendar
