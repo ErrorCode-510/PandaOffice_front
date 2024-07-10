@@ -10,7 +10,6 @@ export const callInterviewerAPI = () => {
 
             if (result.status === 200) {
                 dispatch(getInterviewer(result))
-                // console.log('면접관 api 확인: ' + JSON.stringify(result))
             } else {
                 console.error('CallInterviewerAPI error : ', result);
             }
@@ -29,7 +28,6 @@ export const callApplicantAllAPI = () => {
 
             if (result.status === 200) {
                 dispatch(getApplicantList(result.data))
-                // console.log('API 호출 확인: ' + JSON.stringify(result))
             } else {
                 console.error('CallApplicantAllAPI error : ', result);
             }
@@ -48,7 +46,6 @@ export const callEventsAPI = () => {
 
             if (result.status === 200) {
                 dispatch(getCalendar(result.data))
-                // console.log('API 호출 확인: ' + JSON.stringify(result))
             } else {
                 console.error('CallApplicantAllAPI error : ', result);
             }
@@ -60,21 +57,11 @@ export const callEventsAPI = () => {
 /* 면접 일정 등록 API */
 export const callEventsRegitstAPI = (event) => {
     return async (dispatch, getState) => {
-
-        const { ...data } = event;
-        console.log('API 호출 확인: ' + JSON.stringify(data))
-
         try {
-
-            const result = await authRequest.post('/recruitment/interview-schedule/regist', data, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
+            const result = await authRequest.post('/recruitment/interview-schedule/regist', event)
 
             if (result.status === 200 || result.status === 201) {
-                // dispatch(setRegistCalendar(result.data))
-                // console.log('API 호출 확인: ' + JSON.stringify(result))
+                dispatch(setRegistCalendar(result.data))
             } else {
                 console.error('CallApplicantAllAPI error : ', result);
             }

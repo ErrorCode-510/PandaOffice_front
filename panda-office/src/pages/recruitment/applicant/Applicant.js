@@ -12,7 +12,7 @@ const Applicant = () => {
     const dispatch = useDispatch();
     /* 페이지 번호 상태 저장하기: 디폴트 1 */
     const [currentPage, setCurrentPage] = useState(1);
-    
+
     const { applicant, criteria } = useSelector(state => state.applicantReducer)
 
     useEffect(() => {
@@ -32,7 +32,7 @@ const Applicant = () => {
                         <PagingBar pageInfo={applicant.pageInfo} setCurrentPage={setCurrentPage} />
                     </div>
                     <ApplicantModal />
-                    <ApplicantCreateModal/>
+                    <ApplicantCreateModal />
                 </>
             }
         </>
