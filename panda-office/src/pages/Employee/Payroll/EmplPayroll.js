@@ -57,13 +57,16 @@ function EmplPayroll() {
 
         // API 호출 및 응답 처리
         dispatch(callSaveEmplPayAPI(payrollData))
-            .then(response => {
-                if (response.success) {
-                    console.log("저장된 데이터:", response.data);
+            .then(result => {
+                if (result.success) {
+                    alert("저장되었습니다.");
+                } else {
+                    alert("저장에 실패했습니다: " + result.error);
                 }
             })
             .catch(error => {
-                console.error("API 호출 중 예상치 못한 오류가 발생했습니다:", error);
+                console.error("API 호출 중 예상치 못한 오류 발생:", error);
+                alert("저장 중 오류가 발생했습니다.");
             });
     };
 
