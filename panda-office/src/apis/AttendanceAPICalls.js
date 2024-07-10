@@ -1,18 +1,24 @@
 import { authRequest } from './api';
 import {
+    /* 1.현년도 근태 현황 불러오기 */
     getAttendanceStatus,
+    /* 2.현재 연차 기록 불러오기  */
     getCurrentYearAnnualLeaveRecord, 
+    /* 2.검색된 연차 기록 불러오기 */
     getSearchAnnualLeaveRecord,
+    /* 3.연차 캘린더에 넣을 값 불러오기 */
     getAnnualLeaveCalendar,
-    getAttendanceRequestStatus,
-    getAllLeaveAdjustment,
-    getLeaveAdjustmentSearch,
+    /* 4.현재 년도의 근태 신청 현황 불러오기 */
     getCurrentYearAttendanceRequestStatus,
+    /* 4.검색 받은 년도의 근태 신청 현황 불러오기 */
     getSearchAttendanceRequestStatus,
+    /* 5.모든 사원의 현재 모든 연차 불러오기 */
     getAllLeaveAdjustment,
+    /* 5.입사년도를 기준으로 검색한 사원들의 현년도 모든 연차 불러오기 */
     getLeaveAdjustmentSearch
 } from '../modules/AttendanceModules';
 
+/* 1.내 근태 현황 확인 */
 export const callAttendanceStatusAPI = (searchDate) => {
     return async (dispatch) => {
         try {
@@ -46,6 +52,7 @@ export const callAttendanceStatusAPI = (searchDate) => {
     };
 };
 
+/* 2.내 연차 내역 확인 */
 export const callAnnualLeaveRecordAPI = (startDate, endDate, type) => {
     return async (dispatch) => {
         try {
@@ -65,6 +72,7 @@ export const callAnnualLeaveRecordAPI = (startDate, endDate, type) => {
     };
 };
 
+/* 3.연차 캘린더 확인 */
 export const callAnnualLeaveCalendarAPI = () => {
     return async (dispatch) => {
         try {
@@ -82,6 +90,7 @@ export const callAnnualLeaveCalendarAPI = () => {
     };
 };
 
+/* 4.내 근태 신청 현황 확인 */
 export const callAttendanceRequestStatusAPI = (startDate, endDate, type) => {
     return async (dispatch) => {
         try {
@@ -139,12 +148,13 @@ export const callAttendanceRequestStatusAPI = (startDate, endDate, type) => {
     };
 };
 
+/* 5.사원들의 연차 조정 */
 export const callAllLeaveAdjustmentAPI = () => {
     return async (dispatch) => {
         try {
             const response = await authRequest.get('/attendance/all_leave_adjustment');
             if (response.status === 200) {
-                dispatch(getAllLeaveAdjustment(response.data));
+                dispatch(getAllLeaveAdjustment(response.data.allLeaveRecords)); // response.data.allLeaveRecords 사용
             } else {
                 console.error('API 호출 실패:', response);
                 // 에러 처리 로직 추가
@@ -156,12 +166,13 @@ export const callAllLeaveAdjustmentAPI = () => {
     };
 };
 
+/* 5.입사년도를 기준으로 사원들 검색하기 */
 export const callLeaveAdjustmentSearchAPI = (hireYear) => {
     return async (dispatch) => {
         try {
             const response = await authRequest.get(`/attendance/all_leave_adjustment/search?hireYear=${hireYear}`);
             if (response.status === 200) {
-                dispatch(getLeaveAdjustmentSearch(response.data));
+                dispatch(getLeaveAdjustmentSearch(response.data.allLeaveRecords)); // response.data.allLeaveRecords 사용
             } else {
                 console.error('API 호출 실패:', response);
                 // 에러 처리 로직 추가
@@ -172,6 +183,8 @@ export const callLeaveAdjustmentSearchAPI = (hireYear) => {
         }
     };
 };
+
+/* 6.출근 찍기 */
 export const callCheckInAPI = (attendanceData) => {
     return async (dispatch) => {
         try {
@@ -191,7 +204,7 @@ export const callCheckInAPI = (attendanceData) => {
         }
     };
 };
-
+/* 6.퇴근 찍기 */
 export const callCheckOutAPI = (attendanceData) => {
     return async (dispatch) => {
         try {
