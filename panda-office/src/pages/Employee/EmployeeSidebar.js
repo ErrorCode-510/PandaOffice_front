@@ -40,7 +40,7 @@ function RecruitmentSidebar() {
             <div className={`side-wrap ${isRootPath ? 'collapsed' : ''}`}>
                 <div className="side-bar">
                     <div className="title">인사관리</div>
-                    <button className="add-btn">사원 등록</button>
+                    <button className="add-btn"><NavLink to={`/employee/addNewEmployee`}>사원 등록</NavLink></button>
                     <ul className="mt-30 txt-align-left">
                         <li>
                             <div className="sidebar-item" onClick={toggleMainHandler}>
@@ -51,8 +51,8 @@ function RecruitmentSidebar() {
                                 <ul className="mt-10">
 
                                     <li className="icons-text fs-12 mt-10 ml-35 cursor-p"><NavLink to="/employee/employeeList">사원 조회(인사부)</NavLink></li>
-                                    <li className="icons-text fs-12 mt-10 ml-35 cursor-p"><NavLink to={`/employee/${getMemberId()}`}>대충 개인 조회</NavLink></li>
-                                    <li className="icons-text fs-12 mt-10 ml-35 cursor-p">추가</li>
+                                    <li className="icons-text fs-12 mt-10 ml-35 cursor-p"><NavLink to={`/employee/${getMemberId()}`}>개인 조회</NavLink></li>
+                                    {/*<li className="icons-text fs-12 mt-10 ml-35 cursor-p">추가</li>*/}
                                 </ul>
                             )}
                         </li>

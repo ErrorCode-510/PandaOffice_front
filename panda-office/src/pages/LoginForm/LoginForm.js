@@ -16,6 +16,8 @@ import NewModal from "./NewModal";
 import FindPasswordModal from "./FindPasswordModal";
 import VerificationCodeModal from "./VerificationCodeModal";
 import ResetPasswordModal from "./ResetPasswordModal";
+import UseOfPersonalInfoModal from "./UseOfPersonalInfoModal";
+import TermsOfUseModal from "./TermsOfUseModal";
 
 function LoginForm() {
     const dispatch = useDispatch();
@@ -26,6 +28,8 @@ function LoginForm() {
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
     const [isVerificationCodeModalOpen, setIsVerificationCodeModalOpen] = useState(false);
     const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
+    const [isUseOfPersonalInfoModalOpen,setIsUseOfPersonalInfoModalOpen] = useState(false);
+    const [isTermsOfUseModalOpen,setIsTermsOfUseModalOpen] = useState(false);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -56,6 +60,20 @@ function LoginForm() {
         setIsVerificationCodeModalOpen(false);
     };
 
+    const openUseOfPersonalInfoModal = () => {
+        setIsUseOfPersonalInfoModalOpen(true);
+    };
+
+    const closeUseOfPersonalInfoModal = () => {
+        setIsUseOfPersonalInfoModalOpen(false);
+    };
+    const openTermsOfUseModal = () => {
+        setIsTermsOfUseModalOpen(true);
+    };
+
+    const closeTermsOfUseModal = () => {
+        setIsTermsOfUseModalOpen(false);
+    };
     const openResetPasswordModal = () => {
         setIsResetPasswordModalOpen(true);
     };
@@ -162,6 +180,7 @@ function LoginForm() {
     };
 
 
+
     return (
         <>
             <div className="Login-wrapper">
@@ -216,8 +235,8 @@ function LoginForm() {
                     </form>
                 </div>
                 <div className="agree-link">
-                    <a href="#">개인정보처리방침</a>
-                    <a href="#">이용약관</a>
+                    <a href="#" onClick={openUseOfPersonalInfoModal}>개인정보처리방침</a>
+                    <a href="#" onClick={openTermsOfUseModal}>이용약관</a>
                 </div>
                 <FindIdModal
                     isOpen={isModalOpen}
@@ -248,6 +267,20 @@ function LoginForm() {
                     onSubmitNewPasswordHandler={onSubmitNewPasswordHandler}
 
                     />
+                <UseOfPersonalInfoModal
+                    isOpen={isUseOfPersonalInfoModalOpen}
+                    onRequestClose={closeUseOfPersonalInfoModal}
+
+
+
+                />
+                <TermsOfUseModal
+                    isOpen={isTermsOfUseModalOpen}
+                    onRequestClose={closeTermsOfUseModal}
+
+
+
+                />
             </div>
         </>
     );

@@ -5,13 +5,13 @@ import axios from "axios";
 
 function AddNewEmployee() {
     const job = [
-        { id: 600, name: '사원' },
-        { id: 500, name: '주임' },
-        { id: 400, name: '대리' },
-        { id: 300, name: '과장' },
-        { id: 200, name: '차장' },
-        { id: 100, name: '부장' },
-        { id: 1, name: '사장' }
+        { id: 50, name: '사원' },
+        { id: 40, name: '주임' },
+        { id: 35, name: '대리' },
+        { id: 30, name: '과장' },
+        { id: 25, name: '차장' },
+        { id: 20, name: '부장' },
+        { id: 11, name: '사장' }
     ];
 
     const department = [
@@ -21,15 +21,17 @@ function AddNewEmployee() {
         { id: 14, name: '기획' },
         { id: 15, name: '마케팅' }
     ];
-    const [rows, setRows] = useState([{ relationship: '', name: '', birthDate: '', job: '', education: '', note: '' }]);
-    const [employmentRows, setEmploymentRows] = useState([{ hireDate: '', endDate: '', companyName: '', department: '', lastPosition: '', jobDescription: '' }]);
-    const [educationRows, setEducationRows] = useState([{ admissionDate: '', graduationDate: '', schoolName: '', major: '', degree: '' }]);
-    const [licensesRows, setLicenses] = useState([{ issuingOrganization: '', issueDate: '', name: '' }]);
+
+    // Change the initial state to an empty array
+    const [rows, setRows] = useState([]);
+    const [employmentRows, setEmploymentRows] = useState([]);
+    const [educationRows, setEducationRows] = useState([]);
+    const [licensesRows, setLicenses] = useState([]);
     const [photo, setPhoto] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
-        englishName : '',
-        hanjaName : '',
+        englishName: '',
+        hanjaName: '',
         accountNumber: '',
         phone: '',
         personalId: '',
@@ -39,11 +41,9 @@ function AddNewEmployee() {
         nationality: '',
         birthDate: '',
         email: '',
-        job:'',
-        department:'',
-        employmentStatus:'',
-
-
+        job: '',
+        department: '',
+        employmentStatus: '',
     });
 
     const handleChange = (e) => {
@@ -76,7 +76,6 @@ function AddNewEmployee() {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPhoto({ name: file.name, path: reader.result });
-
             };
             reader.readAsDataURL(file);
         }
@@ -85,6 +84,7 @@ function AddNewEmployee() {
     const handlePhotoClick = () => {
         document.getElementById('photo').click();
     };
+
     const sample6_execDaumPostcode = () => {
         new window.daum.Postcode({
             oncomplete: function (data) {
@@ -121,6 +121,7 @@ function AddNewEmployee() {
             }
         }).open();
     };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -129,24 +130,27 @@ function AddNewEmployee() {
             familyMember: rows,
             careerHistory: employmentRows,
             educationHistory: educationRows,
-            licenses: licensesRows,  // 수정
+            licenses: licensesRows,
             photoName: photo ? photo.name : '',
             photoPath: photo ? photo.path : ''
         };
+
         console.log(data);
+
         try {
             const response = await axios.post('http://localhost:8001/api/v1/members/newEmployee', data);
             console.log('서버 응답:', response.data);
 
-
             alert('사원 정보가 성공적으로 저장되었습니다.');
-            setRows([{ relationship: '', name: '', birthDate: '', job: '', education: '', note: '' }]);
-            setEmploymentRows([{ hireDate: '', endDate: '', companyName: '', department: '', lastPosition: '', jobDescription: '' }]);
-            setEducationRows([{ admissionDate: '', graduationDate: '', schoolName: '', major: '', degree: '' }]);
-            setLicenses([{ issuingOrganization: '', issueDate: '', name: '' }]);
+            setRows([]);
+            setEmploymentRows([]);
+            setEducationRows([]);
+            setLicenses([]);
             setPhoto(null);
             setFormData({
                 name: '',
+                englishName: '',
+                hanjaName: '',
                 accountNumber: '',
                 phone: '',
                 personalId: '',
@@ -156,7 +160,9 @@ function AddNewEmployee() {
                 nationality: '',
                 birthDate: '',
                 email: '',
-                job:''
+                job: '',
+                department: '',
+                employmentStatus: '',
             });
         } catch (error) {
             console.error('서버 요청 실패:', error);
@@ -215,17 +221,17 @@ function AddNewEmployee() {
                                                    onChange={handleChange}/>
                                         </td>
 
-                                        <th>계좌번호</th>
+                                        <th></th>
                                         <td>
-                                            <input type="text" id="account_number" name="accountNumber"
-                                                   value={formData.accountNumber} onChange={handleChange}/>
+                                            {/*<input type="text" id="account_number" name="accountNumber"*/}
+                                            {/*       value={formData.accountNumber} onChange={handleChange}/>*/}
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>전화번호</th>
                                         <td>
                                             <input type="text" id="phone" name="phone" value={formData.phone}
-                                                   onChange={handleChange}/>
+                                                   onChange={handleChange}  />
                                         </td>
                                         <th>주민등록번호</th>
                                         <td>
@@ -238,10 +244,10 @@ function AddNewEmployee() {
                                         <td>
                                             <label htmlFor="male">남성</label>
                                             <input type="radio" id="male" name="gender" value="남"
-                                                   checked={formData.gender === 'male'} onChange={handleChange}/>
+                                                   checked={formData.gender === '남'} onChange={handleChange}/>
                                             <label htmlFor="female">여성</label>
                                             <input type="radio" id="female" name="gender" value="여"
-                                                   checked={formData.gender === 'female'} onChange={handleChange}/>
+                                                   checked={formData.gender === '여'} onChange={handleChange}/>
                                         </td>
                                         <th>입사일</th>
                                         <td>
@@ -250,9 +256,7 @@ function AddNewEmployee() {
                                         </td>
                                         <th>주소</th>
                                         <td colSpan="3">
-                                            <input type="text" id="postcode" placeholder="우편번호"
-                                                   onClick={sample6_execDaumPostcode}
-                                                   readOnly/>
+
                                             <input type="text" id="address" placeholder="주소" name="address"
                                                    value={formData.address} onClick={sample6_execDaumPostcode}
                                                    readOnly/>
@@ -274,7 +278,7 @@ function AddNewEmployee() {
                                         </td>
                                         <th>이메일</th>
                                         <td>
-                                            <input type="text" id="email" name="email" value={formData.email}
+                                            <input type="email" id="email" name="email" value={formData.email}
                                                    onChange={handleChange}/>
                                         </td>
                                     </tr>
@@ -523,7 +527,11 @@ function AddNewEmployee() {
                                     </tbody>
                                 </table>
                             </div>
-                            <button type="submit">저장</button>
+
+                                <button type="submit" className="save-btn">저장</button>
+
+
+
                         </form>
                     </div>
                 </div>

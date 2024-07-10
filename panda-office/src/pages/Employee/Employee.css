@@ -19,7 +19,7 @@
 .employee-container th, .employee-container td, .newEmployee-container th, .newEmployee-container td {
     border: 1px solid grey;
 
-    text-align: left;
+    text-align: center;
 }
 
 .employee-container th{
@@ -46,13 +46,17 @@
     color: white;
 }
 
-.employee-container input[type="text"], .employee-container select ,.newEmployee-container input[type="text"], .newEmployee-container select{
+.employee-container input[type="text"],
+.employee-container input[type="email"],
+.employee-container select,
+.newEmployee-container input[type="text"],
+.newEmployee-container input[type="email"],
+.newEmployee-container select {
     width: calc(100% - 12px);
     padding: 6px;
     box-sizing: border-box;
     background-color: transparent; /* 투명 배경 */
     border: none; /* 테두리 제거 */
-
 }
 .list-search-button{
     height: 100px;
@@ -95,21 +99,9 @@
     width: 100%;
     table-layout: fixed;
 }
-.button-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
-}
 
-.button-container button {
-    padding: 10px 20px;
-    background-color: #292929;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
 
-}
+
 .plus-button{
 
     padding: 10px;
@@ -206,4 +198,28 @@
 .plus-symbol {
     font-weight: bold;
     line-height: 1; /* Ensure the plus symbol is vertically centered */
+}
+
+.detail-card .value, .profile-info .value{
+    margin-left: 15px;
+}
+.profile-info p,.detail-card p {
+    margin: 5px 0;
+}
+.profile-info .label,.detail-card .label {
+    font-weight: bold;
+}
+.save-btn{
+    background-color: #1E1F31; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
 }

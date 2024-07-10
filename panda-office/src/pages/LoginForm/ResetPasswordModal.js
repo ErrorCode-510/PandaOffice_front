@@ -24,6 +24,8 @@ const ResetPasswordModal = ({
                     placeholder="새 비밀번호 입력"
                     name="newPassword"
                     onChange={onChangeHandler}
+                    minLength="4"
+                    maxLength="15"
                     required
                 />
 
