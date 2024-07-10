@@ -57,16 +57,9 @@ export const callEventsAPI = () => {
 /* 면접 일정 등록 API */
 export const callEventsRegitstAPI = (event) => {
     return async (dispatch, getState) => {
-        try {
-            const result = await authRequest.post('/recruitment/interview-schedule/regist', event)
-
-            if (result.status === 200 || result.status === 201) {
-                dispatch(setRegistCalendar(result.data))
-            } else {
-                console.error('CallApplicantAllAPI error : ', result);
-            }
-        } catch (error) {
-            console.error('catch: CallApplicantAllAPI error : ', error);
+        const result = await authRequest.post('/recruitment/interview-schedule/regist', event)
+        if (result.status === 201) {
+            dispatch(callEventsAPI())
         }
     }
 }

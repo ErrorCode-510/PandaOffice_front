@@ -1,6 +1,6 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getScheduleStatus, setRegistCalendar } from "../../../modules/InterviewScheduleModules";
+import { getScheduleStatus } from "../../../modules/InterviewScheduleModules";
 import Interviewer from "./Intertviewer";
 import InterviewereAddList from "./InterviewerAddList";
 import { callApplicantAllAPI, callEventsRegitstAPI } from "../../../apis/InterviewScheduleAPICalls";

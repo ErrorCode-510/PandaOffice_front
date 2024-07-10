@@ -1,7 +1,7 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { callEventsAPI } from "../apis/InterviewScheduleAPICalls";
 import { setScheduleModal } from "../modules/InterviewScheduleModules";
@@ -12,9 +12,10 @@ const CalendarApi = ({ height }) => {
 
     const { calendar } = useSelector(state => state.interviewScheduleReducer);
 
+    /* 렌더링 후 캘린더 마운트 */
     useEffect(() => {
         dispatch(callEventsAPI());
-    }, [dispatch])
+    }, [])
 
     /* end 날짜를 하루 더하는 함수 */
     const addOneDay = (dateString) => {
