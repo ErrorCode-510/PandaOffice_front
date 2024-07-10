@@ -15,7 +15,8 @@ const initialState = {
     annualLeaveCalendar: null,
     attendanceRequestStatus: null,
     allLeaveAdjustment: null,
-    leaveAdjustmentSearch: null
+    leaveAdjustmentSearch: null,
+    message: null
 };
 
 /* 액션 타입 */
@@ -27,7 +28,7 @@ const GET_ATTENDANCE_REQUEST_STATUS = 'attendance/GET_ATTENDANCE_REQUEST_STATUS'
 const GET_ALL_LEAVE_ADJUSTMENT = 'attendance/GET_ALL_LEAVE_ADJUSTMENT';
 const GET_LEAVE_ADJUSTMENT_SEARCH = 'attendance/GET_LEAVE_ADJUSTMENT_SEARCH';
 
-const SAVE_ATTENDANCE_MESSAGE = 'attendance/SAVE_ATTENDANCE_SUCCESS';
+const SAVE_ATTENDANCE_MESSAGE = 'attendance/SAVE_ATTENDANCE_MESSAGE';
 
 /* 액션 생성 함수 */
 export const { attendance: {

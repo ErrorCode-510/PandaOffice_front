@@ -7,7 +7,7 @@ import {
     getAttendanceRequestStatus,
     getAllLeaveAdjustment,
     getLeaveAdjustmentSearch,
-    saveAttendanceMessage 
+    saveAttendanceMessage
 } from '../modules/AttendanceModules';
 
 
@@ -131,6 +131,40 @@ export const callLeaveAdjustmentSearchAPI = (hireYear) => {
             // 에러 처리 로직 추가
         }
     };
+};
+export const callCheckInAPI = (attendanceData) => {
+    return async (dispatch) => {
+        try {
+            const response = await authRequest.post('/attendance/check-in', {
+                checkInDate: attendanceData.checkInDate,
+                checkInTime: attendanceData.checkInTime
+            });
+            dispatch(saveAttendanceMessage(response.data));
+            return response;
+        } catch (error) {
+            console.error("출근 API 오류:", error.response?.data || error.message);
+            const errorMessage = error.response?.data === "이미 오늘 출근 체크를 하셨습니다."
+                ? error.response.data
+                : "출근 체크 중 오류가 발생했습니다. 다시 시도해 주세요.";
+            dispatch(saveAttendanceMessage(errorMessage));
+            throw error;
+        }
+    };
+};
 
-    
+export const callCheckOutAPI = (attendanceData) => {
+    return async (dispatch) => {
+        try {
+            const response = await authRequest.put('/attendance/check-out', {
+                checkInDate: attendanceData.checkInDate,
+                checkOutTime: attendanceData.checkOutTime
+            });
+            dispatch(saveAttendanceMessage("퇴근 성공"));
+            return response;
+        } catch (error) {
+            console.error("퇴근 API 오류:", error.response?.data || error.message);
+            dispatch(saveAttendanceMessage("퇴근 실패: " + (error.response?.data || error.message)));
+            throw error;
+        }
+    };
 };

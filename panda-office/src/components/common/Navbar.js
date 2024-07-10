@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import Clock from '../../utils/Clock';
 import { RiMegaphoneLine } from 'react-icons/ri';
@@ -9,28 +8,11 @@ import { FaRegFolderOpen } from 'react-icons/fa6';
 import { PiHandshakeLight } from 'react-icons/pi';
 import { TfiHeadphoneAlt } from 'react-icons/tfi';
 import { LiaSitemapSolid } from 'react-icons/lia';
-import { callCheckInAPI, callCheckOutAPI } from '../attendance/AttendanceModules2';
+import { AttendanceHandler } from './AttendanceHandler';
 
 function Navbar() {
-    const dispatch = useDispatch();
     const location = useLocation();
     const isRootPath = location.pathname === "/";
-
-    const handleCheckIn = () => {
-        const attendanceData = {
-            date: new Date().toISOString().split('T')[0],
-            time: new Date().toLocaleTimeString()
-        };
-        dispatch(callCheckInAPI(attendanceData));
-    };
-
-    const handleCheckOut = () => {
-        const attendanceData = {
-            date: new Date().toISOString().split('T')[0],
-            time: new Date().toLocaleTimeString()
-        };
-        dispatch(callCheckOutAPI(attendanceData));
-    };
 
     return (
         <div className={`nav-wrap ${isRootPath ? '' : 'collapsed'}`}>
@@ -38,10 +20,7 @@ function Navbar() {
                 <div className="side-clock">
                     <Clock />
                 </div>
-                <div className="check-button">
-                    <button onClick={handleCheckIn}>출근</button>
-                    <button onClick={handleCheckOut}>퇴근</button>
-                </div>
+                <AttendanceHandler />
                 <ul className="department-list">
                     <li>
                         <NavLink to="/notice/all-notice" className="nav-link">
