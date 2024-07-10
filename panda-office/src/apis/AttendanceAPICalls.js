@@ -15,7 +15,8 @@ import {
     /* 5.모든 사원의 현재 모든 연차 불러오기 */
     getAllLeaveAdjustment,
     /* 5.입사년도를 기준으로 검색한 사원들의 현년도 모든 연차 불러오기 */
-    getLeaveAdjustmentSearch
+    getLeaveAdjustmentSearch,
+    saveAttendanceMessage
 } from '../modules/AttendanceModules';
 
 /* 1.내 근태 현황 확인 */

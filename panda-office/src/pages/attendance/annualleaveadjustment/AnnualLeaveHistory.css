@@ -23,6 +23,9 @@
 
 .leave-details {
     flex: 1;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .leave-details h4 {
@@ -82,11 +85,12 @@
     flex-direction: column;
     align-items: flex-end;
     margin-top: 10px;
+    padding: 20px;
 }
 
-.adjust-title {
+.leave-adjustment h4 {
+    margin-bottom: 10px;
     align-self: flex-start;
-    margin-bottom: 5px;
 }
 
 .adjust-leave-table {
@@ -117,13 +121,13 @@
     margin: 0 5px;
 }
 
-.adjust-leave-table .adjust-days {
+.adjust-days {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.adjust-leave-table .adjust-days button {
+.adjust-days button {
     background-color: #2F3850;
     color: white;
     border: none;
@@ -133,17 +137,17 @@
     margin: 0 5px;
 }
 
-.adjust-leave-table .adjust-days button:hover {
+.adjust-days button:hover {
     background-color: #333;
 }
 
-.adjust-leave-table .reason-buttons {
+.reason-buttons {
     display: flex;
     justify-content: center;
     gap: 5px;
 }
 
-.adjust-leave-table .reason-buttons button {
+.reason-buttons button {
     background-color: #2F3850;
     color: white;
     border: none;
@@ -152,7 +156,7 @@
     cursor: pointer;
 }
 
-.adjust-leave-table .reason-buttons button:hover {
+.reason-buttons button:hover {
     background-color: #333;
 }
 
@@ -163,6 +167,7 @@
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 .save-button:hover {
