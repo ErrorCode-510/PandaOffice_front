@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const ScheduleForm = () => {
 
-    const [time, setTime ] = useState("");
+    const [time, setTime] = useState("");
 
     useEffect(() => {
         const now = new Date();
@@ -12,7 +12,7 @@ const ScheduleForm = () => {
     }, []);
 
     console.log('면접 시간: ' + time);
-    
+
     return (
         <>
             <div className="schedule-form">

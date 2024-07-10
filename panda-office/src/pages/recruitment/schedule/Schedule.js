@@ -9,7 +9,7 @@ const Schedule = () => {
     return (
         <>
             <div className="schedule-calendar">
-                <CalendarApi 
+                <CalendarApi
                     height='745px'
                     events={onAddEvent}
                 />

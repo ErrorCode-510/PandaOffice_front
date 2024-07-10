@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getScheduleStatus, setRegistCalendar } from "../../../modules/InterviewScheduleModules";
 import Interviewer from "./Intertviewer";
@@ -20,8 +20,6 @@ const ScheduleModal = ({ setOnAddEvent }) => {
         startTime: "",
         place: "",
         employee: "",
-        // employee2: "",
-        // employee3: "",
         applicantList: []
     };
 
@@ -29,27 +27,22 @@ const ScheduleModal = ({ setOnAddEvent }) => {
 
     /* 이벤트 추가 핸들러 */
     const handleAddEvent = () => {
-        const event = {
-            title: formValues.name,
-            start: `${formValues.startDate}`,
-            end: `${formValues.endDate}`,
-            extendedProps: {
-                memo: formValues.memo,
-                startTime: formValues.startTime,
-                employee: formValues.employee,
-                // employee2: "201212002",
-                // employee3: "201313003",
-                place: formValues.place,
-                applicantList: formValues.applicantList
-            }
-        };
+        const event =
+        {
+            name: formValues.name,
+            memo: formValues.memo,
+            startDate: formValues.startDate,
+            endDate: formValues.endDate,
+            startTime: formValues.startTime,
+            place: formValues.place,
+            employee: formValues.employee,
+            applicantList: formValues.applicantList
+        }
 
-        // console.log("event:" + JSON.stringify(event));
+        console.log("event:", event);
 
         /* 등록 api 호출 */
-        // dispatch(callEventsRegitstAPI(event));
-
-        // setFormValues(initialFormValues);
+        dispatch(callEventsRegitstAPI(event));
 
         // alert("면접일정 등록 완료");
         handlerCancelModal();
@@ -67,7 +60,6 @@ const ScheduleModal = ({ setOnAddEvent }) => {
             ...prevState,
             [name]: value
         }));
-        // console.log('이름 변경 확인: ' + JSON.stringify(value))
     }
 
     /* 마운트 시 Esc 키 활성화 */
@@ -91,8 +83,6 @@ const ScheduleModal = ({ setOnAddEvent }) => {
             startTime: "",
             place: "",
             employee: "",
-            // employee2: "",
-            // employee3: "",
             applicantList: []
         });
     }
@@ -125,7 +115,6 @@ const ScheduleModal = ({ setOnAddEvent }) => {
             ...prevState,
             employee: interviewerId
         }));
-        // console.log('면접관 변경 핸들러: ' + JSON.stringify(interviewerId));
     };
 
     /* 면접자 선택 핸들러 */
@@ -136,7 +125,6 @@ const ScheduleModal = ({ setOnAddEvent }) => {
                 ...prevState,
                 applicantList: [...prevState.applicantList, applicantId]
             }));
-            // console.log('면접자 선택 핸들러: ' + JSON.stringify(applicantId));
         }
     };
 
@@ -206,9 +194,9 @@ const ScheduleModal = ({ setOnAddEvent }) => {
                                                 onChange={handlerFormOnChange}
                                             >
                                                 <option>시간 선택</option>
-                                                <option>11:00</option>
-                                                <option>13:00</option>
-                                                <option>15:00</option>
+                                                <option value="11:00">11:00</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="15:00">15:00</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -260,10 +248,8 @@ const ScheduleModal = ({ setOnAddEvent }) => {
                                                         <div
                                                             key={applicant.id}
                                                             className="applicant-item applicant-hover"
-                                                            /* 개별 선택 */
-                                                            // onClick={() => handleSelectApplicant(applicant.id)}
-                                                        /* 전체 선택 */
-                                                        onClick={() => handleSelectApplicant(applicant.id)}
+                                                            /* 전체 선택 */
+                                                            onClick={() => handleSelectApplicant(applicant.id)}
                                                         >
                                                             <div>{applicant.name}</div>
                                                             <div>{applicant.birthDate}</div>
@@ -285,7 +271,7 @@ const ScheduleModal = ({ setOnAddEvent }) => {
                                 onChange={handlerFormOnChange}
                                 value={formValues.memo}
                                 name="memo"
-                                ></textarea>
+                            ></textarea>
                         </div>
                         <div className="schedule-btn">
                             <button onClick={handlerCancelModal}>취소</button>

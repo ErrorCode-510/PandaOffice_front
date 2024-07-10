@@ -1,16 +1,16 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { callEventsAPI } from "../apis/InterviewScheduleAPICalls";
+import { setScheduleModal } from "../modules/InterviewScheduleModules";
 
 const CalendarApi = ({ height, events }) => {
 
     const dispatch = useDispatch();
 
     const { calendar } = useSelector(state => state.interviewScheduleReducer);
-    // console.log("리덕스 확인:" + JSON.stringify(calendar));
 
     useEffect(() => {
         dispatch(callEventsAPI());
@@ -22,10 +22,6 @@ const CalendarApi = ({ height, events }) => {
         end: calendarEvent.endDate,
         extendedProps: calendarEvent.extendedProps
       }));
-
-    //   console.log("formattedEvents 확인:" + JSON.stringify(formattedEvent));
-
-    // console.log("eventsValue 데이터 확인: " + JSON.stringify({events}))
 
     // FullCalendar의 글로벌 로케일 설정 배열 초기화
     if (!FullCalendar.globalLocales) {
@@ -52,14 +48,14 @@ const CalendarApi = ({ height, events }) => {
 
     // 날짜 셀의 내용을 커스터마이즈하는 함수
     const customDayCellContent = ({ date }) => {
-        return <span>{date.getDate()}</span>; // 날짜에서 일(날짜 숫자)만 출력
+        return <span>{date.getDate()}</span>;
     };
 
     /* 이벤트 클릭 핸들러 */
-    const handleEventClick = (e) => {
-        console.log('eventClick', e);
+    const handleEventClick = () => {
+        dispatch(setScheduleModal(true))
     }
-
+    
     return (
         <div>
             <FullCalendar
@@ -83,7 +79,6 @@ const CalendarApi = ({ height, events }) => {
                 dayCellContent={customDayCellContent}
                 /* 이벤트 렌더링 */
                 events={formattedEvents}
-                // events={formattedEvent ? [formattedEvent] : []}
                 display='auto'
                 eventClick={handleEventClick}
             />

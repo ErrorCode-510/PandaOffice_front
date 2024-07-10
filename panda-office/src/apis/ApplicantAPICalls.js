@@ -4,14 +4,11 @@ import { authRequest } from './api';
 /* 면접자 전체 조회 API */
 export const callApplicantListAPI = ({ criteria, currentPage = 1 }) => {
 
-    // console.log('api params 호출 : ' + JSON.stringify(params))
-    
     let endpoint = `/recruitment/applicant/search?page=${currentPage}`
 
-    /* 검색 조건이 true 일 때(비어있지 않을 때) */
     if (criteria) {
         const { mainCriteria, subCriteria, searchCriteria } = criteria;
-    
+
         if (mainCriteria !== 'all' && subCriteria && searchCriteria) {
             /* mainCriteria가 all이 아니고 subCriteria와 searchCriteria가 모두 존재할 때 */
             endpoint += `&${mainCriteria}=${subCriteria}&name=${searchCriteria}`;
@@ -25,15 +22,10 @@ export const callApplicantListAPI = ({ criteria, currentPage = 1 }) => {
     }
 
     return async (dispatch, getState) => {
-        // const result = await request (
-        //     'GET',
-        //     `/recruitment/applicant?page=${currentPage}`
-        // );
         const result = await authRequest.get(endpoint)
 
         if (result.status === 200) {
             dispatch(getApplicant(result))
-            // console.log('리듀서 함수: ' + JSON.stringify(result))
         } else {
             console.error('callApplicantListAPI error : ', result);
         }
@@ -60,7 +52,7 @@ export const callApplicantModify = (formValues) => {
 
         try {
             const { id, ...data } = formValues
-            
+
             const result = await authRequest.put(`/recruitment/applicant/modify/${id}`, data, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -70,7 +62,6 @@ export const callApplicantModify = (formValues) => {
             if (result.status === 200 || result.status === 201) {
                 dispatch(setApplicantModify(result))
                 alert('수정 성공')
-                // console.log('API 수정 확인: ' + JSON.stringify(result));
             } else {
                 console.error('else: callApplicantModify error : ', result);
                 alert('수정 실패')
@@ -78,7 +69,7 @@ export const callApplicantModify = (formValues) => {
         } catch (error) {
             console.error('catch: callApplicantModify error : ', error);
         }
-        
+
     }
 }
 
@@ -117,7 +108,6 @@ export const callApplicantRegist = (formValues) => {
 
             if (result.status === 200 || result.status === 201) {
                 alert('등록 성공')
-                // console.log('API 등록 확인: ' + JSON.stringify(result));
             } else {
                 console.error('else: callApplicantModify error : ', result);
                 alert('등록 실패')
