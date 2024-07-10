@@ -13,7 +13,8 @@ const initialState = {
     currentYearAnnualLeaveRecord: null,
     searchAnnualLeaveRecord: null,
     annualLeaveCalendar: null,
-    attendanceRequestStatus: null,
+    currentYearAttendanceRequestStatus: null,
+    searchAttendanceRequestStatus: null,
     allLeaveAdjustment: null,
     leaveAdjustmentSearch: null,
     message: null
@@ -24,7 +25,8 @@ const GET_ATTENDANCE_STATUS = 'attendance/GET_ATTENDANCE_STATUS';
 const GET_CURRENT_YEAR_ANNUAL_LEAVE_RECORD = 'attendance/GET_CURRENT_YEAR_ANNUAL_LEAVE_RECORD';
 const GET_SEARCH_ANNUAL_LEAVE_RECORD = 'attendance/GET_SEARCH_ANNUAL_LEAVE_RECORD';
 const GET_ANNUAL_LEAVE_CALENDAR = 'attendance/GET_ANNUAL_LEAVE_CALENDAR';
-const GET_ATTENDANCE_REQUEST_STATUS = 'attendance/GET_ATTENDANCE_REQUEST_STATUS';
+const GET_CURRENT_YEAR_ATTENDANCE_REQUEST_STATUS = 'attendance/GET_CURRENT_YEAR_ATTENDANCE_REQUEST_STATUS';
+const GET_SEARCH_ATTENDANCE_REQUEST_STATUS = 'attendance/GET_SEARCH_ATTENDANCE_REQUEST_STATUS';
 const GET_ALL_LEAVE_ADJUSTMENT = 'attendance/GET_ALL_LEAVE_ADJUSTMENT';
 const GET_LEAVE_ADJUSTMENT_SEARCH = 'attendance/GET_LEAVE_ADJUSTMENT_SEARCH';
 
@@ -36,7 +38,8 @@ export const { attendance: {
     getCurrentYearAnnualLeaveRecord, 
     getSearchAnnualLeaveRecord,
     getAnnualLeaveCalendar,
-    getAttendanceRequestStatus,
+    getCurrentYearAttendanceRequestStatus,
+    getSearchAttendanceRequestStatus,
     getAllLeaveAdjustment,
     getLeaveAdjustmentSearch,
 
@@ -48,7 +51,8 @@ export const { attendance: {
     [GET_CURRENT_YEAR_ANNUAL_LEAVE_RECORD]: (record) => ({ record }),
     [GET_SEARCH_ANNUAL_LEAVE_RECORD]: (record) => ({ record }),
     [GET_ANNUAL_LEAVE_CALENDAR]: (calendar) => ({ calendar }),
-    [GET_ATTENDANCE_REQUEST_STATUS]: (requestStatus) => ({ requestStatus }),
+    [GET_CURRENT_YEAR_ATTENDANCE_REQUEST_STATUS]: (status) => ({ status }),
+    [GET_SEARCH_ATTENDANCE_REQUEST_STATUS]: (status) => ({ status }),
     [GET_ALL_LEAVE_ADJUSTMENT]: (adjustment) => ({ adjustment }),
     [GET_LEAVE_ADJUSTMENT_SEARCH]: (searchResult) => ({ searchResult }),
 
@@ -95,7 +99,7 @@ export const { attendance: {
     leaveAdjustmentSearch: null
 } */
 const attendanceReducer = handleActions({
-    /* 현재 근태 상태를 가져옴  */
+  
     [GET_ATTENDANCE_STATUS]: (state, { payload }) => ({ ...state, attendanceStatus: payload.status }),
 
     /* 현년도의 연차 내역을 가져옴 */
@@ -111,6 +115,15 @@ const attendanceReducer = handleActions({
     [GET_ATTENDANCE_REQUEST_STATUS]: (state, { payload }) => ({ ...state, attendanceRequestStatus: payload.requestStatus }),
 
     /* 모든 사원의 연차 내역을 가져옴  */
+
+    [GET_SEARCH_ANNUAL_LEAVE_RECORD]: (state, { payload }) => ({...state,searchAnnualLeaveRecord: payload.record,}),
+  
+    [GET_ANNUAL_LEAVE_CALENDAR]: (state, { payload }) => ({ ...state, annualLeaveCalendar: payload.calendar }),
+  
+    [GET_CURRENT_YEAR_ATTENDANCE_REQUEST_STATUS]: (state, { payload }) => ({ ...state, currentYearAttendanceRequestStatus: payload.status }),
+  
+    [GET_SEARCH_ATTENDANCE_REQUEST_STATUS]: (state, { payload }) => ({ ...state, searchAttendanceRequestStatus: payload.status }),
+
     [GET_ALL_LEAVE_ADJUSTMENT]: (state, { payload }) => ({ ...state, allLeaveAdjustment: payload.adjustment }),
 
     /* 검색받은 사원의 연차 내역을 가져옴 */

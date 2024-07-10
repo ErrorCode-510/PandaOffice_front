@@ -53,24 +53,6 @@ const ApplicantModal = () => {
             })
     }
 
-    /* Confirm 확인 */
-    // const handlerConfirm = () => {
-    //     const { id } = applicantDetail;
-    //     dispatch(callApplicantDelete(id))
-    //     .then(() => {
-    //         dispatch(setApplicantDetail(null));
-    //         setIsTrue(true);
-    //     })
-    //     .then(() => {
-    //         handlerConfirmCancel();
-    //     })
-    // }
-
-    /* Confirm 닫기 */
-    // const handlerConfirmCancel = () => {
-    //     setConfirmation(false);
-    // }
-
     /* 모달 랩 클릭 핸들러 (이벤트 버블링 방지) */
     const handlerModalWrapClick = (e) => {
         e.stopPropagation();
@@ -218,7 +200,7 @@ const ApplicantModal = () => {
                                     onChange={handlerInputChange}
                                     disabled={isTrue}
                                     placeholder='이름을 입력해주세요.'
-                                    ></input>
+                                ></input>
                             </div>
                             <div className='applicant-gender'>
                                 <p>성별</p>
@@ -246,7 +228,7 @@ const ApplicantModal = () => {
                                     onChange={handlerInputChange}
                                     disabled={isTrue}
                                     placeholder='연락처를 입력해주세요.'
-                                    ></input>
+                                ></input>
                             </div>
                             <div className='applicant-age'>
                                 <p>나이</p>
@@ -257,7 +239,7 @@ const ApplicantModal = () => {
                                     readOnly={isTrue}
                                     onChange={handlerInputChange}
                                     disabled={isTrue}
-                                    ></input>
+                                ></input>
                             </div>
                         </div>
                     </div>
@@ -270,7 +252,7 @@ const ApplicantModal = () => {
                             onChange={handlerInputChange}
                             readOnly={isTrue}
                             disabled={isTrue}
-                            >
+                        >
                             <option>도시를 선택하세요</option>
                             {cities.map((city, index) => (
                                 <option key={index} value={city}>{city}</option>
@@ -287,7 +269,7 @@ const ApplicantModal = () => {
                             onChange={handlerInputChange}
                             disabled={isTrue}
                             placeholder='이메일을 입력해주세요.'
-                            ></input>
+                        ></input>
                     </div>
                     <div className='modal-btn'>
                         <button className='cancel-btn' onClick={handlerCancelOnClick}>
@@ -307,10 +289,6 @@ const ApplicantModal = () => {
 
                 </div>
             </div>
-            {/* {
-                confirmation &&
-                <ConfirmationModal message='면접자를 삭제하시겠습니까?' onConfirm={handlerConfirm} onCancel={handlerConfirmCancel} />
-            } */}
         </>
     )
 }

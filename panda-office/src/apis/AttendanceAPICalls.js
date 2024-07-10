@@ -8,13 +8,13 @@ import {
     getAllLeaveAdjustment,
     getLeaveAdjustmentSearch,
     saveAttendanceMessage
+    getCurrentYearAttendanceRequestStatus,
+    getSearchAttendanceRequestStatus
+
 } from '../modules/AttendanceModules';
-
-
 
 export const callAttendanceStatusAPI = (searchDate) => {
     return async (dispatch) => {
-        const response = await authRequest.get(`/attendance/management/status?searchDate=${searchDate}`);
         try {
             const response = await authRequest.get(`/attendance/management/status?searchDate=${searchDate}`);
             if (response.status === 200) {
@@ -82,19 +82,59 @@ export const callAnnualLeaveCalendarAPI = () => {
     };
 };
 
-export const callAttendanceRequestStatusAPI = (startDate, endDate) => {
+export const callAttendanceRequestStatusAPI = (startDate, endDate, type) => {
     return async (dispatch) => {
         try {
             const response = await authRequest.get(`/attendance/request_status?startDate=${startDate}&endDate=${endDate}`);
             if (response.status === 200) {
-                dispatch(getAttendanceRequestStatus(response.data));
+                if (type === 'currentYear') {
+                    dispatch(getCurrentYearAttendanceRequestStatus(response.data));
+                } else {
+                    dispatch(getSearchAttendanceRequestStatus(response.data));
+                }
             } else {
                 console.error('API 호출 실패:', response);
-                // 에러 처리 로직 추가
+                // 기본값 설정
+                const defaultData = {
+                    attendanceSummary: {
+                        lateCount: 0,
+                        overtimeCount: 0,
+                        holidayWorkCount: 0,
+                        annualLeaveCount: 0,
+                        totalCount: 0
+                    },
+                    overTimeRecordsForToday: { overTimeRecords: [], lateRecords: [] },
+                    overTimeRecords: { overTimeRecords: [], lateRecords: [] },
+                    usedLeaveRecordsForToday: { annualLeaveUsedRecords: [] },
+                    annualLeaveUsedRecords: { annualLeaveUsedRecords: [] }
+                };
+                if (type === 'currentYear') {
+                    dispatch(getCurrentYearAttendanceRequestStatus(defaultData));
+                } else {
+                    dispatch(getSearchAttendanceRequestStatus(defaultData));
+                }
             }
         } catch (error) {
-            console.error('근태 신청 현황 조회 에러:', error);
-            // 에러 처리 로직 추가
+            console.error('근태 신청 내역 조회 에러:', error);
+            // 기본값 설정
+            const defaultData = {
+                attendanceSummary: {
+                    lateCount: 0,
+                    overtimeCount: 0,
+                    holidayWorkCount: 0,
+                    annualLeaveCount: 0,
+                    totalCount: 0
+                },
+                overTimeRecordsForToday: { overTimeRecords: [], lateRecords: [] },
+                overTimeRecords: { overTimeRecords: [], lateRecords: [] },
+                usedLeaveRecordsForToday: { annualLeaveUsedRecords: [] },
+                annualLeaveUsedRecords: { annualLeaveUsedRecords: [] }
+            };
+            if (type === 'currentYear') {
+                dispatch(getCurrentYearAttendanceRequestStatus(defaultData));
+            } else {
+                dispatch(getSearchAttendanceRequestStatus(defaultData));
+            }
         }
     };
 };
