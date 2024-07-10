@@ -54,12 +54,24 @@ export const callEventsAPI = () => {
         }
     }
 }
+
 /* 면접 일정 등록 API */
 export const callEventsRegitstAPI = (event) => {
     return async (dispatch, getState) => {
         const result = await authRequest.post('/recruitment/interview-schedule/regist', event)
         if (result.status === 201) {
             dispatch(callEventsAPI())
+        }
+    }
+}
+
+
+/* 면접 일정 상세 조회 API */
+export const callEventsDetailAPI = (event) => {
+    return async (dispatch, getState) => {
+        const result = await authRequest.post('/interview-schedule/detail/1')
+        if (result.status === 201) {
+            dispatch(callEventsDetailAPI(result.data))
         }
     }
 }
