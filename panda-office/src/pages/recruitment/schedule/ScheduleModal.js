@@ -39,8 +39,6 @@ const ScheduleModal = () => {
             applicantList: formValues.applicantList
         }
 
-        console.log("event:", event);
-
         /* 등록 api 호출 */
         dispatch(callEventsRegitstAPI(event));
 
