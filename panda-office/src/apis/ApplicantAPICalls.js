@@ -60,6 +60,12 @@ export const callApplicantDetail = (applicantId) => {
 
 /* 면접자 정보 수정 API */
 export const callApplicantModify = (formValues) => {
+    const criteria = {
+        mainCriteria: 'all',
+        subCriteria: '',
+        searchCriteria: '',
+    }
+
     return async (dispatch, getState) => {
         try {
             const { id, ...data } = formValues
@@ -72,6 +78,7 @@ export const callApplicantModify = (formValues) => {
 
             if (result.status === 200 || result.status === 201) {
                 dispatch(setApplicantModify(result))
+                dispatch(callApplicantListAPI(criteria))
                 alert('면접자 정보가 성공적으로 수정되었습니다.');
             } else {
                 alert('면접자 정보 수정에 실패했습니다. 다시 시도해 주세요.');
@@ -86,6 +93,12 @@ export const callApplicantModify = (formValues) => {
 
 /* 면접자 정보 삭제 API */
 export const callApplicantDelete = (id) => {
+    const criteria = {
+        mainCriteria: 'all',
+        subCriteria: '',
+        searchCriteria: '',
+    }
+
     return async (dispatch, getState) => {
         try {
             const result = await authRequest.delete(`/recruitment/applicant/delete/${id}`);
@@ -93,6 +106,7 @@ export const callApplicantDelete = (id) => {
             if (result.status === 204) {
                 dispatch(setApplicantDelete(result));
                 alert('면접자 정보가 성공적으로 삭제되었습니다.');
+                dispatch(callApplicantListAPI(criteria))
             } else {
                 alert('면접자 정보 삭제에 실패했습니다. 다시 시도해 주세요.');
             }
@@ -110,6 +124,7 @@ export const callApplicantRegist = (formValues) => {
         subCriteria: '',
         searchCriteria: '',
     }
+
     return async (dispatch, getState) => {
         try {
             const { ...data } = formValues;
