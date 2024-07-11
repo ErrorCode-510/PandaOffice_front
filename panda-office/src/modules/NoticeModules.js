@@ -1,29 +1,51 @@
 import { createActions, handleActions } from "redux-actions";
 
+
 /* 초기값 */
 const initialState = {
     notice: null,
     detail: null,
-    noticesByCategory: null
+    noticesByCategory: {}
 };
 
 /* 액션 타입 */
 const GET_NOTICE = "notice/GET_NOTICE";
 const SET_NOTICE = "notice/SET_NOTICE";
 const GET_NOTICE_BY_CATEGORY = "notice/GET_NOTICE_BY_CATEGORY";
+const ADD_NOTICE = "notice/ADD_NOTICE";
 
 /* 액션 함수 */
-export const { notice: { getNotice, setNotice, getNoticeByCategory } } = createActions({
+export const { notice: { getNotice, setNotice, getNoticeByCategory, addNotice } } = createActions({
     [GET_NOTICE]: result => ({ notice: result.data }),
     [SET_NOTICE]: detail => ({ detail: detail.data }),
-    [GET_NOTICE_BY_CATEGORY]: result => ({ noticesByCategory: result.data })
+    [GET_NOTICE_BY_CATEGORY]: result => ({ category: result.category, subCategory: result.subCategory, data: result.data }),
+    [ADD_NOTICE]: result => ({ notice: result.data })
 });
 
 /* 리듀서 함수 */
 const noticeReducer = handleActions({
-    [GET_NOTICE]: (state, { payload }) => ({ ...state, notice: payload.notice }),
-    [SET_NOTICE]: (state, { payload }) => ({ ...state, detail: payload.detail }),
-    [GET_NOTICE_BY_CATEGORY]: (state, { payload }) => ({ ...state, noticesByCategory: payload.noticesByCategory })
+    [GET_NOTICE]: (state, { payload }) => {
+        console.log('GET_NOTICE payload:', payload);
+        return { ...state, notice: payload.notice };
+    },
+    [SET_NOTICE]: (state, { payload }) => {
+        console.log('SET_NOTICE payload:', payload);
+        return { ...state, detail: payload.detail };
+    },
+    [GET_NOTICE_BY_CATEGORY]: (state, { payload }) => {
+        console.log('GET_NOTICE_BY_CATEGORY payload:', payload);
+        const { category, subCategory, data } = payload;
+        const updatedNoticesByCategory = { ...state.noticesByCategory };
+        if (!updatedNoticesByCategory[category]) {
+            updatedNoticesByCategory[category] = {};
+        }
+        updatedNoticesByCategory[category][subCategory] = data;
+        return { ...state, noticesByCategory: updatedNoticesByCategory };
+    },
+    [ADD_NOTICE]: (state, { payload }) => {
+        console.log('ADD_NOTICE payload:', payload);
+        return { ...state, notice: [...state.notice, payload.notice] };
+    }
 }, initialState);
 
 export default noticeReducer;

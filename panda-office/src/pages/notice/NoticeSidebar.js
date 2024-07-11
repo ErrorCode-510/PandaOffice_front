@@ -1,11 +1,33 @@
-import {NavLink, useLocation} from "react-router-dom";
+import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {IoIosArrowDown, IoIosArrowUp} from "react-icons/io";
-import {useEffect, useState} from "react";
+import React,{useEffect, useState} from "react";
+
+const categories = {
+    // 전체공지
+    main: [
+      { name: "전체공지", path: "/notice/all-notice" },
+    ],
+    // 그룹공지
+    group: [
+        { name: "회계", path: "/notice/category/group/accounting" },
+        { name: "영업", path: "/notice/category/group/sales" },
+        { name: "인사", path: "/notice/category/group/hr" },
+        { name: "마케팅", path: "/notice/category/group/marketing" },
+        { name: "기획", path: "/notice/category/group/planning" },
+      ],
+      // 경조사
+      event: [
+        { name: "결혼", path: "/notice/category/event/marriage" },
+        { name: "부고", path: "/notice/category/event/obituary" },
+        { name: "돌잔치", path: "/notice/category/event/dol" },
+      ],
+  };
 
 function NoticeSidebar() {
 
     const location = useLocation();  // 현재 경로를 확인하기 위해 useLocation 훅 사용
     const isRootPath = location.pathname === "/";  // 루트 경로 확인
+    const navigate = useNavigate();
 
     // 메인, 서브, 이벤트 섹션의 열림/닫힘 상태를 관리하는 상태 훅
     const [isMainOpen, setIsMainOpen] = useState(false);
@@ -59,79 +81,86 @@ function NoticeSidebar() {
         }
     }, []);
 
+    // 글쓰기 버튼 클릭 시 등록 페이지로 이동하는 함수
+    const handleRegistButtonClick = () => {
+        navigate('/notice/regist');
+    };
+
     return (
         <>
-            <div className={`side-wrap ${isRootPath ? 'collapsed' : ''}`}> {/* 루트 경로에 따라 사이드바 스타일 적용 */}
-                <div className="side-bar">
-                    <div className="title">게시판</div>
-                    <button className="add-btn">글쓰기</button>
-                    <ul className="mt-30 txt-align-left">
-                        <li>
-                            <div className="sidebar-item" onClick={toggleMainHandler}>
-                                {isMainOpen ? <IoIosArrowDown className="sidebar-icons toggle-down"/> :
-                                    <IoIosArrowUp className="sidebar-icons toggle-up"/>}
-                                <span className="icons-text fs-18 cursor-p">공지사항</span>
-                            </div>
-                            {isMainOpen && (
-                                <ul className="mt-10">
-                                        <NavLink to="/notice/all-notice">
-                                            <li className="icons-text fs-14 cursor-p" style={{marginLeft:"51px"}}>전체공지</li>
-                                        </NavLink>
-                                    <li>
-
-                                        <div className="sidebar-item" onClick={toggleSubHandler}>
-                                            {isSubOpen ? <IoIosArrowDown className="sidebar-icons  mt-10 ml-20"/> :
-                                                <IoIosArrowUp className="sidebar-icons ml-20"/>}
-                                            <span className="icons-text fs-14 cursor-p">그룹공지</span>
-                                        </div>
-                                        {isSubOpen && (
-                                            <ul>
-                                                <NavLink to={"/category/group/accounting"}>
-                                                    <li className="icons-text fs-12 mt-10 ml-55 cursor-p">회계</li>
-                                                </NavLink>
-                                                <NavLink to={"/category/group/sales"}>
-                                                    <li className="icons-text fs-12 mt-10 ml-55 cursor-p">영업</li>
-                                                </NavLink>
-                                                <NavLink to={"/category/group/hr"}>
-                                                    <li className="icons-text fs-12 mt-10 ml-55 cursor-p">인사</li>
-                                                </NavLink>
-                                                <NavLink to={"/category/group/marketing"}>
-                                                    <li className="icons-text fs-12 mt-10 ml-55 cursor-p">마케팅</li>
-                                                </NavLink>
-                                                <NavLink to={"/category/group/planning"}>
-                                                    <li className="icons-text fs-12 mt-10 ml-55 cursor-p">기획</li>
-                                                </NavLink>
-                                            </ul>
+          <div className={`side-wrap ${isRootPath ? 'collapsed' : ''}`}>
+            <div className="side-bar">
+                <div className="title">게시판</div>
+                <button className="add-btn" onClick={handleRegistButtonClick}>글쓰기</button>
+                <ul className="mt-30 txt-align-left">
+                    <li>
+                        <div className="sidebar-item" onClick={toggleMainHandler}>
+                            {isMainOpen ? (
+                                <IoIosArrowDown className="sidebar-icons toggle-down" />
+                            ) : (
+                                <IoIosArrowUp className="sidebar-icons toggle-up" />
+                            )}
+                            <span className="icons-text fs-18 cursor-p">공지사항</span>
+                        </div>
+                        {isMainOpen && (
+                            <ul className="mt-10">
+                                {categories.main.map((item) => (
+                                    <NavLink to={item.path} key={item.name}>
+                                        <li className="icons-text fs-14 cursor-p" style={{ marginLeft: "51px" }}>
+                                            {item.name}
+                                        </li>
+                                    </NavLink>
+                                ))}
+                                <li>
+                                    <div className="sidebar-item" onClick={toggleSubHandler}>
+                                        {isSubOpen ? (
+                                            <IoIosArrowDown className="sidebar-icons mt-10 ml-20" />
+                                        ) : (
+                                            <IoIosArrowUp className="sidebar-icons ml-20" />
                                         )}
-                                    </li>
-                                </ul>
+                                        <span className="icons-text fs-14 cursor-p">그룹공지</span>
+                                    </div>
+                                    {isSubOpen && (
+                                        <ul>
+                                            {categories.group.map((item) => (
+                                                <NavLink to={item.path} key={item.name}>
+                                                    <li className="icons-text fs-12 mt-10 ml-55 cursor-p">
+                                                        {item.name}
+                                                    </li>
+                                                </NavLink>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </li>
+                            </ul>
+                        )}
+                    </li>
+                    <li>
+                        <div className="sidebar-item" onClick={toggleEventHandler} style={{ marginTop: "20px" }}>
+                            {isEventOpen ? (
+                                <IoIosArrowDown className="sidebar-icons toggle-down" />
+                            ) : (
+                                <IoIosArrowUp className="sidebar-icons toggle-up" />
                             )}
-                        </li>
-                        <li>
-                            <div className="sidebar-item" onClick={toggleEventHandler} style={{marginTop: '20px'}}>
-                                {isEventOpen ? <IoIosArrowDown className="sidebar-icons toggle-down"/> :
-                                    <IoIosArrowUp className="sidebar-icons toggle-up"/>}
-                                <span className="icons-text fs-18 cursor-p">경조사</span>
-                            </div>
-                            {isEventOpen && (
-                                <ul className="mt-10">
-                                    <NavLink to="/category/event/marriage">
-                                        <li className="icons-text fs-12 mt-10 ml-35 cursor-p">결혼</li>
+                            <span className="icons-text fs-18 cursor-p">경조사</span>
+                        </div>
+                        {isEventOpen && (
+                            <ul className="mt-10">
+                                {categories.event.map((item) => (
+                                    <NavLink to={item.path} key={item.name}>
+                                        <li className="icons-text fs-12 mt-10 ml-35 cursor-p">
+                                            {item.name}
+                                        </li>
                                     </NavLink>
-                                    <NavLink to="/category/event/funeral">
-                                        <li className="icons-text fs-12 mt-10 ml-35 cursor-p">부고</li>
-                                    </NavLink>
-                                    <NavLink to="/category/event/first_birthday">
-                                        <li className="icons-text fs-12 mt-10 ml-35 cursor-p">돌잔치</li>
-                                    </NavLink>
-                                </ul>
-                            )}
-                        </li>
-                    </ul>
-                </div>
+                                ))}
+                            </ul>
+                        )}
+                    </li>
+                </ul>
             </div>
+        </div>
         </>
-    )
+      );
 }
 
 export default NoticeSidebar;
