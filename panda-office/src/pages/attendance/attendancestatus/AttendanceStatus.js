@@ -54,10 +54,10 @@ function AttendanceStatus() {
 
     useEffect(() => {
         const savedStates = {};
-        [1, 2, 3, 4, 5].forEach((weekNumber) => {
-            const savedState = localStorage.getItem(`week_${weekNumber}`);
+        ['1주', '2주', '3주', '4주', '5주'].forEach((week) => {
+            const savedState = localStorage.getItem(`week_${week}`);
             if (savedState !== null) {
-                savedStates[weekNumber] = JSON.parse(savedState);
+                savedStates[week] = JSON.parse(savedState);
             }
         });
         setOpenWeeks(savedStates);
@@ -71,11 +71,8 @@ function AttendanceStatus() {
         return <div>로딩 중...</div>;
     }
 
-    const attendanceRecord = attendanceStatus.attendanceRecordResponse?.calculatedAttendanceRecords[0] || {};
-    const overTimeAndLatenessRecord = attendanceStatus.calculatedOverTimeAndLatenessRecordResponse?.calculatedOverTimeAndLatenessRecords[0] || {};
-
-    const weekNumbers = [1, 2, 3, 4, 5];
-    const weeks = weekNumbers.map(num => `${num}주`);
+    const attendanceRecord = attendanceStatus.attendanceRecordResponse.calculatedAttendanceRecords[0] || {};
+    const overTimeAndLatenessRecord = attendanceStatus.calculatedOverTimeAndLatenessRecordResponse.calculatedOverTimeAndLatenessRecords[0] || {};
 
     return (
         <>
@@ -126,43 +123,38 @@ function AttendanceStatus() {
             </div>
 
             <div className="AttendanceStatusWeekSection">
-                {weeks.map((week, index) => (
-                    <div key={index} className={`sidebar-item week ${openWeeks[weekNumbers[index]] ? 'open' : ''}`}>
-                        <div onClick={() => toggleWeekContent(weekNumbers[index])}>
-                            {openWeeks[weekNumbers[index]] ? <IoIosArrowDown className="sidebar-icons toggle-down" /> : <IoIosArrowUp className="sidebar-icons toggle-up" />}
-                            <span className="icons-text fs-18 cursor-p">{week}</span>
+                {Object.entries(attendanceRecord.weeklyStartEndTimes || {}).map(([weekKey, days], index) => (
+                    <div key={index} className={`sidebar-item week ${openWeeks[`${index + 1}주`] ? 'open' : ''}`}>
+                        <div onClick={() => toggleWeekContent(`${index + 1}주`)}>
+                            {openWeeks[`${index + 1}주`] ? <IoIosArrowDown className="sidebar-icons toggle-down" /> : <IoIosArrowUp className="sidebar-icons toggle-up" />}
+                            <span className="icons-text fs-18 cursor-p">{`${index + 1}주`}</span>
                         </div>
-                        {openWeeks[weekNumbers[index]] && attendanceRecord.weeklyStartEndTimes && (
+                        {openWeeks[`${index + 1}주`] && (
                             <div className="week-content">
-                                {Object.keys(attendanceRecord.weeklyStartEndTimes).map((weekKey) => {
-                                    const weekData = attendanceRecord.weeklyStartEndTimes[weekKey].filter(day => parseInt(day.week) === weekNumbers[index]);
-                                    return weekData.length > 0 && (
-                                        <table key={weekKey} className="week-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>일</th>
-                                                    <th>요일</th>
-                                                    <th>업무 시작</th>
-                                                    <th>업무 종료</th>
-                                                    <th>총 근무 시간</th>
-                                                    <th>근무 시간 상세</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {weekData.map((day, dayIndex) => (
-                                                    <tr key={dayIndex}>
-                                                        <td>{day.date}</td>
-                                                        <td style={{ color: day.day === '일' ? 'red' : day.day === '토' ? 'blue' : 'black' }}>{day.day}</td>
-                                                        <td>{day.start}</td>
-                                                        <td>{day.end}</td>
-                                                        <td>{day.dayDuration}</td>
-                                                        <td>{`기본 ${day.dayDuration}`}</td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    );
-                                })}
+                                <table className="week-table">
+                                    <thead>
+                                        <tr>
+                                            <th>일</th>
+                                            <th>요일</th>
+                                            <th>업무 시작</th>
+                                            <th>업무 종료</th>
+                                            <th>총 근무 시간</th>
+                                            <th>근무 시간 상세</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {days.map((day, dayIndex) => (
+                                            <tr key={dayIndex}>
+                                                <td>{day.date}</td>
+                                                <td style={{ color: day.day === '일' ? 'red' : day.day === '토' ? 'blue' : 'black' }}>{day.day}</td>
+                                                <td>{day.start}</td>
+                                                <td>{day.end}</td>
+                                                <td>{day.dayDuration}</td>
+                                                <td>{`기본 ${day.dayDuration}`}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
                             </div>
                         )}
                     </div>
