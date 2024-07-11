@@ -71,7 +71,6 @@ const CalendarApi = ({ height }) => {
     const handleEventClick = (info) => {
         dispatch(setSelectedEvent(info.event))
         dispatch(setScheduleModalStatus(true))
-        console.log(JSON.stringify(info.event))
     }
 
     return (

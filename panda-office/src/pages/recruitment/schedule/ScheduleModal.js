@@ -46,11 +46,6 @@ const ScheduleModal = () => {
         handlerCancelModal();
     };
 
-    /* 등록 이후 값이 비어졌는지 확인 */
-    useEffect(() => {
-        console.log("FormValues :" + JSON.stringify(formValues));
-    }, [formValues]);
-
     /* 입력 필드 */
     const handlerFormOnChange = (e) => {
         const { name, value } = e.target;
