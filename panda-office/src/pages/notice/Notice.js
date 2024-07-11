@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NoticePagingBar from "./NoticePagingBar";
-import { callNoticeListAPI } from "../../apis/NoticeAPICalls";
+import { callNoticeListAPI } from "../../apis/NoticeAPICalls";  // 공지사항 목록 API 호출
 import NoticeList from "./NoticeList";
 import "./notice.css";
 
