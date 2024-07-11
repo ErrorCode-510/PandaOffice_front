@@ -8,6 +8,7 @@ import VerificationCodeModal from "../LoginForm/VerificationCodeModal";
 import ResetPasswordModal from "../LoginForm/ResetPasswordModal";
 import {callChangePasswordAPI, callSendAuthCodeAPI, callVerifyAuthCodeAPI} from "../../apis/MemberAPICalls";
 import {useDispatch} from "react-redux";
+import {getMemberId} from "../../utils/TokenUtils";
 
 
 function EmployeeDetail() {
@@ -17,6 +18,7 @@ function EmployeeDetail() {
     const [isVerificationCodeModalOpen, setIsVerificationCodeModalOpen] = useState(false);
     const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
     const [form, setForm] = useState({});
+    const [showFindPasswordButton, setShowFindPasswordButton] = useState(false);
     const dispatch = useDispatch();
     const openPasswordModal = () => {
         setIsPasswordModalOpen(true);
@@ -53,8 +55,19 @@ function EmployeeDetail() {
                 console.log("Fetching employee details...");
                 const response = await axios.get(`http://localhost:8001/api/v1/members/employees/${id}`);
                 setEmployee(response.data);
+
+                const memberId = getMemberId();
+
+                const employeeIdAsString = String(response.data?.employee?.employeeId);
+
+                if (employeeIdAsString === memberId) {
+                    setShowFindPasswordButton(true);
+                } else {
+                    setShowFindPasswordButton(false);
+                }
             } catch (error) {
                 console.error('Failed to fetch employee details:', error);
+
             }
         };
 
@@ -175,7 +188,7 @@ function EmployeeDetail() {
                             className="value">{employee.employee.nationality}</span></p>
                         <p><span className="label">주소</span> <span className="value">{employee.employee.address}</span>
                         </p>
-                        <p><span className="label">주민등록번호</span> <span className="value">{employee.employee.ssn}</span>
+                        <p><span className="label">주민등록번호</span> <span className="value">{employee.employee.personalId}</span>
                         </p>
                     </div>
                     <div className="detail-card">
@@ -272,7 +285,9 @@ function EmployeeDetail() {
                 />
 
             </div>
-            <a href="#" onClick={openPasswordModal}>비밀번호 찾기</a>
+            {showFindPasswordButton && (
+                <button className="find-password-button" onClick={openPasswordModal}>비밀번호 찾기</button>
+            )}
         </div>
     );
 }

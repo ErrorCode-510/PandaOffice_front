@@ -218,8 +218,19 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
+
     cursor: pointer;
     border-radius: 8px;
     transition: background-color 0.3s ease;
 }
+.find-password-button {
+    background-color:  #1E1F31; /* Blue color for button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+

@@ -36,7 +36,7 @@ const ResetPasswordModal = ({
                     style={{backgroundColor: "#1E1F31", color: "white"}}
                     onClick={onSubmitNewPasswordHandler}
                 >
-                    찾기
+                    확인
                 </button>
             </div>
         </div>

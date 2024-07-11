@@ -7,11 +7,16 @@ import { FaRegFolderOpen } from "react-icons/fa6";
 import { PiHandshakeLight } from "react-icons/pi";
 import { TfiHeadphoneAlt } from "react-icons/tfi";
 import { LiaSitemapSolid } from "react-icons/lia";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import {getMemberId} from "../../utils/TokenUtils";
 
 function Navbar() {
 
     const location = useLocation();
     const isRootPath = location.pathname === "/";
+
+
 
     return (
         <>
@@ -32,7 +37,7 @@ function Navbar() {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/employee" className="nav-link">
+                            <NavLink to={`/employee/${getMemberId()}`} className="nav-link">
                                 <FaRegUser className="side-icons"/>
                                 <p>인사</p>
                             </NavLink>

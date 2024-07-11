@@ -131,6 +131,7 @@ function LoginForm() {
                 // 성공적으로 처리된 경우
                 alert('인증 코드를 전송했습니다.');
                 openVerificationCodeModal();
+                closePasswordModal();
             } else {
                 // 오류 처리
                 alert('인증 코드 전송 실패');
@@ -150,7 +151,8 @@ function LoginForm() {
             const result = await dispatch(callVerifyAuthCodeAPI({ email, verificationCode }));
             if (result?.status === 200) {
                 alert('인증이 완료되었습니다. 새로운 비밀번호를 입력하세요.');
-                openResetPasswordModal()
+                openResetPasswordModal();
+                closeVerificationCodeModal();
             } else {
                 alert('인증 코드가 잘못되었습니다.');
             }
