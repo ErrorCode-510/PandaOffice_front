@@ -19,6 +19,7 @@ export const callAttendanceStatusAPI = (searchDate) => {
                 dispatch(getAttendanceStatus(response.data));
             } else {
                 console.error('API 호출 실패:', response);
+                // 에러 처리 로직 추가
                 dispatch(getAttendanceStatus({
                     weeklyAccumulated: '0h 0m 0s',
                     weeklyOvertime: '0h 0m 0s',
@@ -30,6 +31,7 @@ export const callAttendanceStatusAPI = (searchDate) => {
             }
         } catch (error) {
             console.error('API 호출 에러:', error);
+            // 에러 처리 로직 추가
             dispatch(getAttendanceStatus({
                 weeklyAccumulated: '0h 0m 0s',
                 weeklyOvertime: '0h 0m 0s',
