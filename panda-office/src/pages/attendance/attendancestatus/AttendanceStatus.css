@@ -78,25 +78,48 @@
 
 .week-table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
+    border-collapse: separate; /* 변경된 부분 */
+    border-spacing: 0; /* 테이블 셀 사이의 간격을 없앰 */
+    margin-bottom: 20px;
+    background-color: white;
 }
 
 .week-table th, .week-table td {
-    border: 1px solid #ddd;
+    border-top: 1px solid #ddd; /* 상단 테두리 추가 */
+    border-bottom: 1px solid #ddd; /* 하단 테두리 추가 */
     padding: 8px;
     text-align: center;
 }
 
 .week-table th {
-    background-color: #333;
-    color: #fff;
+    background-color: #1E1F31;
+    color: white;
+}
+
+.week-table thead th:first-child {
+    border-top-left-radius: 15px;
+}
+
+.week-table thead th:last-child {
+    border-top-right-radius: 15px;
+}
+
+.no-radius {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+.week-table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 0;
+}
+
+.week-table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 0;
 }
 
 .icons-text {
     margin-right: auto;
 }
-
 
 .week-summary {
     background-color: #f8f9fa;
@@ -106,4 +129,46 @@
     margin-bottom: 10px;
 }
 
+.date-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
 
+.date-picker {
+    border: 1px solid #ddd;
+    padding: 7px 10px; /* 패딩을 줄여 크기 조절 */
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+    background-color: transparent; /* 투명 배경 설정 */
+    box-shadow: none; /* 그림자 제거 */
+    width: 100px; /* 너비를 픽셀 값으로 설정 */
+    transition: box-shadow 0.3s ease;
+}
+
+.date-picker:focus {
+    outline: none;
+    box-shadow: none; /* 포커스 시 그림자 제거 */
+}
+
+.date-navigation .navigation-icon {
+    font-size: 24px;
+    cursor: pointer;
+    margin: 0 30px; /* 양옆 간격 조절 */
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.date-navigation .navigation-icon:hover {
+    color: #007bff;
+}
+
+.sunday {
+    color: red;
+}
+
+.saturday {
+    color: blue;
+}

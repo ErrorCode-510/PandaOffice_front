@@ -13,17 +13,17 @@ const initialState = {
 
 /* 액션 타입 */
 const GET_PAYROLL = 'payroll/GET_PAYROLL';
+const SAVE_EMPL_PAY = 'payroll/SAVE_EMPL_PAY';
 const GET_EARNING_CATEGORIES = 'earningCategories/GET_EARNING_CATEGORIES';
 const GET_DEDUCTION_CATEGORIES = 'deductionCategories/GET_DEDUCTION_CATEGORIES';
 const SUCCESS = 'payroll/SUCCESS';
-const SET_PAYROLL = 'payroll/SET_PAYROLL';
 const REQUEST_START = 'payroll/REQUEST_START';
 const REQUEST_FAIL = 'payroll/REQUEST_FAIL';
 const RESET_SUCCESS = 'payroll/RESET_SUCCESS';
 
 /* 액션 함수 */
 export const { 
-    payroll: { getPayroll, success, setPayroll, requestStart, requestFail, resetSuccess },
+    payroll: { getPayroll, success, saveEmplPay , requestStart, requestFail, resetSuccess },
     earningCategories: { getEarningCategories },
     deductionCategories: { getDeductionCategories }
 } = createActions({
@@ -31,7 +31,7 @@ export const {
     [GET_EARNING_CATEGORIES]: (earningCategories) => ({ earningCategories }),
     [GET_DEDUCTION_CATEGORIES]: (deductionCategories) => ({ deductionCategories }),
     [SUCCESS]: () => ({ success: true }),
-    [SET_PAYROLL]: (payroll) => ({ payroll }),
+    [SAVE_EMPL_PAY]: (payrollData) => ({ payrollData }),
     [REQUEST_START]: () => ({}),
     [REQUEST_FAIL]: (error) => ({ error }),
     [RESET_SUCCESS]: () => ({})
@@ -39,39 +39,51 @@ export const {
 
 /* 리듀서 함수 */
 const payrollReducer = handleActions({
-    [GET_PAYROLL]: (state, { payload }) => 
+    [GET_PAYROLL]: (state, { payload }) =>
         produce(state, draft => {
             draft.payroll = payload.payroll;
         }),
-    [GET_EARNING_CATEGORIES]: (state, { payload }) => 
+    [GET_EARNING_CATEGORIES]: (state, { payload }) =>
         produce(state, draft => {
             draft.earningCategories = payload.earningCategories;
         }),
-    [GET_DEDUCTION_CATEGORIES]: (state, { payload }) => 
+    [GET_DEDUCTION_CATEGORIES]: (state, { payload }) =>
         produce(state, draft => {
             draft.deductionCategories = payload.deductionCategories;
         }),
-    [SUCCESS]: (state) => 
+    [SUCCESS]: (state) =>
         produce(state, draft => {
             draft.success = true;
             draft.loading = false;
             draft.error = null;
         }),
-    [SET_PAYROLL]: (state, { payload }) => 
+    [SAVE_EMPL_PAY]: (state, { payload }) =>
         produce(state, draft => {
-            draft.payroll = payload.payroll;
+            // 저장된 급여 정보를 state에 반영
+            const index = draft.payroll.findIndex(p => p.employeeId === payload.payrollData.employeeId);
+            if (index !== -1) {
+                draft.payroll[index] = {
+                    ...draft.payroll[index],
+                    ...payload.payrollData
+                };
+            } else {
+                draft.payroll.push(payload.payrollData);
+            }
+            draft.success = true;
+            draft.loading = false;
+            draft.error = null;
         }),
-    [REQUEST_START]: (state) => 
+    [REQUEST_START]: (state) =>
         produce(state, draft => {
             draft.loading = true;
             draft.error = null;
         }),
-    [REQUEST_FAIL]: (state, { payload }) => 
+    [REQUEST_FAIL]: (state, { payload }) =>
         produce(state, draft => {
             draft.loading = false;
             draft.error = payload.error;
         }),
-    [RESET_SUCCESS]: (state) => 
+    [RESET_SUCCESS]: (state) =>
         produce(state, draft => {
             draft.success = false;
         })

@@ -33,7 +33,6 @@
     width: 23%;
     float: left;
     margin-right: 20px;
-    max-height: 700px;
 }
 
 .emplPay-table-container {
@@ -41,9 +40,9 @@
     border: 1px solid #ccc;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    height: 580px;
+    height: 650px;
     background: #fff;
-    max-height: 600px;
+    max-height: 700px;
 }
 
 .emplPay-data-table,
@@ -112,7 +111,7 @@
     border: 1px solid #ccc;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    height: 216px;
+    height: 250px;
     background: #fff;
     max-height: 600px;
 }
@@ -125,6 +124,8 @@
 }
 
 .emplAll-data-table thead {
+    position: sticky;
+    top: 0;
     text-align: center;
     background: #2F3850;
     color: #fff;

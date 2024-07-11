@@ -1,0 +1,99 @@
+.leave-adjustment {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 10px;
+}
+
+.adjust-title {
+    align-self: flex-start;
+    margin-bottom: 5px;
+}
+
+.adjust-leave-table {
+    width: 350px;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+.adjust-leave-table th, .adjust-leave-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.adjust-leave-table th {
+    background-color: #1E1F31;
+    color: white;
+    width: 150px;
+}
+
+.adjust-leave-table td input[type="text"] {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    width: 50px;
+    text-align: center;
+    margin: 0 5px;
+}
+
+.adjust-leave-table .adjust-days {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.adjust-leave-table .adjust-days button {
+    background-color: #2F3850;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.adjust-leave-table .adjust-days button:hover {
+    background-color: #333;
+}
+
+.adjust-leave-table .reason-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.adjust-leave-table .reason-buttons button {
+    background-color: #2F3850;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.adjust-leave-table .reason-buttons button:hover {
+    background-color: #333;
+}
+
+.save-button {
+    background-color: #2F3850;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.save-button:hover {
+    background-color: #333;
+}
+
+/* Border radius for specific cells */
+.rounded-left-top {
+    border-top-left-radius: 15px;
+}
+
+.rounded-left-bottom {
+    border-bottom-left-radius: 15px;
+}

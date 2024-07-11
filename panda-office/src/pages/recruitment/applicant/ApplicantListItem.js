@@ -1,4 +1,4 @@
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { callApplicantDetail } from '../../../apis/ApplicantAPICalls';
 
 const ApplicantListItem = ({ applicant: { id, name, birthDate, gender, phone, address, email } }) => {
@@ -9,7 +9,7 @@ const ApplicantListItem = ({ applicant: { id, name, birthDate, gender, phone, ad
     const handlerOnClick = () => {
         dispatch(callApplicantDetail(id));
     }
-    
+
     // 생일로부터 나이 계산 함수
     const calculateAge = (birthDate) => {
         const today = new Date();

@@ -46,7 +46,9 @@ function Main() {
                        }
                 </div>
             </div>
+            <div style={{marginTop: "40px"}}>
             <Footer/>
+            </div>
         </main>
     );
 }
