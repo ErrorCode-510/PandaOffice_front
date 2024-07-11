@@ -144,7 +144,7 @@ export const callLeaveAdjustmentAPI = (hireYear = null) => {
                 ? `/attendance/all_leave_adjustment?hireYear=${hireYear}`
                 : '/attendance/all_leave_adjustment';
             const response = await authRequest.get(url);
-            if (response.status === 200) {
+            if (response && response.status === 200) {
                 dispatch(getLeaveAdjustment(response.data.allLeaveRecords));
             } else {
                 console.error('API 호출 실패:', response);
