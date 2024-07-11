@@ -4,7 +4,8 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { callEventsAPI } from "../apis/InterviewScheduleAPICalls";
-import { setScheduleModal } from "../modules/InterviewScheduleModules";
+import { setScheduleModalStatus, setSelectedEvent } from "../modules/InterviewScheduleModules";
+import ScheduleDetailModal from "../pages/recruitment/schedule/SchedulDetailModal";
 
 const CalendarApi = ({ height }) => {
 
@@ -24,6 +25,7 @@ const CalendarApi = ({ height }) => {
         return date.toISOString().split('T')[0];
     };
 
+    /* 캘린더 db에서 꺼내서 조회 */
     const formattedEvents = calendar.map((calendarEvent) => ({
         title: calendarEvent.name,
         start: `${calendarEvent.startDate}T${calendarEvent.startTime}`,
@@ -66,37 +68,42 @@ const CalendarApi = ({ height }) => {
     };
 
     /* 이벤트 클릭 핸들러 */
-    const handleEventClick = () => {
-        dispatch(setScheduleModal(true))
+    const handleEventClick = (info) => {
+        dispatch(setSelectedEvent(info.event))
+        dispatch(setScheduleModalStatus(true))
+        console.log(JSON.stringify(info.event))
     }
 
     return (
-        <div>
-            <FullCalendar
-                height={height}
-                plugins={[dayGridPlugin, timeGridPlugin]}
-                initialView="dayGridMonth"
-                /* 캘린더 헤더 스타일 */
-                headerToolbar={{
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                }}
-                /* 언어 설정 */
-                locales={[FullCalendar.globalLocales[FullCalendar.globalLocales.length - 1]]}
-                locale="ko"
-                /* 이벤트 편집 기능(일정 bar를 선택하거나 드래그) */
-                editable={true}
-                /* 여러 날짜 선택 가능 */
-                selectable={true}
-                // 날짜 셀의 내용을 커스터마이즈하는 함수를 전달
-                dayCellContent={customDayCellContent}
-                /* 이벤트 렌더링 */
-                events={formattedEvents}
-                display='auto'
-                eventClick={handleEventClick}
-            />
-        </div>
+        <>
+            <div>
+                <FullCalendar
+                    height={height}
+                    plugins={[dayGridPlugin, timeGridPlugin]}
+                    initialView="dayGridMonth"
+                    /* 캘린더 헤더 스타일 */
+                    headerToolbar={{
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    }}
+                    /* 언어 설정 */
+                    locales={[FullCalendar.globalLocales[FullCalendar.globalLocales.length - 1]]}
+                    locale="ko"
+                    /* 이벤트 편집 기능(일정 bar를 선택하거나 드래그) */
+                    editable={true}
+                    /* 여러 날짜 선택 가능 */
+                    selectable={true}
+                    // 날짜 셀의 내용을 커스터마이즈하는 함수를 전달
+                    dayCellContent={customDayCellContent}
+                    /* 이벤트 렌더링 */
+                    events={formattedEvents}
+                    display='auto'
+                    eventClick={handleEventClick}
+                />
+            </div>
+            <ScheduleDetailModal/>
+        </>
     );
 };
 
