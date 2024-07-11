@@ -14,7 +14,7 @@ const initialState = {
 /* 액션 타입 */
 const GET_APPLICANT = 'applicant/GET_APPLICANT';
 const SET_CRITERIA = 'applicant/SET_CRITERIA';
-const SET_APPLICANT_DEDATIL = 'applicant/SET_APPLICANT_DETAIL';
+const SET_APPLICANT_DETAIL = 'applicant/SET_APPLICANT_DETAIL';
 const SET_APPLICANT_MODIFY = 'applicant/SET_APPLICANT_MODIFY';
 const SET_APPLICANT_DELETE = 'applicant/SET_APPLICANT_DELETE';
 const SET_MODAL_REGIST = 'applicant/SET_MODAL_REGIST';
@@ -32,7 +32,7 @@ export const { applicant: {
 } } = createActions({
     [GET_APPLICANT]: result => ({ applicant: result.data }),
     [SET_CRITERIA]: params => ({ criteria: params }),
-    [SET_APPLICANT_DEDATIL]: detail => ({ applicantDetail: detail }),
+    [SET_APPLICANT_DETAIL]: detail => ({ applicantDetail: detail }),
     [SET_APPLICANT_MODIFY]: modify => ({ applicatnModify: modify }),
     [SET_APPLICANT_DELETE]: deleteData => ({ applicantDelete: deleteData }),
     [SET_MODAL_REGIST]: regist => ({ modalRegist: regist }),
@@ -45,7 +45,7 @@ const applicantReducer = handleActions({
     [SET_CRITERIA]: (state, { payload }) => ({
         ...state, criteria: payload.criteria
     }),
-    [SET_APPLICANT_DEDATIL]: (state, { payload }) => {
+    [SET_APPLICANT_DETAIL]: (state, { payload }) => {
         return { ...state, applicantDetail: payload.applicantDetail }
     },
     [SET_APPLICANT_MODIFY]: (state, { payload }) => {

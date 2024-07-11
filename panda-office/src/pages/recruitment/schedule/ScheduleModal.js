@@ -1,6 +1,6 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getScheduleStatus, setRegistCalendar } from "../../../modules/InterviewScheduleModules";
+import { getScheduleStatus } from "../../../modules/InterviewScheduleModules";
 import Interviewer from "./Intertviewer";
 import InterviewereAddList from "./InterviewerAddList";
 import { callApplicantAllAPI, callEventsRegitstAPI } from "../../../apis/InterviewScheduleAPICalls";
@@ -38,8 +38,6 @@ const ScheduleModal = () => {
             employee: formValues.employee,
             applicantList: formValues.applicantList
         }
-
-        console.log("event:", event);
 
         /* 등록 api 호출 */
         dispatch(callEventsRegitstAPI(event));

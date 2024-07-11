@@ -5,7 +5,7 @@ import { callApplicantModify, callApplicantDelete } from '../../../apis/Applican
 
 const ApplicantModal = () => {
 
-    const { applicantDetail, applicantModify } = useSelector(state => state.applicantReducer)
+    const { applicantDetail } = useSelector(state => state.applicantReducer)
 
     const dispatch = useDispatch();
 
@@ -19,13 +19,11 @@ const ApplicantModal = () => {
         phone: '',
         email: '',
     });
-    const [confirmation, setConfirmation] = useState(false);
 
     /* 모달 백그라운드 클릭 시 모달창 닫기 */
     const handlerCloseOnClick = () => {
         dispatch(setApplicantDetail(null));
         setIsTrue(true);
-        // handlerConfirmCancel();
     }
 
     /* 모달창 닫기/취소 버튼 */
@@ -34,11 +32,9 @@ const ApplicantModal = () => {
         if (isTrue) {
             dispatch(setApplicantDetail(null));
             setIsTrue(true);
-            // handlerConfirmCancel();
             /* 거짓일 경우 상태 변화 */
         } else {
             setIsTrue(true)
-            // handlerConfirmCancel();
         }
     }
 
@@ -106,7 +102,6 @@ const ApplicantModal = () => {
     const handlerButtonOff = (e) => {
         if (e.key === 'Escape') {
             handlerCloseOnClick();
-            // console.log('Esc 키 눌림');
         }
     }
 
@@ -199,7 +194,7 @@ const ApplicantModal = () => {
                                     readOnly={isTrue}
                                     onChange={handlerInputChange}
                                     disabled={isTrue}
-                                    placeholder='이름을 입력해주세요.'
+                                    placeholder='이름을 입력해 주세요.'
                                 ></input>
                             </div>
                             <div className='applicant-gender'>
@@ -227,7 +222,7 @@ const ApplicantModal = () => {
                                     readOnly={isTrue}
                                     onChange={handlerInputChange}
                                     disabled={isTrue}
-                                    placeholder='연락처를 입력해주세요.'
+                                    placeholder='연락처를 입력해 주세요.'
                                 ></input>
                             </div>
                             <div className='applicant-age'>
@@ -268,7 +263,7 @@ const ApplicantModal = () => {
                             readOnly={isTrue}
                             onChange={handlerInputChange}
                             disabled={isTrue}
-                            placeholder='이메일을 입력해주세요.'
+                            placeholder='이메일을 입력해 주세요.'
                         ></input>
                     </div>
                     <div className='modal-btn'>

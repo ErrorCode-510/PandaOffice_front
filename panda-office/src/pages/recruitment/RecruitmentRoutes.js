@@ -6,7 +6,7 @@ function RecruitmentRoutes() {
     return (
         <Routes>
             <Route path="applicant" element={<Applicant />} />
-            <Route path="schedule" element={<Schedule/>}/>
+            <Route path="schedule" element={<Schedule />} />
         </Routes>
     );
 }
