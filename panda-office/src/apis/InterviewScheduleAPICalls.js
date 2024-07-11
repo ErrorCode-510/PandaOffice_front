@@ -5,7 +5,7 @@ import { authRequest } from "./api"
 export const callInterviewerAPI = () => {
     return async (dispatch, getState) => {
         try {
-            const result = await authRequest.get('/payroll/allemplpayroll');
+            const result = await authRequest.get('/payroll/all-emplpayroll');
 
             if (result.status === 200) {
                 dispatch(getInterviewer(result));
