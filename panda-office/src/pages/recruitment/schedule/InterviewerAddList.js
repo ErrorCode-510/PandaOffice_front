@@ -1,6 +1,4 @@
 import { useSelector } from "react-redux";
-import { FiMinus } from "react-icons/fi";
-import { useState } from "react";
 
 const InterviewereAddList = () => {
 

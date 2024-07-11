@@ -116,3 +116,44 @@
 .ali-btn {
     cursor: pointer;
 }
+
+
+/* 공지사항 등록 페이지 */
+.notice-create {
+    margin: 20px;
+  }
+  
+  .notice-create h2 {
+    margin-bottom: 20px;
+  }
+  
+  .notice-create form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .notice-create form > div {
+    margin-bottom: 10px;
+  }
+  
+  .notice-create form label {
+    margin-right: 10px;
+  }
+  
+  .notice-create form input,
+  .notice-create form select,
+  .notice-create form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+  }
+  
+  .notice-create form textarea {
+    height: 200px;
+  }
+  
+  .notice-create form button {
+    padding: 10px;
+    margin-right: 10px;
+  }
+  
