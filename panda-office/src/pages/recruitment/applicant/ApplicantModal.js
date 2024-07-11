@@ -239,7 +239,7 @@ const ApplicantModal = () => {
                         </div>
                     </div>
                     <div className='applicant-address wd-420'>
-                        <p>주소</p>
+                        <p>지역</p>
                         <select
                             className="acm-address"
                             value={formValues.address}
@@ -248,7 +248,7 @@ const ApplicantModal = () => {
                             readOnly={isTrue}
                             disabled={isTrue}
                         >
-                            <option>도시를 선택하세요</option>
+                            <option>선택</option>
                             {cities.map((city, index) => (
                                 <option key={index} value={city}>{city}</option>
                             ))}

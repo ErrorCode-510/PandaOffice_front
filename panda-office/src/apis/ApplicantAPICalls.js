@@ -17,6 +17,9 @@ export const callApplicantListAPI = ({ criteria, currentPage = 1 }) => {
         } else if (mainCriteria === 'all' && searchCriteria) {
             /* mainCriteria가 all이 아니고 searchCriteria만 존재할 때 */
             endpoint += `&name=${searchCriteria}`;
+        } else if (mainCriteria === 'all' && !subCriteria) {
+            /* mainCriteria가 all일 때 */
+            endpoint += '';
         }
     }
 
@@ -27,7 +30,7 @@ export const callApplicantListAPI = ({ criteria, currentPage = 1 }) => {
 
             if (result.status === 200) {
                 dispatch(getApplicant(result))
-            } else {
+             } else {
                 alert("면접자 목록을 불러오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.")
             }
         } catch (error) {
@@ -102,6 +105,11 @@ export const callApplicantDelete = (id) => {
 
 /* 면접자 등록 API */
 export const callApplicantRegist = (formValues) => {
+    const criteria = {
+        mainCriteria: 'all',
+        subCriteria: '',
+        searchCriteria: '',
+    }
     return async (dispatch, getState) => {
         try {
             const { ...data } = formValues;
@@ -114,6 +122,7 @@ export const callApplicantRegist = (formValues) => {
 
             if (result.status === 200 || result.status === 201) {
                 alert('면접자가 성공적으로 등록되었습니다.');
+                dispatch(callApplicantListAPI(criteria))
             } else {
                 alert('면접자 등록에 실패했습니다. 다시 시도해 주세요.');
             }
