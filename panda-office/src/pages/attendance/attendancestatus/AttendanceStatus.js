@@ -54,7 +54,7 @@ function AttendanceStatus() {
 
     useEffect(() => {
         const savedStates = {};
-        [1, 2, 3, 4, 5].forEach((weekNumber) => {
+        [1, 2, 3, 4].forEach((weekNumber) => {
             const savedState = localStorage.getItem(`week_${weekNumber}`);
             if (savedState !== null) {
                 savedStates[weekNumber] = JSON.parse(savedState);
@@ -74,7 +74,7 @@ function AttendanceStatus() {
     const attendanceRecord = attendanceStatus.attendanceRecordResponse?.calculatedAttendanceRecords[0] || {};
     const overTimeAndLatenessRecord = attendanceStatus.calculatedOverTimeAndLatenessRecordResponse?.calculatedOverTimeAndLatenessRecords[0] || {};
 
-    const weekNumbers = [1, 2, 3, 4, 5];
+    const weekNumbers = [1, 2, 3, 4];
     const weeks = weekNumbers.map(num => `${num}주`);
 
     return (

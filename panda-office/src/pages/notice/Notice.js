@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NoticePagingBar from "./NoticePagingBar";
-import { callNoticeListAPI } from "../../apis/NoticeAPICalls";
+import { callNoticeListAPI } from "../../apis/NoticeAPICalls";  // 공지사항 목록 API 호출
 import NoticeList from "./NoticeList";
 import "./notice.css";
 
@@ -10,7 +10,7 @@ const Notice = () => {
 
     // 액션을 디스패치 하기 위해 디스패치 훅을 사용 
     const dispatch = useDispatch();
-
+    
     /* 페이지 번호 상태 저장하기: 디폴트 1 */
     const [currentPage, setCurrentPage] = useState(1);
 

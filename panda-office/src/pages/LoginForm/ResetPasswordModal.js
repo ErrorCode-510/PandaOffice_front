@@ -24,6 +24,8 @@ const ResetPasswordModal = ({
                     placeholder="새 비밀번호 입력"
                     name="newPassword"
                     onChange={onChangeHandler}
+                    minLength="4"
+                    maxLength="15"
                     required
                 />
 
@@ -34,7 +36,7 @@ const ResetPasswordModal = ({
                     style={{backgroundColor: "#1E1F31", color: "white"}}
                     onClick={onSubmitNewPasswordHandler}
                 >
-                    찾기
+                    확인
                 </button>
             </div>
         </div>

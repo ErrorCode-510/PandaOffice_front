@@ -4,6 +4,7 @@ export function AddNewLinePreview({ newLine }) {
     const { infoForCreate } = useSelector(state => state.e_approvalReducer);
     return (
         <div className="newLinePreview">
+            {/* <div>결재선 추가</div> */}
             <div className="new-line-preview-area">
                 <div>
                     <img src="/logo192.png"></img>

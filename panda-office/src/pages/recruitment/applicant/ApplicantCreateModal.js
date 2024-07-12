@@ -52,7 +52,6 @@ const ApplicantCreateModal = () => {
                     closeModalHandler();
                 })
                 .catch((error) => {
-                    console.error('등록 실패:', error);
                     alert('등록 중 오류가 발생했습니다.');
                 });
         } else {
@@ -145,7 +144,7 @@ const ApplicantCreateModal = () => {
                                         name='phone'
                                         onChange={handlerInputChange}
                                         value={formValues.phone}
-                                        placeholder='연락처를 입력해주세요.'
+                                        placeholder='숫자만 입력해주세요.'
                                     ></input>
                                 </div>
                                 <div className='applicant-age'>
@@ -159,12 +158,12 @@ const ApplicantCreateModal = () => {
                             </div>
                         </div>
                         <div className='applicant-address'>
-                            <p>주소</p>
+                            <p>지역</p>
                             <select
-                            className="acm-address"
-                            name="address"
-                            onChange={handlerInputChange}
-                            value={formValues.address}
+                                className="acm-address"
+                                name="address"
+                                onChange={handlerInputChange}
+                                value={formValues.address}
                             >
                                 <option value="">선택</option>
                                 {cities.map((city, index) => (

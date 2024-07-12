@@ -6,7 +6,7 @@ const ApplicantInfoTitle = () => {
                     <li>이름</li>
                     <li>나이</li>
                     <li>성별</li>
-                    <li>주소</li>
+                    <li>지역</li>
                     <li>번호</li>
                     <li>이메일</li>
                 </ul>

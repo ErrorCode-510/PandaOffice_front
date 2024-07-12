@@ -1,15 +1,17 @@
 import { authRequest } from './api';
-import { getNotice, getNoticeByCategory, setNotice } from '../modules/NoticeModules';
+import { getNotice, getNoticeByCategory, setNotice, addNotice } from '../modules/NoticeModules';
+
 
 /* 공지사항 전체 조회 API */
 export const callNoticeListAPI = ({ currentPage }) => {
-    return async (dispatch, getState) => {
 
+    return async (dispatch, getState) => {
         const result = await authRequest.get(`/notice/notices?page=${currentPage}`);
-        console.log("Fetching all notices for page: " + currentPage);
+        console.log(`Fetching all notices for page: ${currentPage}`);
 
         if (result.status === 200) {
-            dispatch(getNotice(result));
+            dispatch(getNotice(result.data));
+            return result.data;  // tatalPages 값을 얻기 위해 반환
         } else {
             console.error('callNoticeListAPI error : ', result);
         }
@@ -29,15 +31,42 @@ export const callNoticeDetailAPI = (noticeId) => {
     };
 }
 
-/* 카테고리 별 공지사항 조회 API */
+/* 카테고리 별 공지사항 조회 API (사이드바) */
 export const callNoticeByCategoryAPI = ({ category, subCategory, currentPage }) => {
     return async (dispatch, getState) => {
-        const result = await authRequest.get(`/notice/category/${category}/${subCategory}?page=${currentPage}`);
-        console.log(`Fetching notice for category: ${category}, subCategory: ${subCategory}, page: ${currentPage}`);
-        if (result.status === 200) {
-            dispatch(getNoticeByCategory(result));
-        } else {
-            console.error('callNoticeByCategoryAPI error : ', result);
+        try {
+            const apiUrl = `/notice/category/filter?category=${category}&subCategory=${subCategory}&page=${currentPage}`;
+            const result = await authRequest.get(apiUrl);
+            
+            if (result.status === 200) {
+                dispatch(getNoticeByCategory({
+                    category,
+                    subCategory,
+                    data: result.data
+                }));
+                console.log('getNoticeByCategory 액션을 데이터와 함께 디스패치:', result.data);
+                return result.data;
+            } else {
+                console.error('callNoticeByCategoryAPI error : ', result);
+            }
+        } catch (error) {
+            console.error('callNoticeByCategoryAPI error : ', error);
         }
     };
+}
+
+/* 공지사항 등록 API */
+export const callAddNoticeAPI = (formData) => {
+    return async (dispatch) => {
+        const result = await authRequest.post('/notice/regist', formData);
+        console.log('Response Data:', result.data);
+        if (result.status === 201) {
+            dispatch(addNotice( result.data ));
+            
+            /* 성공시 추가 작업 */
+            return result;  // 응답을 반환하여 성공 여부 확인
+        } else {
+            console.error('callAddNoticeAPI error : ', result);
+        }
+    }
 }

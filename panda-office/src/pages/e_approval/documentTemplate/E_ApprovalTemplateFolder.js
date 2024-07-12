@@ -2,26 +2,30 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../E_Approval.css';
 import { useEffect, useState } from 'react';
 import { callDocumentFolderAPI } from '../../../apis/e_approval/ApprovalDocumentFolderAPICalls';
-import { Folder } from '../../../components/e_approval/templateFolder/TemplateFolder';
+import { FolderList } from '../../../components/e_approval/templateFolder/FolderList';
 import { FolderManager } from '../../../components/e_approval/templateFolder/FolderManager';
 import { TemplateManager } from '../../../components/e_approval/templateFolder/TemplateManager';
 import { TemplateTable } from '../../../components/e_approval/templateFolder/TemplateTable';
 import { fetchCurrentFolder } from '../../../modules/E_ApprovalModules';
+import { FolderChangeModal } from '../../../components/e_approval/modal/FolderChangeModal';
 
 export function DocumentTemplateFolderPage() {
     const dispatch = useDispatch();
-
+    
+    const { documentTemplateFolder, currentFolder } = useSelector(state => state.e_approvalReducer);
+    const [folderSearchResult, setFolderSearchResult] = useState()
+    const [folderChangeMode, setFolderChangeMode] = useState(false)
     useEffect(() => {
         dispatch(callDocumentFolderAPI());
         dispatch(fetchCurrentFolder(null))
-    }, [dispatch]);
+    }, []);
+    useEffect(() => {
+        setFolderSearchResult(documentTemplateFolder)
+    }, [documentTemplateFolder])
 
-    const { documentTemplateSearchResult, currentFolder } = useSelector(state => state.e_approvalReducer);
 
-
-
-    
     return (
+        folderSearchResult&&
         <>
             <div className="common-comp">
                 <div className='title'>전자결재 양식 관리</div>
@@ -29,18 +33,13 @@ export function DocumentTemplateFolderPage() {
                     <div className='common-component' style={{ width: '25%' }}>
                         <div className='cc-header align-c'>폴더 목록</div>
                         <div className='cc-content align-l' style={{ height: '650px' }}>
-                            <FolderManager />
+                            <FolderManager setFolderSearchResult={setFolderSearchResult} />
                             <div className='scroll'>
-                                {documentTemplateSearchResult.length > 0 ? (
-                                    documentTemplateSearchResult.map((folder) => (
-                                        <Folder
-                                            key={folder.folderId}
-                                            folder={folder}
-                                        />
-                                    ))
-                                ) : (
-                                    <p className='none-content-mini'>결과를 찾을 수 없습니다.</p>
-                                )}
+                                {folderSearchResult.length > 0 ?
+                                    <FolderList folders={folderSearchResult} />
+                                    : (
+                                        <p className='none-content-mini'>결과를 찾을 수 없습니다.</p>
+                                    )}
                             </div>
                         </div>
                     </div>
@@ -49,7 +48,7 @@ export function DocumentTemplateFolderPage() {
                         <div className='cc-header align-c'>폴더 상세</div>
                         {currentFolder ?
                             <div className='cc-content align-l' style={{ height: '650px' }}>
-                                <TemplateManager />
+                                <TemplateManager setFolderChangeMode={setFolderChangeMode}/>
                                 <TemplateTable />
                             </div> :
                             <div className='cc-content align-c' style={{ height: '650px' }}>
@@ -58,6 +57,7 @@ export function DocumentTemplateFolderPage() {
                     </div>
                 </div>
             </div>
+            {folderChangeMode&&<FolderChangeModal setFolderChangeMode={setFolderChangeMode}/>}
         </>
     );
 }
