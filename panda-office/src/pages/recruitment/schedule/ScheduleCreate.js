@@ -1,5 +1,4 @@
 import CalendarApi from "../../../utils/CalendarApi";
-import ScheduleForm from "./ScheduleForm";
 
 const ScheduleCreate = () => {
 
@@ -7,7 +6,6 @@ const ScheduleCreate = () => {
         <>
             <h1 className="schedule-title">면접 일정 등록</h1>
             <div className="schedule-create">
-                <ScheduleForm />
                 <div className="schedule-calendar-emp">
                     <CalendarApi
                         height='700px'
