@@ -71,11 +71,10 @@ export const callAnnualLeaveCalendarAPI = () => {
             const response = await authRequest.get('/attendance/management/annual_leave_calendar');
             if (response.status === 200) {
                 dispatch(getAnnualLeaveCalendar(response.data));
-            } else {
-                console.error('API 호출 실패:', response);
+            } else { alert('연차 일정을 불러오는 데 실패했습니다. 다시 시도해 주세요.');
             }
         } catch (error) {
-            console.error('연차 캘린더 조회 에러:', error);
+            alert('서버에 문제가 발생했습니다. 관리자에게 문의하세요.');
         }
     };
 };
