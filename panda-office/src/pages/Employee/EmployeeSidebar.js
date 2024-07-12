@@ -1,25 +1,30 @@
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import {getMemberId} from "../../utils/TokenUtils";
+import { getMemberId } from "../../utils/TokenUtils";
+import axios from "axios";
 
 function RecruitmentSidebar() {
     const location = useLocation();
     const isRootPath = location.pathname === "/";
     const [isMainOpen, setIsMainOpen] = useState(false);
     const [isSubOpen, setIsSubOpen] = useState(false);
+    const [employee, setEmployee] = useState(null);
 
-    const toggleMainHandler = () => {
-        const newMainState = !isMainOpen;
-        setIsMainOpen(newMainState);
-        localStorage.setItem("mainHandler", JSON.stringify(newMainState));
-    };
+    useEffect(() => {
+        const fetchEmployee = async () => {
+            try {
+                console.log("Fetching employee details...");
+                const response = await axios.get(`http://localhost:8001/api/v1/members/employees/${getMemberId()}`);
+                setEmployee(response.data);
+                console.log(response.data);
+            } catch (error) {
+                console.error('Failed to fetch employee details:', error);
+            }
+        };
 
-    const toggleSubHandler = () => {
-        const newSubState = !isSubOpen;
-        setIsSubOpen(newSubState);
-        localStorage.setItem("subHandler", JSON.stringify(newSubState));
-    };
+        fetchEmployee();
+    }, []);
 
     useEffect(() => {
         const savedMainStorage = localStorage.getItem("mainHandler");
@@ -35,12 +40,30 @@ function RecruitmentSidebar() {
         }
     }, []);
 
+    const depId = employee?.employee?.department?.id;
+    const showEmployeeRegistration = depId === 11;
+    const showEmployeeList = depId === 11;
+
+    const toggleMainHandler = () => {
+        const newMainState = !isMainOpen;
+        setIsMainOpen(newMainState);
+        localStorage.setItem("mainHandler", JSON.stringify(newMainState));
+    };
+
+    const toggleSubHandler = () => {
+        const newSubState = !isSubOpen;
+        setIsSubOpen(newSubState);
+        localStorage.setItem("subHandler", JSON.stringify(newSubState));
+    };
+
     return (
         <>
             <div className={`side-wrap ${isRootPath ? 'collapsed' : ''}`}>
                 <div className="side-bar">
                     <div className="title">인사관리</div>
-                    <button className="add-btn"><NavLink to={`/employee/addNewEmployee`}>사원 등록</NavLink></button>
+                    {showEmployeeRegistration && (
+                        <button className="add-btn"><NavLink to={`/employee/addNewEmployee`}>사원 등록</NavLink></button>
+                    )}
                     <ul className="mt-30 txt-align-left">
                         <li>
                             <div className="sidebar-item" onClick={toggleMainHandler}>
@@ -49,10 +72,10 @@ function RecruitmentSidebar() {
                             </div>
                             {isMainOpen && (
                                 <ul className="mt-10">
-
-                                    <li className="icons-text fs-12 mt-10 ml-35 cursor-p"><NavLink to="/employee/employeeList">사원 조회(인사부)</NavLink></li>
+                                    {showEmployeeList && (
+                                        <li className="icons-text fs-12 mt-10 ml-35 cursor-p"><NavLink to="/employee/employeeList">사원 조회(인사부)</NavLink></li>
+                                    )}
                                     <li className="icons-text fs-12 mt-10 ml-35 cursor-p"><NavLink to={`/employee/${getMemberId()}`}>개인 조회</NavLink></li>
-                                    {/*<li className="icons-text fs-12 mt-10 ml-35 cursor-p">추가</li>*/}
                                 </ul>
                             )}
                         </li>
@@ -62,13 +85,13 @@ function RecruitmentSidebar() {
                                 <span className="icons-text fs-18 cursor-p">급여 관리</span>
                             </div>
                             {isSubOpen && (
-                                <ul >
+                                <ul>
                                     <li className="icons-text fs-12 mt-10 ml-35 cursor-p">
                                         <NavLink to="/employee/payroll/MyPay">급여(개인) 조회</NavLink>
                                     </li>
-                                    <li className="icons-text fs-12 mt-10 ml-35 cursor-p">
+                                    {depId === 11 &&<li className="icons-text fs-12 mt-10 ml-35 cursor-p">
                                         <NavLink to="/employee/payroll/EmplPayroll">급여자료입력</NavLink>
-                                    </li>
+                                    </li>}
                                 </ul>
                             )}
                         </li>

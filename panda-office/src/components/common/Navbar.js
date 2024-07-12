@@ -12,10 +12,25 @@ import axios from "axios";
 import {getMemberId} from "../../utils/TokenUtils";
 
 function Navbar() {
-
+    const [employee, setEmployee] = useState(null);
     const location = useLocation();
     const isRootPath = location.pathname === "/";
+    useEffect(() => {
+        const fetchEmployee = async () => {
+            try {
+                console.log("Fetching employee details...");
+                const response = await axios.get(`http://localhost:8001/api/v1/members/employees/${getMemberId()}`);
+                setEmployee(response.data);
+                console.log(employee);
+            } catch (error) {
+                console.error('Failed to fetch employee details:', error);
+            }
+        };
 
+        fetchEmployee();
+    }, []);
+
+    const depId = employee?.employee?.department?.id;
 
 
     return (
@@ -54,12 +69,12 @@ function Navbar() {
                                 <p>문서함</p>
                             </NavLink>
                         </li>
-                        <li>
+                        {depId===11 && <li>
                             <NavLink to="/recruitment/schedule" className="nav-link">
                                 <PiHandshakeLight className="side-icons"/>
                                 <p>채용면접</p>
                             </NavLink>
-                        </li>
+                        </li>}
                         <li>
                             <NavLink to="/welfare" className="nav-link">
                                 <TfiHeadphoneAlt className="side-icons"/>

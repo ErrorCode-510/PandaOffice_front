@@ -38,7 +38,7 @@ function EmployeeRoutes() {
             <Route path=":id" element={<EmployeeDetail />} />
             <Route path="editEmployee/:id" element={depId === 11 ? <EditEmployee /> : <Navigate to={`/employee/${getMemberId()}`} replace />} />
             <Route path="payroll/MyPay" element={<MyPay />} />
-            <Route path="payroll/EmplPayroll" element={<EmplPayroll />} />
+            <Route path="payroll/EmplPayroll" element={depId === 11 ? <EmplPayroll /> : <Navigate to={`/employee/${getMemberId()}`} replace />} />
         </Routes>
     );
 }

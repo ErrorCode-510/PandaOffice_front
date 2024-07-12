@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import './MyPay.css';
+import './MyPay.css';
 
 function MyPay() {
     const [rows, setRows] = useState([]);
