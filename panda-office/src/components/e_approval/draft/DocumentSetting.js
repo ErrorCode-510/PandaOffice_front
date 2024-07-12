@@ -10,7 +10,7 @@ export function DocumentSetting({ setDraftForm }) {
                 <tbody>
                     <tr>
                         <th>문서 제목</th>
-                        <td><input name="name" placeholder="제목을 입력해주세요." onChange={onChangeFormHandler}></input></td>
+                        <td><input name="title" placeholder="제목을 입력해주세요." onChange={onChangeFormHandler}></input></td>
                     </tr>
                     <tr>
                         <th>기안자</th>
