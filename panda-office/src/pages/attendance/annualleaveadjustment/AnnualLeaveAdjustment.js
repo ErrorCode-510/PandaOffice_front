@@ -1,15 +1,65 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { callLeaveAdjustmentAPI } from '../../../apis/AttendanceAPICalls';
+import AnnualLeaveHistoryWithAdjustment from './AnnualLeaveHistoryWithAdjustment';
 import './AnnualLeaveAdjustment.css';
-import AnnualLeaveHistory from './AnnualLeaveHistory';
 
 const AnnualLeaveAdjustment = () => {
+    const dispatch = useDispatch();
     const [selectedYear, setSelectedYear] = useState(new Date());
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const [visibleRecords, setVisibleRecords] = useState([]);
+    const [hasMore, setHasMore] = useState(true);
+    const [selectedRowIndex, setSelectedRowIndex] = useState(null);
+    const allLeaveRecords = useSelector(state => state.attendanceReducer.allLeaveAdjustment) || [];
+    const [noResults, setNoResults] = useState(false);
+
+    useEffect(() => {
+        dispatch(callLeaveAdjustmentAPI());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (allLeaveRecords.length > 0) {
+            setVisibleRecords(allLeaveRecords.slice(0, 10));
+            setHasMore(allLeaveRecords.length > 10);
+            setNoResults(false);
+        } else if (allLeaveRecords.length === 0 && noResults === false) {
+            setVisibleRecords([]);
+            setHasMore(false);
+            setNoResults(true);
+            setSelectedEmployee(null);  // 검색 결과가 없을 때 변경 이력 초기화
+        }
+    }, [allLeaveRecords, noResults]);
 
     const handleYearChange = (date) => {
         setSelectedYear(date);
     };
+
+    const handleSearch = () => {
+        const year = selectedYear.getFullYear();
+        setSelectedEmployee(null); // 검색 시 selectedEmployee 상태 초기화
+        setSelectedRowIndex(null); // 검색 시 selectedRowIndex 상태 초기화
+        setNoResults(false); // 검색 시 noResults 초기화
+        dispatch(callLeaveAdjustmentAPI(year));
+    };
+
+    const handleRowClick = (employee, index) => {
+        setSelectedEmployee(employee);
+        setSelectedRowIndex(index);
+    };
+
+    const fetchMoreRecords = useCallback(() => {
+        const currentLength = visibleRecords.length;
+        if (currentLength >= allLeaveRecords.length) {
+            setHasMore(false);
+            return;
+        }
+        const nextRecords = allLeaveRecords.slice(currentLength, currentLength + 10);
+        setVisibleRecords(prevRecords => [...prevRecords, ...nextRecords]);
+    }, [allLeaveRecords, visibleRecords]);
 
     return (
         <div className="annual-leave-adjustment">
@@ -25,122 +75,83 @@ const AnnualLeaveAdjustment = () => {
                     dateFormat="yyyy"
                     className="year-picker"
                 />
-                <button type="button" className="search-button">조회</button>
+                <button type="button" className="search-button" onClick={handleSearch}>조회</button>
             </div>
             <div className="leave-info">
                 <h2>연차 정보</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th rowSpan="2">번호</th>
-                            <th rowSpan="2">부서</th>
-                            <th rowSpan="2">직급</th>
-                            <th rowSpan="2">사원</th>
-                            <th rowSpan="2">그룹입사일</th>
-                            <th rowSpan="2">근속기간</th>
-                            <th colSpan="6">부여</th>
-                            <th colSpan="5">소진</th>
-                            <th rowSpan="2" className="rounded-right">잔여</th>
-                        </tr>
-                        <tr>
-                            <th className="no-radius">기본발생</th>
-                            <th>가산</th>
-                            <th>1년미만</th>
-                            <th>보상</th>
-                            <th>대체</th>
-                            <th className="no-radius">합계</th>
-                            <th>기본사용</th>
-                            <th>1년미만</th>
-                            <th>보상</th>
-                            <th>대체</th>
-                            <th className="no-radius">합계</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>인사팀</td>
-                            <td>부장</td>
-                            <td>박지연</td>
-                            <td>2020-01-01</td>
-                            <td>4년</td>
-                            <td>15</td>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>16</td>
-                            <td>2</td>
-                            <td></td>
-                            <td></td>
-                            <td>2</td>
-                            <td>4</td>
-                            <td>4</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>인사팀</td>
-                            <td>슈퍼바이저</td>
-                            <td>윤승희</td>
-                            <td>2021-01-01</td>
-                            <td>3년</td>
-                            <td>15</td>
-                            <td></td>
-                            <td></td>
-                            <td>1</td>
-                            <td></td>
-                            <td>16</td>
-                            <td>2</td>
-                            <td></td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>5</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>인사팀</td>
-                            <td>매니저</td>
-                            <td>이나라</td>
-                            <td>2021-01-01</td>
-                            <td>1년 미만</td>
-                            <td>11</td>
-                            <td></td>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td>12</td>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>2</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>인사팀</td>
-                            <td>팀장</td>
-                            <td>최용수</td>
-                            <td>2021-11-01</td>
-                            <td>2년 2개월</td>
-                            <td>15</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>15</td>
-                            <td>2</td>
-                            <td></td>
-                            <td></td>
-                            <td>2</td>
-                            <td>4</td>
-                            <td>4</td>
-                        </tr>
-                    </tbody>
-                </table>
+                {noResults ? (
+                    <p>해당년도에 입사한 사원이 없습니다</p>
+                ) : (
+                    <div className="scrollable-table">
+                        <InfiniteScroll
+                            dataLength={visibleRecords.length}
+                            next={fetchMoreRecords}
+                            hasMore={hasMore}
+                            endMessage={<p>모든 데이터를 불러왔습니다.</p>}
+                        >
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th rowSpan="2" className='rounded-left-top'>번호</th>
+                                        <th rowSpan="2">부서</th>
+                                        <th rowSpan="2">직급</th>
+                                        <th rowSpan="2">사원</th>
+                                        <th rowSpan="2">그룹 입사일</th>
+                                        <th rowSpan="2">근속 기간</th>
+                                        <th colSpan="5">부여</th>
+                                        <th colSpan="5">소진</th>
+                                        <th rowSpan="2" className="rounded-right-top">잔여</th>
+                                    </tr>
+                                    <tr>
+                                        <th className="no-radius">기본 발생</th>
+                                        <th>1년 미만</th>
+                                        <th>보상</th>
+                                        <th>대체</th>
+                                        <th className="no-radius">합계</th>
+                                        <th>기본 사용</th>
+                                        <th>1년 미만</th>
+                                        <th>보상</th>
+                                        <th>대체</th>
+                                        <th className="no-radius">합계</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {visibleRecords.map((record, index) => (
+                                        <tr
+                                            key={index}
+                                            onClick={() => handleRowClick(record, index)}
+                                            className={selectedRowIndex === index ? 'selected-row' : ''}
+                                        >
+                                            <td>{index + 1}</td>
+                                            <td>{record.departmentName}</td>
+                                            <td>{record.jobName}</td>
+                                            <td>{record.employeeName}</td>
+                                            <td>{record.hireDate}</td>
+                                            <td>{record.yearsOfService}</td>
+                                            <td>{record.defaultGrant}</td>
+                                            <td>{record.underOneYearGrant}</td>
+                                            <td>{record.rewardGrant}</td>
+                                            <td>{record.replaceGrant}</td>
+                                            <td>{record.totalGrantedLeave}</td>
+                                            <td>{record.defaultUsed}</td>
+                                            <td>{record.underOneYearUsed}</td>
+                                            <td>{record.rewardUsed}</td>
+                                            <td>{record.replaceUsed}</td>
+                                            <td>{record.totalUsedLeave}</td>
+                                            <td>{record.remainingLeave}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </InfiniteScroll>
+                    </div>
+                )}
             </div>
-            <AnnualLeaveHistory />
+            {selectedEmployee && (
+                <div className="leave-section full-width">
+                    <AnnualLeaveHistoryWithAdjustment selectedEmployee={selectedEmployee} />
+                </div>
+            )}
         </div>
     );
 };

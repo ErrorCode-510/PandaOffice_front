@@ -1,17 +1,16 @@
 import { authRequest } from './api';
 import {
     getAttendanceStatus,
-    getCurrentYearAnnualLeaveRecord, 
+    getCurrentYearAnnualLeaveRecord,
     getSearchAnnualLeaveRecord,
     getAnnualLeaveCalendar,
-    getAllLeaveAdjustment,
-    getLeaveAdjustmentSearch,
-    saveAttendanceMessage,
     getCurrentYearAttendanceRequestStatus,
-    getSearchAttendanceRequestStatus
-
+    getSearchAttendanceRequestStatus,
+    getLeaveAdjustment,
+    saveAttendanceMessage
 } from '../modules/AttendanceModules';
 
+/* 1.내 근태 현황 확인 */
 export const callAttendanceStatusAPI = (searchDate) => {
     return async (dispatch) => {
         try {
@@ -45,6 +44,7 @@ export const callAttendanceStatusAPI = (searchDate) => {
     };
 };
 
+/* 2.내 연차 내역 확인 */
 export const callAnnualLeaveRecordAPI = (startDate, endDate, type) => {
     return async (dispatch) => {
         try {
@@ -64,6 +64,7 @@ export const callAnnualLeaveRecordAPI = (startDate, endDate, type) => {
     };
 };
 
+/* 3.연차 캘린더 확인 */
 export const callAnnualLeaveCalendarAPI = () => {
     return async (dispatch) => {
         try {
@@ -72,15 +73,14 @@ export const callAnnualLeaveCalendarAPI = () => {
                 dispatch(getAnnualLeaveCalendar(response.data));
             } else {
                 console.error('API 호출 실패:', response);
-                // 에러 처리 로직 추가
             }
         } catch (error) {
             console.error('연차 캘린더 조회 에러:', error);
-            // 에러 처리 로직 추가
         }
     };
 };
 
+/* 4.내 근태 신청 현황 확인 */
 export const callAttendanceRequestStatusAPI = (startDate, endDate, type) => {
     return async (dispatch) => {
         try {
@@ -93,7 +93,6 @@ export const callAttendanceRequestStatusAPI = (startDate, endDate, type) => {
                 }
             } else {
                 console.error('API 호출 실패:', response);
-                // 기본값 설정
                 const defaultData = {
                     attendanceSummary: {
                         lateCount: 0,
@@ -115,7 +114,6 @@ export const callAttendanceRequestStatusAPI = (startDate, endDate, type) => {
             }
         } catch (error) {
             console.error('근태 신청 내역 조회 에러:', error);
-            // 기본값 설정
             const defaultData = {
                 attendanceSummary: {
                     lateCount: 0,
@@ -138,39 +136,26 @@ export const callAttendanceRequestStatusAPI = (startDate, endDate, type) => {
     };
 };
 
-export const callAllLeaveAdjustmentAPI = () => {
+/* 5.사원들의 연차 조정 */
+export const callLeaveAdjustmentAPI = (hireYear = null) => {
     return async (dispatch) => {
         try {
-            const response = await authRequest.get('/attendance/all_leave_adjustment');
-            if (response.status === 200) {
-                dispatch(getAllLeaveAdjustment(response.data));
+            const url = hireYear
+                ? `/attendance/all_leave_adjustment?hireYear=${hireYear}`
+                : '/attendance/all_leave_adjustment';
+            const response = await authRequest.get(url);
+            if (response && response.status === 200) {
+                dispatch(getLeaveAdjustment(response.data.allLeaveRecords));
             } else {
                 console.error('API 호출 실패:', response);
-                // 에러 처리 로직 추가
             }
         } catch (error) {
-            console.error('연차 조정 첫페이지 조회 에러:', error);
-            // 에러 처리 로직 추가
+            console.error('연차 조정 조회 에러:', error);
         }
     };
 };
 
-export const callLeaveAdjustmentSearchAPI = (hireYear) => {
-    return async (dispatch) => {
-        try {
-            const response = await authRequest.get(`/attendance/all_leave_adjustment/search?hireYear=${hireYear}`);
-            if (response.status === 200) {
-                dispatch(getLeaveAdjustmentSearch(response.data));
-            } else {
-                console.error('API 호출 실패:', response);
-                // 에러 처리 로직 추가
-            }
-        } catch (error) {
-            console.error('연차 조정 검색 에러:', error);
-            // 에러 처리 로직 추가
-        }
-    };
-};
+/* 6.출근 찍기 */
 export const callCheckInAPI = (attendanceData) => {
     return async (dispatch) => {
         try {
@@ -191,6 +176,7 @@ export const callCheckInAPI = (attendanceData) => {
     };
 };
 
+/* 6.퇴근 찍기 */
 export const callCheckOutAPI = (attendanceData) => {
     return async (dispatch) => {
         try {
