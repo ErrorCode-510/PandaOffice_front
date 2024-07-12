@@ -78,7 +78,7 @@ const CalendarApi = ({ height }) => {
         <>
             <div>
                 <FullCalendar
-                    height={height}
+                    height='780px'
                     plugins={[dayGridPlugin, timeGridPlugin]}
                     initialView="dayGridMonth"
                     /* 캘린더 헤더 스타일 */
