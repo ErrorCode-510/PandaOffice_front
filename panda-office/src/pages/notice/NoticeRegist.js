@@ -20,8 +20,8 @@ const NoticeRegist = () => {
     status: 'Y', // 초기값을 'Y'로 설정
   });
 
-  useEffect(() => {
-  }, [formData])
+  // useEffect(() => {
+  // }, [formData])
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const NoticeRegist = () => {
     setFormData({
       ...formData,
       [name]: value,
-      ...(name === 'category' && { subCategory: '' }),
+      ...(name === 'category' && { subCategory: '' }),  // 카테고리 변경 시 서브카테고리 초기화
     });
   };
 
@@ -41,15 +41,16 @@ const NoticeRegist = () => {
 
     // 응답이 성공적으로 처리되었는지 확인
     if (response && response.status === 201) {
-      const redirectUrl = `/notice/category/filter?category=${formData.category}&subCategory=${formData.subCategory}`;
+      const redirectUrl = `/notice/category/${formData.category}/${formData.subCategory}`;
       navigate(redirectUrl);
-
+      
       // 목록 갱신을 위해 추가 API 호출
-      await dispatch(callNoticeByCategoryAPI ({
-        category: formData.category,
-        subCategory: formData.subCategory,
-        currentPage: 1
-      }));
+      // await dispatch(callNoticeByCategoryAPI ({
+      //   category: formData.category,
+      //   subCategory: formData.subCategory,
+      //   currentPage: 1
+      // }));
+
     } else {
       console.error('Error creating notice:', response);
     }

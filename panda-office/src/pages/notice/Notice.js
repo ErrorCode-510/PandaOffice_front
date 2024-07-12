@@ -14,13 +14,13 @@ const Notice = () => {
     /* 페이지 번호 상태 저장하기: 디폴트 1 */
     const [currentPage, setCurrentPage] = useState(1);
 
-    // useSelector를 사용하여 notice 데이터를 가져옴, noticeReducer에서 가져온 데이터를 notice 변수에 저장
-    const {notice} = useSelector(state => state.noticeReducer);
-
     // useEffect는 컴포넌트가 마운트되거나 currentPage 상태가 변경될 때마다 callNoticeListAPI함수를 호출하여, 공지사항 리스트를 불러옴
     useEffect(() => {
         dispatch(callNoticeListAPI({ currentPage }));
     }, [currentPage, dispatch]);
+
+    // useSelector를 사용하여 notice 데이터를 가져옴, noticeReducer에서 가져온 데이터를 notice 변수에 저장
+    const { notice } = useSelector(state => state.noticeReducer);
 
     return (
         <>
@@ -28,7 +28,7 @@ const Notice = () => {
                 <>
                     <h1>전체공지</h1>
                     <div className="notice-wrap">
-                        <NoticeList notice={notice.data} />
+                        <NoticeList notice={notice} />
                         <NoticePagingBar pageInfo={notice.pageInfo} setCurrentPage={setCurrentPage} />
                     </div>
                 </>

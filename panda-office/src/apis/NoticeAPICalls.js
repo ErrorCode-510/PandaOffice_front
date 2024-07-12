@@ -16,7 +16,8 @@ export const callNoticeListAPI = ({ currentPage }) => {
             console.error('callNoticeListAPI error : ', result);
         }
     };
-};
+}; 
+
 
 /* 공지사항 상세 조회 API */
 export const callNoticeDetailAPI = (noticeId) => {
@@ -44,8 +45,8 @@ export const callNoticeByCategoryAPI = ({ category, subCategory, currentPage }) 
                     subCategory,
                     data: result.data
                 }));
-                console.log('getNoticeByCategory 액션을 데이터와 함께 디스패치:', result.data);
                 return result.data;
+
             } else {
                 console.error('callNoticeByCategoryAPI error : ', result);
             }
@@ -59,11 +60,10 @@ export const callNoticeByCategoryAPI = ({ category, subCategory, currentPage }) 
 export const callAddNoticeAPI = (formData) => {
     return async (dispatch) => {
         const result = await authRequest.post('/notice/regist', formData);
-        console.log('Response Data:', result.data);
+        
         if (result.status === 201) {
             dispatch(addNotice( result.data ));
             
-            /* 성공시 추가 작업 */
             return result;  // 응답을 반환하여 성공 여부 확인
         } else {
             console.error('callAddNoticeAPI error : ', result);
