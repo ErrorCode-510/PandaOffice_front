@@ -6,7 +6,7 @@ import { FaHeartCirclePlus } from 'react-icons/fa6';
 import { FaHeartCircleMinus } from 'react-icons/fa6';
 import { TbRosetteDiscountCheckFilled } from 'react-icons/tb';
 import { LuCalendarCheck } from "react-icons/lu";
-import Calender from '../../components/main/calender/Calendar.js';
+import Calendar from "../../components/main/calender/Calendar.js"
 
 function Main() {
 
