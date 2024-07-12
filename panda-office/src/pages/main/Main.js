@@ -1,5 +1,5 @@
 import Card from '../../components/main/card/Card.js';
-import AnnualLeaveCalendar from '../../components/main/calender/AnnualLeaveCalendar.js';
+import Calendar from '../../components/main/calender/Calendar.js';
 import Announcement from '../../components/main/announcement/Announcement.js';
 import Footer from '../../components/common/Footer.js';
 import { BsCartFill } from "react-icons/bs";
@@ -21,6 +21,7 @@ function Main() {
         cardTexts:["주문접수","발주확인","출고처리","출고지연","출고완료"],
         cardIcons:[<BsCartFill className='circle-icon'/>,<BsBookmarkCheckFill className='circle-icon'/>,<TbTruckDelivery className='circle-icon'/>,< PiWarningFill className='circle-icon'/>,<FaFlag className='circle-icon'/>],
         cardNums:[10,10,5,1,4]
+    }
 
 
 
