@@ -1,0 +1,96 @@
+.modal-bg {
+    background-color: rgba(0, 0, 0, 0.50);
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+.modal-min-wrap {
+    min-width: 600px;
+    min-height: 300px;
+    background-color: #fff;
+    border-radius: 15px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px 50px 10px 50px;
+    z-index: 10;
+}
+.modal-title {
+    font-size: 20px;
+    font-weight: bold;
+    width: 100%;
+    border-bottom: 1px solid #696969;
+    margin-bottom: 20px;
+}
+
+.now-folder{
+    width: 300px;
+    margin: 0px auto;
+}
+/* 일반 컴포넌트 헤더 */
+.modal-header {
+    background-color: #1E1F31;
+    color: white;
+    font-size: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 상하 정렬 추가 */
+}
+.modal-content{
+    background-color: white;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-style: solid;
+    border-color: #696969;
+    border-width: 0px 1px 1px 1px;
+}
+.modal-btn-area{
+    text-align: center;
+    margin: 25px 0px 0px 0px;
+}
+.modal-component{
+    text-align: center;
+    width: auto;
+    margin: 0px 30px;
+}
+.modal-scroll{
+    min-width: 250px;
+    padding: 20px 20px 20px 0px;
+    height: 270px;
+    overflow-y: scroll;
+}
+.current-template-info {
+    width: 300px;
+    height: 270px;
+}
+
+.target-template table{
+    text-align: left;
+    margin-left: 20px;
+}
+.target-template table th {
+    width: 100px;
+}
+.target-template {
+    width:300px;
+    height: 270px;
+}
+.approval-modal-table{
+    text-align: left;
+}
+.approval-modal-table th {
+    width: 100px
+}
+.approval-modal-table input {
+    width: 300px;
+    height:100px;
+}

@@ -58,7 +58,7 @@ export function TemplateTable() {
                                     : <IoIosCheckboxOutline />}
                             </td>
                             <td>{doc.title}</td>
-                            <td>{`${doc.employeeName} ${doc.employeeJob}`}</td>
+                            <td>{`${doc.lastEditorName} ${doc.lastEditorJob}`}</td>
                             <td>{doc.lastEditDate}</td>
                             <td>{doc.status}</td>
                         </tr>

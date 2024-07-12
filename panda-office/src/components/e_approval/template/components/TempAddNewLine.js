@@ -1,79 +1,36 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AddNewLinePreview } from "./AddNewLinePreview";
-import { insertApprovalLine } from "../../../../modules/E_ApprovalModules";
 
-export function AddNewLine() {
-    const dispatch = useDispatch();
+export function TempAddNewLine({ setApprovalLineList }) {
     const { infoForCreate } = useSelector(state => state.e_approvalReducer);
-    const [newLine, setNewLine] = useState({
-        type: "employee",
-        order: null,
-        departmentId: null,
-        employeeId: null,
-        jobId: null,
-        isSubmitAble: false
-    });
-
-    const typeHandler = (e) => {
+    const [newLine, setNewLine] = useState({});
+    const [selectType, setSelectType] = useState('employee');
+    const [submitAble, setSubmitAble] = useState(false);
+    const onChangeSetSelectType = (e) => {
+        setSelectType(e.target.value)
         if (e.target.value == 'boss') {
-            setNewLine({
-                employeeId: infoForCreate.employeeList.find(emp => emp.job.title == '사장').employeeId,
-                type: e.target.value
-            })
+            const bossId = infoForCreate.jobList.find(job=>job.title == '사장').id
+            setNewLine({jobId: bossId})
+            setSubmitAble(true)
         } else {
-            setNewLine({
-                type: e.target.value
-            })
+            setNewLine({})
+            setSubmitAble(false)
         }
-    };
-
-    const onChangeHandler = (e) => {
-        setNewLine({
-            ...newLine,
-            [e.target.name]: e.target.value
-        });
-    };
-
-    const onClickSubmit = () => {
-        let action = {}
-        switch (newLine.type) {
-            case 'employee': action = insertApprovalLine({ employeeId: newLine.employeeId }); break;
-            case 'job': action = insertApprovalLine({ jobId: newLine.jobId, departmentId: newLine.departmentId }); break;
-            case 'boss': action = insertApprovalLine({ employeeId: newLine.employeeId });
-        }
-        dispatch(action)
+    }
+    const onChangeHandleWithSubmitAbleFalse = (e) => {
+        setNewLine(state => ({ ...state, [e.target.name]: e.target.value }))
+        setSubmitAble(false)
+    }
+    const onChangeHandlerWithSubmitAbleTrue = (e) => {
+        setNewLine(state => ({ ...state, [e.target.name]: e.target.value }))
+        setSubmitAble(true)
     }
 
-    /* 부서 변경시 사원, 직급 초기화 */
-    useEffect(() => {
-        setNewLine({
-            ...newLine,
-            employeeId: null,
-            jobId: null
-        })
-    }, [newLine.departmentId])
-
-    useEffect(() => {
-        if ((newLine.departmentId &&
-            newLine.employeeId) ||
-            (newLine.departmentId &&
-                newLine.jobId) ||
-            newLine.type == 'boss'
-        ) {
-            setNewLine({
-                ...newLine,
-                isSubmitAble: true
-            })
-            console.log("line", newLine.employeeId)
-        } else {
-            setNewLine({
-                ...newLine,
-                isSubmitAble: false
-            })
-        }
-    }, [newLine.employeeId, newLine.jobId, newLine.type])
-
+    const onClickSubmit = () => {
+        console.log(newLine)
+        setApprovalLineList(state => [...state, newLine]);
+    }
 
 
     return newLine && (
@@ -81,7 +38,7 @@ export function AddNewLine() {
             <AddNewLinePreview newLine={newLine} />
             <div>
                 <select
-                    onChange={typeHandler}
+                    onChange={onChangeSetSelectType}
                 >
                     <option
                         value="employee"
@@ -102,11 +59,11 @@ export function AddNewLine() {
                         사장
                     </option>
                 </select>
-                {newLine.type === "employee" &&
+                {selectType === "employee" &&
                     <>
                         <select
                             name="departmentId"
-                            onChange={onChangeHandler}
+                            onChange={onChangeHandleWithSubmitAbleFalse}
                         >
                             {infoForCreate.departmentList.map(dep => {
                                 return (
@@ -122,7 +79,7 @@ export function AddNewLine() {
                         {newLine.departmentId &&
                             <select
                                 name="employeeId"
-                                onChange={onChangeHandler}
+                                onChange={onChangeHandlerWithSubmitAbleTrue}
                             >
                                 {infoForCreate.employeeList
                                     .filter(emp => emp.department.id == newLine.departmentId)
@@ -136,12 +93,12 @@ export function AddNewLine() {
                         }
                     </>
                 }
-                {newLine.type === "job" && <>
+                {selectType === "job" && <>
                     <select
                         name="departmentId"
-                        onChange={onChangeHandler}
+                        onChange={onChangeHandleWithSubmitAbleFalse}
                     >
-                        <option value={null}>기안 부서</option>
+                        <option value={0}>기안 부서</option>
                         {infoForCreate.departmentList
                             .map(dep =>
                                 <option
@@ -156,7 +113,7 @@ export function AddNewLine() {
                     {newLine.departmentId &&
                         <select
                             name="jobId"
-                            onChange={onChangeHandler}
+                            onChange={onChangeHandlerWithSubmitAbleTrue}
                         >
                             {infoForCreate.jobList
                                 .filter(job => job.title != '사장')
@@ -170,9 +127,8 @@ export function AddNewLine() {
                         </select>
                     }
                 </>}
-                {newLine.isSubmitAble &&
-                    <button
-                        onClick={onClickSubmit}
+                {submitAble &&
+                    <button onClick={onClickSubmit}
                     >등록</button>}
             </div>
         </div>
