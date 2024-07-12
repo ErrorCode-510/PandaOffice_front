@@ -1,11 +1,14 @@
-import CalendarApi from "../../../utils/CalendarApi"
+import CalendarApi from "../../../utils/CalendarApi";
+import AnnualLeaveCalendar from "./AnnualLeaveCalendar";
 
-function Calender() {
+
+
+function Calendar() {
   return(
     <div className='main-calender'>
         <div className="calender-wrap">
             <div className="calender api">
-                  <CalendarApi height="570px"/>
+                  <AnnualLeaveCalendar height="570px"/>
             </div>
             <div className="calender preview-area">
                 <div className="preview">
@@ -17,4 +20,4 @@ function Calender() {
   )
 }
 
-export default Calender;
+export default Calendar;

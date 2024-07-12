@@ -58,10 +58,12 @@ export const { attendance: {
 /* 리듀서 */
 const attendanceReducer = handleActions({
     [GET_ATTENDANCE_STATUS]: (state, { payload }) => ({ ...state, attendanceStatus: payload.status }),
+
     /* 현년도의 연차 내역을 가져옴 */
     [GET_CURRENT_YEAR_ANNUAL_LEAVE_RECORD]: (state, { payload }) => ({ ...state, currentYearAnnualLeaveRecord: payload.record }),
     /* 검색받은 날짜의 연차 소진/ 생성 내역을 가져옴 */
     [GET_SEARCH_ANNUAL_LEAVE_RECORD]: (state, { payload }) => ({ ...state, searchAnnualLeaveRecord: payload.record }),
+    
     /* 검색한 달의 모든 사원 연차 내역을 가져옴 */
     [GET_ANNUAL_LEAVE_CALENDAR]: (state, { payload }) => ({ ...state, annualLeaveCalendar: payload.calendar }),
     /* 현재 근태 신청 현황을 가져옴 */

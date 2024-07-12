@@ -1,11 +1,12 @@
 import Card from '../../components/main/card/Card.js';
-import Calendar from '../../components/main/calender/Calendar.js';
+import AnnualLeaveCalendar from '../../components/main/calender/AnnualLeaveCalendar.js';
 import Announcement from '../../components/main/announcement/Announcement.js';
 import Footer from '../../components/common/Footer.js';
 import { FaHeartCirclePlus } from 'react-icons/fa6';
 import { FaHeartCircleMinus } from 'react-icons/fa6';
 import { TbRosetteDiscountCheckFilled } from 'react-icons/tb';
 import { LuCalendarCheck } from "react-icons/lu";
+import Calender from '../../components/main/calender/Calendar.js';
 
 function Main() {
     
@@ -37,7 +38,7 @@ function Main() {
                     )
                 }
             </div>
-                <Calendar/>
+                <Calender/>
                 <div className="announcement-area">
                        {
                              announcementMaterials.classNames.map((className, index) =>
