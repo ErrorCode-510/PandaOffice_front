@@ -42,12 +42,14 @@
 }
 
 .search-button {
-    background-color: #2F3850;
+    background-color: #2F3850; /* 기본 색상 */
     color: white;
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
+    border-radius: 4px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 .search-button:hover {
@@ -102,4 +104,32 @@
 
 .leave-info tbody tr:last-child td:last-child {
     border-bottom-right-radius: 0;
+}
+
+.selected-row {
+    background-color: #cce5ff !important;
+}
+
+.scrollable-table {
+    max-height: 400px; /* 원하는 높이로 설정 */
+    overflow-y: auto;
+}
+
+.annual-leave-adjustment table th,
+.annual-leave-adjustment table td {
+    padding: 8px 12px;
+}
+
+.annual-leave-adjustment .header {
+    margin-bottom: 16px;
+}
+
+.search-button:hover {
+    background-color: #333; /* 호버 시 색상 */
+}
+
+.scrollable-table {
+    margin-top: 20px; /* 위쪽 간격 */
+    margin-bottom: 20px; /* 아래쪽 간격 */
+    padding: 20px; /* 내부 패딩 */
 }

@@ -43,8 +43,8 @@ const Search = () => {
                             <th>부서명</th>
                             <th>휴가 종류</th>
                             <th>연차 사용기간</th>
-                            <th>사용 연차</th>
-                            <th>내용</th>
+                            <th>연차 사용량</th>
+                            <th>시간</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,7 +55,7 @@ const Search = () => {
                                     <td>{usage.departmentName}팀</td>
                                     <td>{usage.usedType}</td>
                                     <td>{usage.dateRange}</td>
-                                    <td>{usage.usedAmount}</td>
+                                    <td>{usage.usedAmount}일</td>
                                     <td>{usage.leaveSession}</td>
                                 </tr>
                             ))

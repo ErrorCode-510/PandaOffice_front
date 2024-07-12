@@ -50,7 +50,7 @@ const ApplicantSearch = () => {
                     <select id="criteriaSelect" value={mainCriteria} onChange={handlerCriteriaChange}>
                         <option value='all'>전체</option>
                         <option value="gender">성별</option>
-                        <option value="address">주소</option>
+                        <option value="address">지역</option>
                     </select>
                 </div>
                 <div className="as-sub-selected">

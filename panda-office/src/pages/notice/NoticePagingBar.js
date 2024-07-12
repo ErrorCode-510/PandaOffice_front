@@ -1,7 +1,8 @@
 import React from "react";
 import './notice.css';
 
-function PagingBar({ pageInfo, setCurrentPage }) {
+function PagingBar({ pageInfo = { startPage: 1, endPage: 1, currentPage: 1, maxPage: 1 } , setCurrentPage }) {
+
 
     // 페이지 번호 배열을 생성
     const pageNumber = [];
