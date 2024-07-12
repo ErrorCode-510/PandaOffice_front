@@ -44,7 +44,7 @@ function WelfareSidebar() {
                 <div className="side-bar">
                     <div className="title">민원관리</div>
                     <NavLink to="/welfare/surveyregination">
-                        <button className="add-btn">설문등록</button>
+                        <button className="add-btn" style={{color: '#000'}}>설문등록</button>
                     </NavLink>
                     <ul className="mt-30 txt-align-left">
                         <li>
