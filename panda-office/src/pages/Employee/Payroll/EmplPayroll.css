@@ -33,7 +33,6 @@
     width: 23%;
     float: left;
     margin-right: 20px;
-    max-height: 900px;
 }
 
 .emplPay-table-container {
@@ -41,9 +40,9 @@
     border: 1px solid #ccc;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    height: 724px;
+    height: 650px;
     background: #fff;
-    max-height: 750px;
+    max-height: 700px;
 }
 
 .emplPay-data-table,
@@ -51,7 +50,8 @@
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
-
+    text-align: center;
+    
 }
 
 .emplPay-data-table th,
@@ -64,6 +64,7 @@
 
 .emplPay-data-table td {
     padding-left: 10px;
+    font-size: 14px;
 }
 
 .emplPay-data-table th:first-child,
@@ -72,17 +73,19 @@
 }
 
 .emplPay-data-table thead {
+    position: sticky;
+    top: 0;
     text-align: center;
     background: #2F3850;
     color: #fff;
-    line-height: 27px;
+    line-height: 25px;
 }
 
 .emplPay-foot-table th,
 .emplPay-foot-table td {
     border: 1px solid #ddd;
     padding: 8px;
-    line-height: 20px;
+    line-height: 15px;
 }
 
 .emplPay-foot {
@@ -94,11 +97,12 @@
     text-align: center;
 }
 
+
 /* ------------------------------------- 총합 데이터 테이블 -------------------------------------------- */
 .emplAll-table-combine {
     display: flex;
     flex-direction: column;
-    width: 25%;
+    width: 27%;
     float: left;
 }
 
@@ -107,7 +111,45 @@
     border: 1px solid #ccc;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    height: 278px;
+    height: 250px;
     background: #fff;
-    max-height: 1000px;
+    max-height: 600px;
+}
+
+.emplAll-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    text-align: center;
+}
+
+.emplAll-data-table thead {
+    position: sticky;
+    top: 0;
+    text-align: center;
+    background: #2F3850;
+    color: #fff;
+    line-height: 25px;
+}
+
+.emplAll-data-table th,
+.emplAll-data-table td {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    padding: 8px;
+}
+
+.emplAll-data-table td {
+    padding-left: 10px;
+    line-height: 15px;
+}
+
+.emplAll-data-table th:first-child,
+.emplAll-data-table td:first-child{
+    border-left: none;
+}
+
+.selected-row {
+    background-color: #ACD4F1;
 }

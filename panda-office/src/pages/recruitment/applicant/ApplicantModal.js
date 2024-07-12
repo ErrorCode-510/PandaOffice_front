@@ -5,7 +5,7 @@ import { callApplicantModify, callApplicantDelete } from '../../../apis/Applican
 
 const ApplicantModal = () => {
 
-    const { applicantDetail, applicantModify } = useSelector(state => state.applicantReducer)
+    const { applicantDetail } = useSelector(state => state.applicantReducer)
 
     const dispatch = useDispatch();
 
@@ -19,13 +19,11 @@ const ApplicantModal = () => {
         phone: '',
         email: '',
     });
-    const [confirmation, setConfirmation] = useState(false);
 
     /* 모달 백그라운드 클릭 시 모달창 닫기 */
     const handlerCloseOnClick = () => {
         dispatch(setApplicantDetail(null));
         setIsTrue(true);
-        // handlerConfirmCancel();
     }
 
     /* 모달창 닫기/취소 버튼 */
@@ -34,11 +32,9 @@ const ApplicantModal = () => {
         if (isTrue) {
             dispatch(setApplicantDetail(null));
             setIsTrue(true);
-            // handlerConfirmCancel();
             /* 거짓일 경우 상태 변화 */
         } else {
             setIsTrue(true)
-            // handlerConfirmCancel();
         }
     }
 
@@ -47,29 +43,11 @@ const ApplicantModal = () => {
         // setConfirmation(true);
         const { id } = applicantDetail;
         dispatch(callApplicantDelete(id))
-        .then(() => {
-            dispatch(setApplicantDetail(null));
-            setIsTrue(true);
-        })
+            .then(() => {
+                dispatch(setApplicantDetail(null));
+                setIsTrue(true);
+            })
     }
-
-    /* Confirm 확인 */
-    // const handlerConfirm = () => {
-    //     const { id } = applicantDetail;
-    //     dispatch(callApplicantDelete(id))
-    //     .then(() => {
-    //         dispatch(setApplicantDetail(null));
-    //         setIsTrue(true);
-    //     })
-    //     .then(() => {
-    //         handlerConfirmCancel();
-    //     })
-    // }
-
-    /* Confirm 닫기 */
-    // const handlerConfirmCancel = () => {
-    //     setConfirmation(false);
-    // }
 
     /* 모달 랩 클릭 핸들러 (이벤트 버블링 방지) */
     const handlerModalWrapClick = (e) => {
@@ -124,7 +102,6 @@ const ApplicantModal = () => {
     const handlerButtonOff = (e) => {
         if (e.key === 'Escape') {
             handlerCloseOnClick();
-            // console.log('Esc 키 눌림');
         }
     }
 
@@ -193,6 +170,12 @@ const ApplicantModal = () => {
         return isNaN(age) ? '' : age;
     };
 
+    /* 주소 셀렉트 박스 옵션 */
+    const cities = [
+        '서울', '경기', '인천', '대전', '세종', '충남', '충북', '광주',
+        '전남', '전북', '대구', '경북', '부산', '울산', '경남', '강원', '제주'
+    ];
+
     return (
         <>
             <div className='modal-bg' onClick={handlerCloseOnClick}>
@@ -210,6 +193,8 @@ const ApplicantModal = () => {
                                     value={formValues.name}
                                     readOnly={isTrue}
                                     onChange={handlerInputChange}
+                                    disabled={isTrue}
+                                    placeholder='이름을 입력해 주세요.'
                                 ></input>
                             </div>
                             <div className='applicant-gender'>
@@ -236,6 +221,8 @@ const ApplicantModal = () => {
                                     value={formValues.phone}
                                     readOnly={isTrue}
                                     onChange={handlerInputChange}
+                                    disabled={isTrue}
+                                    placeholder='연락처를 입력해 주세요.'
                                 ></input>
                             </div>
                             <div className='applicant-age'>
@@ -246,9 +233,26 @@ const ApplicantModal = () => {
                                     value={isTrue ? calculateAge(formValues.birthDate) : formValues.birthDate}
                                     readOnly={isTrue}
                                     onChange={handlerInputChange}
+                                    disabled={isTrue}
                                 ></input>
                             </div>
                         </div>
+                    </div>
+                    <div className='applicant-address wd-420'>
+                        <p>주소</p>
+                        <select
+                            className="acm-address"
+                            value={formValues.address}
+                            name="address"
+                            onChange={handlerInputChange}
+                            readOnly={isTrue}
+                            disabled={isTrue}
+                        >
+                            <option>도시를 선택하세요</option>
+                            {cities.map((city, index) => (
+                                <option key={index} value={city}>{city}</option>
+                            ))}
+                        </select>
                     </div>
                     <div className='applicant-email wd-420'>
                         <p>이메일</p>
@@ -258,16 +262,8 @@ const ApplicantModal = () => {
                             value={formValues.email}
                             readOnly={isTrue}
                             onChange={handlerInputChange}
-                        ></input>
-                    </div>
-                    <div className='applicant-address wd-420'>
-                        <p>주소</p>
-                        <input
-                            type='text'
-                            name='address'
-                            value={formValues.address}
-                            readOnly={isTrue}
-                            onChange={handlerInputChange}
+                            disabled={isTrue}
+                            placeholder='이메일을 입력해 주세요.'
                         ></input>
                     </div>
                     <div className='modal-btn'>
@@ -288,10 +284,6 @@ const ApplicantModal = () => {
 
                 </div>
             </div>
-            {/* {
-                confirmation &&
-                <ConfirmationModal message='면접자를 삭제하시겠습니까?' onConfirm={handlerConfirm} onCancel={handlerConfirmCancel} />
-            } */}
         </>
     )
 }

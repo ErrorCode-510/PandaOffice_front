@@ -1,11 +1,10 @@
-import NoticeListItem from "./NoticeListItem";
-import './notice.css';  // css 파일을 임포트
 import React from "react";
+import NoticeListItem from "./NoticeListItem";
+import "./notice.css";
 
-const NoticeList = ({notice}) => {
-    {/* console.log("공지사항 리스트 데이터 받기 : " + JSON.stringify((notice))) */ }
+const NoticeList = ({ notice }) => {
     return (
-        <>
+        <div className="notice-wrap">
             <div className="noticeList-ui">
                 <ul className="noticeList-title">
                     <li>번호</li>
@@ -20,8 +19,8 @@ const NoticeList = ({notice}) => {
                     <NoticeListItem key={notice.noticeId} notice={notice} />
                 ))}
             </div>
-        </>
-    )
-}
+        </div>
+    );
+};
 
 export default NoticeList;

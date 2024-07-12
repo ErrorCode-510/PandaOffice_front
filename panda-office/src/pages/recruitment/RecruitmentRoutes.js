@@ -28,10 +28,7 @@ function RecruitmentRoutes() {
 
         <Routes>
             <Route path="applicant" element={<Applicant />} />
-            <Route path="schedule">
-                <Route index element={<Schedule />} />
-                <Route path="create" element={<ScheduleCreate />} />
-            </Route>
+            <Route path="schedule" element={<Schedule />} />
         </Routes>
     );}else {
         // depId가 11이 아닐 때 루트 화면('/')으로 리다이렉트

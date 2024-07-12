@@ -1,32 +1,33 @@
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import axios from "axios";
 import React from 'react';
-import './notice.css'; // css 파일을 임포트
-// import {callNoticeDetailAPI} from '../../apis/NoticeAPICalls'
+import './notice.css';
 
-const NoticeListItem = ({notice: {noticeId, title, postedDate, viewCount, name, job}}) => {
+const NoticeListItem = ({ notice: { noticeId, title, postedDate, viewCount, name, job, status } }) => {
+    const navigate = useNavigate();
 
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const handlerOnClick = async () => {
+        try {
+            // 조회수 증가 API 호출
+            await axios.put(`http://localhost:8001/notice/${noticeId}/incrementViewCount`);
 
-    const handlerOnClick = () => {
-        navigate(`/notice/detail`)
-        console.log('공지사항 클릭 ID 확인: ' + JSON.stringify({noticeId}))
-        dispatch(callNoticeDetailAPI(noticeId));
-    }
+            // 공지사항 상세 페이지로 이동
+            navigate(`/notice/detail/${noticeId}`);
+        } catch (error) {
+            console.error('Error incrementing view count:', error);
+        }
+    };
 
-    return(
-    <>
-        <div className="noticeListItem-wrap">
+    return (
+        <div className={`noticeListItem-wrap ${status === 'N' ? 'private-notice' : ''}`}>
             <ul className="noticeListItem-ui" onClick={handlerOnClick}>
                 <li>{noticeId}</li>
-                <li>{title}</li>
+                <li>{title} {status === 'N' && <span className="private-label">비공개</span>}</li>
                 <li>{name} {job}</li>
                 <li>{postedDate}</li>
                 <li>{viewCount}</li>
             </ul>
         </div>
-    </>
     )
 }
 

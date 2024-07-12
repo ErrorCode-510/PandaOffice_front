@@ -17,23 +17,23 @@ function AttendanceSidebar() {
         localStorage.setItem("mainHandler", JSON.stringify(newMainState));
     };
 
-    /* 렌더링 후 마운트 될 떄 로컬에 저장 된 상태 값을 가져와서 파싱 된 문자열을 set 
+    /* 렌더링 후 마운트 될 때 로컬에 저장된 상태 값을 가져와서 파싱된 문자열을 set 
     * 애플리케이션 재실행해도 저장 값이 남아있음 */
-    useEffect( () => {
-        const savedMainStorage = localStorage.getItem("mainHandler")
+    useEffect(() => {
+        const savedMainStorage = localStorage.getItem("mainHandler");
         if (savedMainStorage !== null) {
             setIsMainOpen(JSON.parse(savedMainStorage));
         }
     }, []);
 
-    const togglesubHandler = () => {
+    const toggleSubHandler = () => {
         const newSubState = !isSubOpen;
         setIsSubOpen(newSubState);
         localStorage.setItem("subHandler", JSON.stringify(newSubState));
     };
 
-    useEffect( () => {
-        const savedSubStorage = localStorage.getItem("subHandler")
+    useEffect(() => {
+        const savedSubStorage = localStorage.getItem("subHandler");
         if (savedSubStorage !== null) {
             setIsSubOpen(JSON.parse(savedSubStorage));
         }
@@ -43,28 +43,49 @@ function AttendanceSidebar() {
         <>
             <div className={`side-wrap ${isRootPath ? 'collapsed' : ''}`}>
                 <div className="side-bar">
-                    <div className="title">채용/면접</div>
-                    <button className="add-btn">작성/등록</button>
+                    <div className="title">근태 관리</div>
                     <ul className="mt-30 txt-align-left">
                         <li>
                             <div className="sidebar-item" onClick={toggleMainHandler}>
-                                {isMainOpen ? <IoIosArrowDown className="sidebar-icons toggle-down"/> : <IoIosArrowUp className="sidebar-icons toggle-up"/>}
-                                <span className="icons-text fs-18 cursor-p">채용/면접 관리</span>
+                                {isMainOpen ? <IoIosArrowDown className="sidebar-icons toggle-down" /> : <IoIosArrowUp className="sidebar-icons toggle-up" />}
+                                <span className="icons-text fs-18 cursor-p">근태 관리</span>
                             </div>
                             {isMainOpen && (
                                 <ul className="mt-10">
                                     <li>
-                                        <div className="sidebar-item" onClick={togglesubHandler}>
-                                            {isSubOpen ? <IoIosArrowDown className="sidebar-icons ml-20"/> : <IoIosArrowUp className="sidebar-icons ml-20"/>}
-                                            <span className="icons-text fs-14 cursor-p">면접 일정 관리</span>
+                                        <div className="sidebar-item" onClick={toggleSubHandler}>
+                                            {isSubOpen ? <IoIosArrowDown className="sidebar-icons ml-20" /> : <IoIosArrowUp className="sidebar-icons ml-20" />}
+                                            <span className="icons-text fs-14 cursor-p">내 근태 관리</span>
                                         </div>
                                         {isSubOpen && (
                                             <ul className="mt-10">
-                                                <li className="icons-text fs-12 mt-10 ml-55 cursor-p">면접 일정</li>
-                                                <li className="icons-text fs-12 mt-10 ml-55 cursor-p">면접 일정 등록</li>
-                                                <li className="icons-text fs-12 mt-10 ml-55 cursor-p">면접 일정 수정/삭제</li>
+                                                <li>
+                                                    <NavLink to="/attendance/management/status" className="icons-text fs-12 mt-10 ml-55 cursor-p">
+                                                        내 근태 현황
+                                                    </NavLink>
+                                                </li>
+                                                <li>
+                                                    <NavLink to="/attendance/management/annual_leave_record" className="icons-text fs-12 mt-10 ml-55 cursor-p">
+                                                        내 연차 내역
+                                                    </NavLink>
+                                                </li>
                                             </ul>
                                         )}
+                                    </li>
+                                    <li>
+                                        <NavLink to="/attendance/annualLeaveCalendar" className="icons-text fs-14 mt-10 ml-55 cursor-p">
+                                            연차 캘린더
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/attendance/request_status" className="icons-text fs-14 mt-10 ml-55 cursor-p">
+                                            근태 신청 현황
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/attendance/annual_leave_adjustment" className="icons-text fs-14 mt-10 ml-55 cursor-p">
+                                            연차 조정
+                                        </NavLink>
                                     </li>
                                 </ul>
                             )}
@@ -73,7 +94,7 @@ function AttendanceSidebar() {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
 export default AttendanceSidebar;
