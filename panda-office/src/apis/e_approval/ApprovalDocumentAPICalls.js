@@ -1,5 +1,5 @@
 import { authRequest } from "../api";
-import { setDetailApprovalDocument, success } from "../../modules/E_ApprovalModules";
+import { setApprovalDocumentList, setDetailApprovalDocument, success } from "../../modules/E_ApprovalModules";
 
 
 export const callPostNewApprovalDocument = (draftForm) => {
@@ -23,6 +23,15 @@ export const callApproveDocument = (request) => {
         const response = await authRequest.put('approval-document', request)
         if(response.status === 204){
             callApproveDocument(request.documentId)
+        }
+    }
+}
+
+export const callApprovalDocumentSearch = (path) => {
+    return async (dispatch, getState) => {
+        const response = await authRequest.get(path)
+        if(response.status === 200){
+            setApprovalDocumentList(response.data)
         }
     }
 }

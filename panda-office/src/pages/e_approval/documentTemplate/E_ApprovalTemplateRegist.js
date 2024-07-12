@@ -34,9 +34,10 @@ function DocumentTemplateRegist() {
     const onChangeFormHandler = (e) => {
         setTemplateRequest(state => {
             console.log(state)
-            if(e.target.id == 'document'){
-                return {...state, [e.target.id]: e.target.innerHTML}
-            } else{
+            if (e.target.id == 'document') {
+                console.log(e.target.innerHTML)
+                return { ...state, [e.target.id]: e.target.innerHTML }
+            } else {
                 return { ...state, [e.target.name]: e.target.value }
             }
         }
@@ -59,7 +60,7 @@ function DocumentTemplateRegist() {
 
     useEffect(() => {
         dispatch(callGetInfoForCreateTemplate())
-        setTemplateRequest(state=>({...state, folderId: currentFolder?.folderId}))
+        setTemplateRequest(state => ({ ...state, folderId: currentFolder?.folderId }))
         return () => { dispatch(setInfoForCreate(null)) }
     }, [])
 
@@ -70,9 +71,9 @@ function DocumentTemplateRegist() {
             <div className="flex" style={{ width: '100%' }}>
                 <div className='common-component'>
                     <div className='cc-header align-c'>양식 입력</div>
-                    <TemplateEditor draftEmployee={infoForCreate.draftEmployee} 
-                    onChangeFormHandler={onChangeFormHandler}
-                    templateRequest = {templateRequest}
+                    <TemplateEditor draftEmployee={infoForCreate.draftEmployee}
+                        onChangeFormHandler={onChangeFormHandler}
+                        templateRequest={templateRequest}
                     />
                 </div>
                 <div style={{ width: '20px' }}></div>
@@ -89,9 +90,12 @@ function DocumentTemplateRegist() {
                             <TempApprovalLine onClickApprovalLineChange={onClickApprovalLineChange} />
                         </div>
                     </div>
+                    <div className="align-c">
+                        <button className="cancel-btn">취소</button>
+                        <button className='modyfi-btn' onClick={submit}>등록</button>
+                    </div>
                 </div>
             </div>
-            <button onClick={submit}>등록확인</button>
         </div>
     )
 }
