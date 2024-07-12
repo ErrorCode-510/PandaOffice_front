@@ -1,9 +1,11 @@
-import {createActions, handleActions} from "redux-actions";
-import {produce} from 'immer';
+import { createActions, handleActions } from "redux-actions";
+import { produce } from 'immer';
 
 /* 초기값 */
 const initialState = {
     payroll: [],
+    mypay: null,
+    employee: null,
     earningCategories: [],
     deductionCategories: [],
     success: false,
@@ -16,18 +18,21 @@ const GET_PAYROLL = 'payroll/GET_PAYROLL';
 const SAVE_EMPL_PAY = 'payroll/SAVE_EMPL_PAY';
 const GET_EARNING_CATEGORIES = 'earningCategories/GET_EARNING_CATEGORIES';
 const GET_DEDUCTION_CATEGORIES = 'deductionCategories/GET_DEDUCTION_CATEGORIES';
+const GET_MY_PAY = 'mypay/GET_MY_PAY';
 const SUCCESS = 'payroll/SUCCESS';
 const REQUEST_START = 'payroll/REQUEST_START';
 const REQUEST_FAIL = 'payroll/REQUEST_FAIL';
 const RESET_SUCCESS = 'payroll/RESET_SUCCESS';
 
 /* 액션 함수 */
-export const { 
-    payroll: { getPayroll, success, saveEmplPay , requestStart, requestFail, resetSuccess },
+export const {
+    payroll: { getPayroll, success, saveEmplPay, requestStart, requestFail, resetSuccess },
     earningCategories: { getEarningCategories },
-    deductionCategories: { getDeductionCategories }
+    deductionCategories: { getDeductionCategories },
+    mypay: { getMyPay }
 } = createActions({
     [GET_PAYROLL]: (payroll) => ({ payroll }),
+    [GET_MY_PAY]: (mypay) => ({ mypay }),
     [GET_EARNING_CATEGORIES]: (earningCategories) => ({ earningCategories }),
     [GET_DEDUCTION_CATEGORIES]: (deductionCategories) => ({ deductionCategories }),
     [SUCCESS]: () => ({ success: true }),
@@ -43,6 +48,10 @@ const payrollReducer = handleActions({
         produce(state, draft => {
             draft.payroll = payload.payroll;
         }),
+        [GET_MY_PAY]: (state, { payload }) =>
+            produce(state, draft => {
+              draft.mypay = payload.mypay; // payload.mypay 대신 payload를 직접 사용
+            }),
     [GET_EARNING_CATEGORIES]: (state, { payload }) =>
         produce(state, draft => {
             draft.earningCategories = payload.earningCategories;

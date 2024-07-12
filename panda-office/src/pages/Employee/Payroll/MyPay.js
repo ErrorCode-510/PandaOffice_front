@@ -1,219 +1,247 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { callMyPayAPI } from '../../../apis/PayrollAPICalls';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import { registerLocale, setDefaultLocale } from "react-datepicker";
 import './MyPay.css';
 
 function MyPay() {
-    const [rows, setRows] = useState([]);
-    const [date, setDate] = useState('2024-07-15');
-    const [employeeId, setEmployeeId] = useState(null);
-    const [salary, setSalary] = useState({ base: 2500000, meal: 100000 });
-    const [deductions, setDeductions] = useState({ nationalPension: 112500, healthInsurance: 83370, employmentInsurance: 20000, longTermCare: 8540 });
+    const dispatch = useDispatch();
+    const [date, setDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [paymentType, setPaymentType] = useState('payroll');
+    const { mypay } = useSelector(state => state.payrollReducer);
 
-    const totalSalary = salary.base + salary.meal;
-    const totalDeductions = Object.values(deductions).reduce((acc, curr) => acc + curr, 0);
-    const netSalary = totalSalary - totalDeductions;
-
-    /* 사원 정보 가져오기 */
     useEffect(() => {
-        const fetchCurrentUser = async () => {
-            try {
-                const response = await fetch(`http://localhost:8001/payroll/${employeeId}`);
-                const data = await response.json();
-                setEmployeeId(data);
-            } catch (error) {
-                console.error('Error fetching current user data:', error);
-            }
-        };
-    
-        if (employeeId) {
-            fetchCurrentUser();
+        dispatch(callMyPayAPI());
+    }, [dispatch]);
+
+    const earningRecords = mypay?.earningRecordList || [];
+    const deductionRecords = mypay?.deductionRecordList || [];
+
+    const { taxableEarnings, nonTaxableEarnings } = earningRecords.reduce((acc, record) => {
+        if (record.earningCategory.isTax === 'Y') {
+            acc.taxableEarnings += record.amount;
+        } else {
+            acc.nonTaxableEarnings += record.amount;
         }
-    }, [employeeId]);
+        return acc;
+    }, { taxableEarnings: 0, nonTaxableEarnings: 0 });
 
-    const generateRow = (category, amount, categoryType) => ({
-        id: rows.length + 1,
-        categoryType: categoryType, // 지급, 공제 항목 구분
-        column1: category,
-        column2: amount.toLocaleString()
-    });
+    const totalEarnings = taxableEarnings + nonTaxableEarnings;
+    const totalDeductions = deductionRecords.reduce((acc, record) => acc + record.amount, 0);
+    const netSalary = totalEarnings - totalDeductions;
 
-    const addRow = (category, amount, categoryType) => {
-        const newRow = generateRow(category, amount, categoryType);
-        setRows(prevRows => [...prevRows, newRow]);
+    useEffect(() => {
+        if (mypay?.payrollDate) {
+            setSelectedDate(new Date(mypay.payrollDate));
+        }
+    }, [mypay?.payrollDate]);
+
+    const handleSearch = () => {
+        if (selectedDate) {
+            const year = selectedDate.getFullYear();
+            const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+            const searchDate = `${year}-${month}`;
+            dispatch(callMyPayAPI({ payrollDate: searchDate }));
+        }
     };
 
-    useState(() => {
-        addRow('기본급', salary.base, 'payment');
-        addRow('식대', salary.meal, 'payment');
-        addRow('연장근로수당', 0, 'payment');
-        addRow('휴일근로수당', 0, 'payment');
-        addRow('직책수당', 0, 'payment');
-        addRow('국민연금', deductions.nationalPension, 'deduction');
-        addRow('건강보험', deductions.healthInsurance, 'deduction');
-        addRow('고용보험', deductions.employmentInsurance, 'deduction');
-        addRow('장기요양보험', deductions.longTermCare, 'deduction');
-    }, []);
-
     return (
-        <>
-            <div className="common-comp">
+        <div className="common-comp">
+            <div className="title-container">
                 <h2>급여조회</h2>
-                <div className="search-section">
-                    <span className="mypay-span">지급연월</span>
-                    <input type="date" value={date} onChange={e => setDate(e.target.value)} />
-                    <span className="mypay-span">지급구분</span>
-                    <select className="select-pay">
-                        <option value="payroll">급여</option>
-                        <option value="bonus">상여</option>
-                        <option value="payrollandbonus">급여 + 상여</option>
-                    </select>
-                    <span className="mypay-span">대상자</span>
-                    <input type="text" value={employeeId ? employeeId.employeeId : ''} readOnly disabled />
-                    <input type="text" value={employeeId ? employeeId.name : ''} readOnly disabled />
-                    <button type="submit">조회</button>
+            </div>
+            <div className="pay-search-section">
+                <span className="mypay-span">지급연월</span>
+                <DatePicker
+                    selected={selectedDate}
+                    onChange={setSelectedDate}
+                    dateFormat="yyyy-MM"
+                    showMonthYearPicker
+                    locale="ko"
+                    className="custom-date-picker"
+                />
+                <span className="mypay-span">지급구분</span>
+                <select className="select-pay" value={paymentType} onChange={e => setPaymentType(e.target.value)}>
+                    <option value="payroll">급여</option>
+                </select>
+                <span className="mypay-span">대상자</span>
+                <input type="text" defaultValue={mypay?.employeeId || ''} readOnly disabled />
+                <input type="text" defaultValue={mypay?.employeeName || ''} readOnly disabled />
+                <button type="button" onClick={handleSearch}>조회</button>
+            </div>
+
+            <div className="table-combine">
+                <h3>지급항목</h3>
+                <div className="empl-table-container">
+                    <table className="data-table">
+                        <thead>
+                            <tr>
+                                <th>수당구분</th>
+                                <th>금액</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {earningRecords.map((record, index) => (
+                                <tr key={`earning-${index}`}>
+                                    <td>{record.earningCategory?.name || ''}</td>
+                                    <td>{record.amount.toLocaleString()}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
-
-                <div className="table-combine">
-                    <h3>지급항목</h3>
-                    <div className="empl-table-container">
-                        <table id="data-table" className="data-table">
-                            <thead>
-                                <tr>
-                                    <th>수당구분</th>
-                                    <th>금액</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {rows.filter(row => row.categoryType === 'payment').map((row, index) => (
-                                    <tr key={`payment-${index}`}>
-                                        <td>{row.column1}</td>
-                                        <td>{row.column2}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div className="tfoot-container">
-                        <table className="myPay-foot-table">
-                            <tfoot className="myPay-foot">
-                                <tr>
-                                    <td style={{ letterSpacing: '18px', paddingLeft: "22px" }}>과 세</td>
-                                    <td>{totalSalary.toLocaleString()}</td>
-                                </tr>
-                                <tr>
-                                    <td style={{ letterSpacing: '3.5px' }}>비 과 세</td>
-                                    <td>0</td>
-                                </tr>
-                                <tr>
-                                    <td style={{ letterSpacing: '1px' }}>지급액 계</td>
-                                    <td>{totalSalary.toLocaleString()}</td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-
-
-
-                <div className="table-combine">
-                    <h3>공제항목</h3>
-                    <div className="additional-container">
-                        <table id="data-table" className="data-table">
-                            <thead>
-                                <tr>
-                                    <th>수당구분</th>
-                                    <th>금액</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {rows.filter(row => row.categoryType === 'deduction').map((row, index) => (
-                                    <tr key={`deduction-${index}`}>
-                                        <td>{row.column1}</td>
-                                        <td>{row.column2}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-
-                        </table>
-                    </div>
-                    <div className="tfoot-container">
-                        <table className="myPay-foot-table">
-                            <tfoot className="myPay-foot">
-                                <tr>
-                                    <td style={{ letterSpacing: '1px', wordSpacing: "8px" }}>공제액 계</td>
-                                    <td>{totalDeductions.toLocaleString()}</td>
-                                </tr>
-                                <tr>
-                                    <td style={{ letterSpacing: '1px' }}>차인지급액</td>
-                                    <td>{netSalary.toLocaleString()}</td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-
-
-                <div className="result-table-combine">
-                    <h3>계산결과</h3>
-                    <div className="combine-container">
-                        <table className="combine-table">
-                            <tbody>
-                                <tr>
-                                    <td className="pay-title">소속부서</td>
-                                    <td className="pay-detail"><input type="text" /></td>
-                                </tr>
-                                <tr>
-                                    <td className="pay-title">직위</td>
-                                    <td className="pay-detail"><input type="text" /></td>
-                                </tr>
-                                <tr className="spacer-row"><td colSpan="2"></td></tr>
-                                <tr>
-                                    <td className="pay-title">지급총액</td>
-                                    <td className="pay-detail"><input type="text" /></td>
-                                </tr>
-                                <tr>
-                                    <td className="pay-title">야간근로비과세</td>
-                                    <td className="pay-detail"><input type="text" /></td>
-                                </tr>
-                                <tr>
-                                    <td className="pay-title">해외근로비과세</td>
-                                    <td className="pay-detail"><input type="text" /></td>
-                                </tr>
-                                <tr>
-                                    <td className="pay-title">기타비과세</td>
-                                    <td className="pay-detail"><input type="text" /></td>
-                                </tr>
-                                <tr>
-                                    <td className="pay-title">공제총액</td>
-                                    <td className="pay-detail"><input type="text" /></td>
-                                </tr>
-                                <tr>
-                                    <td className="pay-title">차인지급액</td>
-                                    <td className="pay-detail"><input type="text" /></td>
-                                </tr>
-                                <tr className="spacer-row"><td colSpan="2"></td></tr>
-                                <tr>
-                                    <td className="pay-title">은행</td>
-                                    <td className="pay-detail"><input type="text" /></td>
-                                </tr>
-                                <tr>
-                                    <td className="pay-title">계좌번호</td>
-                                    <td className="pay-detail"><input type="text" /></td>
-                                </tr>
-                                <tr>
-                                    <td className="pay-title">계좌이름</td>
-                                    <td className="pay-detail"><input type="text" /></td>
-                                </tr>
-                                <tr className="spacer-row"><td colSpan="2"></td></tr>
-                                <tr>
-                                    <td className="pay-title" style={{ textAlign: "center" }}>특이사항</td>
-                                    <td className="pay-detail" style={{ height: "127px" }}><input type="text" style={{ height: "90%" }} /></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div className="tfoot-container">
+                    <table className="myPay-foot-table">
+                        <tfoot className="myPay-foot">
+                            <tr>
+                                <td style={{ letterSpacing: '18px', paddingLeft: "22px" }}>과 세</td>
+                                <td>{taxableEarnings.toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                                <td style={{ letterSpacing: '3.5px' }}>비 과 세</td>
+                                <td>{nonTaxableEarnings.toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                                <td style={{ letterSpacing: '1px' }}>지급액 계</td>
+                                <td>{totalEarnings.toLocaleString()}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
-        </>
+
+            <div className="table-combine">
+                <h3>공제항목</h3>
+                <div className="additional-container">
+                    <table className="data-table">
+                        <thead>
+                            <tr>
+                                <th>수당구분</th>
+                                <th>금액</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {deductionRecords.map((record, index) => (
+                                <tr key={`deduction-${index}`}>
+                                    <td>{record.deductionCategory?.name || ''}</td>
+                                    <td>{record.amount.toLocaleString()}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                <div className="tfoot-container">
+                    <table className="myPay-foot-table">
+                        <tfoot className="myPay-foot">
+                            <tr>
+                                <td style={{ letterSpacing: '1px', wordSpacing: "8px" }}>공제액 계</td>
+                                <td>{totalDeductions.toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                                <td style={{ letterSpacing: '1px' }}>차인지급액</td>
+                                <td>{netSalary.toLocaleString()}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <div className="result-table-combine">
+                <h3>계산결과</h3>
+                <div className="combine-container">
+                    <table className="combine-table">
+                        <tbody>
+                            <tr>
+                                <td className="pay-title">소속부서</td>
+                                <td className="pay-detail">
+                                    <input type="text" defaultValue={mypay?.departmentName || ''} readOnly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="pay-title">직위</td>
+                                <td className="pay-detail">
+                                    <input type="text" defaultValue={mypay?.jobTitle || ''} readOnly />
+                                </td>
+                            </tr>
+                            <tr className="spacer-row"><td colSpan="2"></td></tr>
+                            <tr>
+                                <td className="pay-title">지급총액</td>
+                                <td className="pay-detail">
+                                    <input
+                                        type="text"
+                                        value={totalEarnings.toLocaleString()}
+                                        readOnly
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="pay-title">야간근로비과세</td>
+                                <td className="pay-detail">
+                                    <input type="text" readOnly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="pay-title">해외근로비과세</td>
+                                <td className="pay-detail"><input type="text" readOnly /></td>
+                            </tr>
+                            <tr>
+                                <td className="pay-title">기타비과세</td>
+                                <td className="pay-detail"><input type="text" readOnly /></td>
+                            </tr>
+                            <tr>
+                                <td className="pay-title">공제총액</td>
+                                <td className="pay-detail">
+                                    <input
+                                        type="text"
+                                        value={totalDeductions.toLocaleString()}
+                                        readOnly
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="pay-title">차인지급액</td>
+                                <td className="pay-detail">
+                                    <input
+                                        type="text"
+                                        value={netSalary.toLocaleString()}
+                                        readOnly
+                                    />
+                                </td>
+                            </tr>
+                            <tr className="spacer-row"><td colSpan="2"></td></tr>
+                            <tr>
+                                <td className="pay-title">은행</td>
+                                <td className="pay-detail">
+                                    <input type="text" defaultValue={mypay?.bankName || ''} readOnly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="pay-title">계좌번호</td>
+                                <td className="pay-detail">
+                                    <input type="text" defaultValue={mypay?.accountNumber || ''} readOnly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="pay-title">예금주</td>
+                                <td className="pay-detail">
+                                    <input type="text" defaultValue={mypay?.employeeName || ''} readOnly />
+                                </td>
+                            </tr>
+                            <tr className="spacer-row"><td colSpan="2"></td></tr>
+                            <tr>
+                                <td className="pay-title" style={{ textAlign: "center" }}>특이사항</td>
+                                <td className="pay-detail" style={{ height: "127px" }}>
+                                    <input type="text" style={{ height: "90%" }} readOnly />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     );
 };
 

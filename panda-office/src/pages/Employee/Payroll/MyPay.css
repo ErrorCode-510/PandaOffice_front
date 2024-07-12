@@ -13,7 +13,7 @@ option {
     border-radius: 0;
 }
 
-.search-section {
+.pay-search-section {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
@@ -23,16 +23,16 @@ option {
     padding: 20px;
 }
 
-.search-section input[type="date"],
-.search-section select {
-    margin-right: 40px;
+.pay-search-section input[type="date"],
+.pay-search-section select {
+    margin-right: 20px;
     height: 30px;
     border: 1px solid #ccc;
     border-radius: 0;
     padding: 0 10px;
 }
 
-.search-section input[type="text"] {
+.pay-search-section input[type="text"] {
     margin-right: 10px;
     width: 100px;
     height: 30px;
@@ -42,7 +42,7 @@ option {
 }
 
 /* 조건 검색 버튼 */
-.search-section button {
+.pay-search-section button {
     height: 30px;
     width: 60px;
     color: #fff;
@@ -53,7 +53,7 @@ option {
     cursor: pointer;
 }
 
-.search-section button:active {
+.pay-search-section button:active {
     background: #3a4563;
 }
 
@@ -185,12 +185,12 @@ option {
 
 .combine-container {
     height: 700px;
-    max-height: 750px;
+    max-height: 730px;
 }
 
 .combine-table {
     width: 60%;
-    height: 615px;
+    height: 684px;
     border-collapse: collapse;
     table-layout: fixed;
 }
@@ -221,7 +221,9 @@ option {
 }
 
 .pay-detail input[type="text"] {
-    height: 20px;
+    height: 120%;
     width: 90%;
     margin-left: 5px;
+    font-size: 15px;
+    padding: 0 10px 0 10px;
   }
