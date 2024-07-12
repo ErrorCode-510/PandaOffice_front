@@ -52,7 +52,6 @@ const ApplicantCreateModal = () => {
                     closeModalHandler();
                 })
                 .catch((error) => {
-                    console.error('등록 실패:', error);
                     alert('등록 중 오류가 발생했습니다.');
                 });
         } else {
@@ -95,9 +94,15 @@ const ApplicantCreateModal = () => {
             window.removeEventListener('keydown', handlerButtonOff);
         }
     }, [modalStatus]);
-    
+
+    /* 주소 셀렉트 박스 옵션 */
+    const cities = [
+        '서울', '경기', '인천', '대전', '세종', '충남', '충북', '광주',
+        '전남', '전북', '대구', '경북', '부산', '울산', '경남', '강원', '제주'
+    ];
+
     return (
-        <>  
+        <>
             {
                 modalStatus &&
                 <div className='modal-bg' onClick={closeModalHandler}>
@@ -109,59 +114,71 @@ const ApplicantCreateModal = () => {
                             <div className='applicant-flex-left'>
                                 <div className='applicant-name'>
                                     <p>이름</p>
-                                    <input 
-                                        type='text' 
-                                        name='name' 
+                                    <input
+                                        type='text'
+                                        name='name'
                                         onChange={handlerInputChange}
+                                        placeholder='이름을 입력해주세요.'
+                                        value={formValues.name}
                                     ></input>
                                 </div>
                                 <div className='applicant-gender'>
                                     <p>성별</p>
                                     <select
-                                    className="acm-gender"
-                                    onChange={handlerInputChange}
-                                    name="gender"
+                                        className="acm-gender"
+                                        onChange={handlerInputChange}
+                                        name="gender"
+                                        value={formValues.gender}
                                     >
-                                        <option>선택</option>
-                                        <option>남</option>
-                                        <option>여</option>
+                                        <option value="">선택</option>
+                                        <option value="남">남</option>
+                                        <option value="여">여</option>
                                     </select>
                                 </div>
                             </div>
                             <div className='applicant-flex-right'>
                                 <div className='applicant-phone'>
                                     <p>연락처</p>
-                                    <input 
-                                        type='tel' 
-                                        name='phone' 
+                                    <input
+                                        type='tel'
+                                        name='phone'
                                         onChange={handlerInputChange}
                                         value={formValues.phone}
+                                        placeholder='숫자만 입력해주세요.'
                                     ></input>
                                 </div>
                                 <div className='applicant-age'>
                                     <p>나이</p>
-                                    <input 
-                                    type='date' 
-                                    name='birthDate'  
-                                    onChange={handlerInputChange}
+                                    <input
+                                        type='date'
+                                        name='birthDate'
+                                        onChange={handlerInputChange}
                                     ></input>
                                 </div>
                             </div>
                         </div>
+                        <div className='applicant-address'>
+                            <p>주소</p>
+                            <select
+                                className="acm-address"
+                                name="address"
+                                onChange={handlerInputChange}
+                                value={formValues.address}
+                            >
+                                <option value="">선택</option>
+                                {cities.map((city, index) => (
+                                    <option key={index} value={city}>{city}</option>
+                                ))}
+                            </select>
+                        </div>
                         <div className='applicant-email wd-420'>
                             <p>이메일</p>
-                            <input 
-                            type='email' 
-                            name='email' 
-                            onChange={handlerInputChange}
-                            ></input>
-                        </div>
-                        <div className='applicant-address wd-420'>
-                            <p>주소</p>
-                            <input 
-                            type='text' 
-                            name='address' 
-                            onChange={handlerInputChange}
+                            <input
+                                type='email'
+                                name='email'
+                                onChange={handlerInputChange}
+                                placeholder='이메일을 입력해주세요.'
+                                value={formValues.email}
                             ></input>
                         </div>
                         <div className='modal-btn'>
