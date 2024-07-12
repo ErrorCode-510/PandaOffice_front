@@ -27,6 +27,7 @@ const CalendarApi = ({ height }) => {
 
     /* 캘린더 db에서 꺼내서 조회 */
     const formattedEvents = calendar.map((calendarEvent) => ({
+        id: calendarEvent.id,
         title: calendarEvent.name,
         start: `${calendarEvent.startDate}T${calendarEvent.startTime}`,
         end: addOneDay(calendarEvent.endDate),

@@ -158,7 +158,7 @@ const ApplicantCreateModal = () => {
                             </div>
                         </div>
                         <div className='applicant-address'>
-                            <p>주소</p>
+                            <p>지역</p>
                             <select
                                 className="acm-address"
                                 name="address"
