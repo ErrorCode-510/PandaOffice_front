@@ -9,15 +9,14 @@ import {getMemberId} from "../../utils/TokenUtils"; // 날짜 유틸리티 임�
 function EmployeeEdit() {
 
     const job = [
-        { id: 600, name: '사원' },
-        { id: 500, name: '주임' },
-        { id: 400, name: '대리' },
-        { id: 300, name: '과장' },
-        { id: 200, name: '차장' },
-        { id: 100, name: '부장' },
-        { id: 1, name: '사장' }
+        { id: 50, name: '사원' },
+        { id: 40, name: '주임' },
+        { id: 35, name: '대리' },
+        { id: 30, name: '과장' },
+        { id: 25, name: '차장' },
+        { id: 20, name: '부장' },
+        { id: 11, name: '사장' }
     ];
-
     const department = [
         { id: 11, name: '인사' },
         { id: 12, name: '회계' },
@@ -182,7 +181,7 @@ function EmployeeEdit() {
         e.preventDefault();
         try {
             await axios.put(`http://localhost:8001/api/v1/members/updateEmployee`, employee); // PUT 요청으로 데이터 업데이트
-            // navigate(`/employees/${id}`); // 업데이트 후 직원 세부 정보 페이지로 이동
+            navigate(`/employee/${id}`); // 업데이트 후 직원 세부 정보 페이지로 이동
             console.log(employee);
         } catch (error) {
             console.error('Failed to update employee details:', error);
@@ -348,10 +347,10 @@ function EmployeeEdit() {
                                             />
                                         </td>
 
-                                        <th>계좌번호</th>
+                                        <th></th>
                                         <td>
-                                            <input type="text" id="account_number" name="accountNumber"
-                                                   value={employee.accountNumber} onChange={handleChange}/>
+                                            {/*<input type="text" id="account_number" name="accountNumber"*/}
+                                            {/*       value={employee.accountNumber} onChange={handleChange}/>*/}
                                         </td>
                                     </tr>
                                     <tr>
@@ -451,26 +450,27 @@ function EmployeeEdit() {
                                                 onChange={(e) => handleChange(e, 'employee')}
                                             /></td>
                                         <th>한자이름</th>
-                                            <input
-                                                type="text"
-                                                name="hanjaName"
-                                                value={employee.employee.hanjaName}
+                                        <input
+                                            type="text"
+                                            name="hanjaName"
+                                            value={employee.employee.hanjaName}
+                                            onChange={(e) => handleChange(e, 'employee')}
+                                        />
+                                        <th>직위</th>
+                                        <td>
+                                            <select
+                                                id="job"
+                                                name="job"
+                                                value={employee.employee.job.id}  // 저장된 값이 선택됩니다.
                                                 onChange={(e) => handleChange(e, 'employee')}
-                                            />
-                                            <th>직위</th>
-                                            <td>
-                                                <select
-                                                    id="job"
-                                                    name="job"
-                                                    value={employee.employee.job.id}  // 저장된 값이 선택됩니다.
-                                                    onChange={(e) => handleChange(e, 'employee')}
-                                                >
-                                                    <option value="">직위를 선택하세요</option>
-                                                    {job.map(job => (
-                                                        <option key={job.id} value={job.id}>{job.name}</option>
-                                                    ))}
-                                                </select>
-                                            </td>
+                                            >
+
+                                                <option value="">직위를 선택하세요</option>
+                                                {job.map(job => (
+                                                    <option key={job.id} value={job.id}>{job.name}</option>
+                                                ))}
+                                            </select>
+                                        </td>
 
 
                                     </tr>
@@ -516,12 +516,12 @@ function EmployeeEdit() {
                                     </tr>
                                     {employee.familyMember.map((member, index) => (
                                         <tr key={index} onDoubleClick={() => handleRemoveRow('familyMembers', index)}>
-                                            <td><input type="text" value={member.relationship} name="relationship" onChange={(e) => handleChange(e, 'familyMembers', index)} /></td>
-                                            <td><input type="text" value={member.name} name="name" onChange={(e) => handleChange(e, 'familyMembers', index)} /></td>
-                                            <td><input type="date" value={member.birthDate} name="birthDate" onChange={(e) => handleChange(e, 'familyMembers', index)} /></td>
-                                            <td><input type="text" value={member.job} name="job" onChange={(e) => handleChange(e, 'familyMembers', index)} /></td>
-                                            <td><input type="text" value={member.education} name="education" onChange={(e) => handleChange(e, 'familyMembers', index)} /></td>
-                                            <td><input type="text" value={member.note} name="note" onChange={(e) => handleChange(e, 'familyMembers', index)} /></td>
+                                            <td><input type="text" value={member.relationship} name="relationship" data-index={index} onChange={(e) => handleChange(e, 'familyMembers')} /></td>
+                                            <td><input type="text" value={member.name} name="name" data-index={index} onChange={(e) => handleChange(e, 'familyMembers')} /></td>
+                                            <td><input type="date" value={member.birthDate} name="birthDate" data-index={index} onChange={(e) => handleChange(e, 'familyMembers')} /></td>
+                                            <td><input type="text" value={member.job} name="job" data-index={index} onChange={(e) => handleChange(e, 'familyMembers')} /></td>
+                                            <td><input type="text" value={member.education} name="education" data-index={index} onChange={(e) => handleChange(e, 'familyMembers')} /></td>
+                                            <td><input type="text" value={member.note} name="note" data-index={index} onChange={(e) => handleChange(e, 'familyMembers')} /></td>
                                         </tr>
                                     ))}
                                     <tr>
@@ -662,7 +662,7 @@ function EmployeeEdit() {
                                     </tbody>
                                 </table>
                             </div>
-                            <button type="submit">저장</button>
+                            <button type="submit" className="save-btn">저장</button>
                         </form>
                     </div>
                 </div>

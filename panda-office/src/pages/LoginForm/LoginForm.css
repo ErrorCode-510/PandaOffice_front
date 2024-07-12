@@ -216,13 +216,21 @@ input[type='date']::before {
     content: attr(data-placeholder);
     width: 100%;
 }
-.modalContent{
-    text-align: center;
-    position: relative;
-    top: 70px;
-}
+/*.modalContent{*/
+/*    text-align: center;*/
+/*    position: relative;*/
+/*    top: 70px;*/
+/*}*/
 .show-modal .modalActions button {
      /* Adjust the value as needed */
     position: relative;
     top: 50px;
+}
+.modalContent li {
+    list-style-type: disc ;
+
+
+}
+.modalContent ul{
+    padding-left: 20px;
 }

@@ -146,9 +146,7 @@ function EmployeeList() {
                                     </tr>
                                 ))}
                                 </tbody>
-                                <div className="button-container">
-                                    <button>신규 사원 추가</button>
-                                </div>
+
                             </table>
 
                         </div>
