@@ -5,7 +5,7 @@ import { setCriteria } from "../../../modules/ApplicantModules";
 const ApplicantSearch = () => {
 
     const dispatch = useDispatch();
-    
+
     const [mainCriteria, setMainCriteria] = useState('all');
     const [subCriteria, setSubCriteria] = useState();
     const [searchCriteria, setSearchCriteria] = useState('');
@@ -14,14 +14,12 @@ const ApplicantSearch = () => {
     const handlerCriteriaChange = (e) => {
         const selectedCriteria = e.target.value;
         setMainCriteria(selectedCriteria);
-        // console.log('selectedCriteria: ' + selectedCriteria);
     }
 
     /* 검색 조건2 */
     const handlerSubCriteriaChange = (e) => {
         const selectedSubCriteria = e.target.value;
         setSubCriteria(selectedSubCriteria);
-        // console.log('selectedSubCriteria: ' + selectedSubCriteria);
     }
 
     /* 이름 입력 */
@@ -33,8 +31,7 @@ const ApplicantSearch = () => {
 
     /* 조건 취합 후 API 요청 */
     const handlerOnClink = () => {
-        const params = {mainCriteria, subCriteria, searchCriteria};
-        // console.log(JSON.stringify(searchCriteria))
+        const params = { mainCriteria, subCriteria, searchCriteria };
         dispatch(setCriteria(params))
     }
 
@@ -53,7 +50,6 @@ const ApplicantSearch = () => {
                     <select id="criteriaSelect" value={mainCriteria} onChange={handlerCriteriaChange}>
                         <option value='all'>전체</option>
                         <option value="gender">성별</option>
-                        {/* <option value="age">나이</option> */}
                         <option value="address">주소</option>
                     </select>
                 </div>
@@ -68,14 +64,6 @@ const ApplicantSearch = () => {
                                 <option value="여">여</option>
                             </>
                         }
-                        {/* {
-                            mainCriteria === 'age' &&
-                            <>
-                                <option value="20">20대</option>
-                                <option value="30">30대</option>
-                                <option value="40">40대</option>
-                            </>
-                        } */}
                         {
                             mainCriteria === 'address' &&
                             <>
@@ -105,7 +93,7 @@ const ApplicantSearch = () => {
                     <input className="as-input-box" type="text" placeholder="이름을 입력해 주세요." value={searchCriteria} onChange={handlerSearchChange} onKeyDown={onSubmitSearch}></input>
                 </div>
                 <button className="as-search-btn" onClick={handlerOnClink}>조회</button>
-                
+
             </div>
         </>
     )

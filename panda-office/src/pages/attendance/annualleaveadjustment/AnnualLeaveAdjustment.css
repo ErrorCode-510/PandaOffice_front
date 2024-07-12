@@ -1,0 +1,105 @@
+.annual-leave-adjustment {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h2 {
+    font-size: 24px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar label {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.year-picker {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    margin-right: 10px;
+    width: 80px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.search-button {
+    background-color: #2F3850;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #333;
+}
+
+.leave-info {
+    margin-top: 20px;
+}
+
+.leave-info h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: left; /* 왼쪽 정렬 */
+}
+
+.leave-info table {
+    width: 100%;
+    border-collapse: separate; /* 변경된 부분 */
+    border-spacing: 0; /* 테이블 셀 사이의 간격을 없앰 */
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+.leave-info th, .leave-info td {
+    border: 1px solid #ddd; /* 모든 테두리 추가 */
+    padding: 8px;
+    text-align: center;
+}
+
+.leave-info th {
+    background-color: #1E1F31;
+    color: white;
+}
+
+.leave-info thead th:first-child {
+    border-top-left-radius: 15px;
+}
+
+.leave-info thead th:last-child {
+    border-top-right-radius: 15px;
+}
+
+.no-radius {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+.leave-info tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 0;
+}
+
+.leave-info tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 0;
+}
