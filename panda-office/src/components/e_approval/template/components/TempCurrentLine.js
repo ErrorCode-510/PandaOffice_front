@@ -1,16 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { IoIosCloseCircle } from "react-icons/io";
-import { removeApprovalLine } from "../../../../modules/E_ApprovalModules";
 
 
-export function CurrentLine({ line }) {
+export function TempCurrentLine({ setApprovalLineList, line }) {
 
-    const dispatch = useDispatch();
     const { infoForCreate } = useSelector(state => state.e_approvalReducer)
 
     const onClickRemoveLine = () => {
-        dispatch(removeApprovalLine(line))
+        setApprovalLineList(state=>{
+            const index = state.indexOf(line)
+            return state.filter((line, ind)=>ind != index)
+        })
     }
+
 
     let employee = null;
     if (line.employeeId) {
@@ -32,7 +34,7 @@ export function CurrentLine({ line }) {
     }
 
     return <>
-        <div className="new-line-preview-area">
+        <div className="new-line-preview-area border-bottom-padding">
             <div>
                 <img src="/logo192.png"></img>
             </div>
@@ -44,7 +46,8 @@ export function CurrentLine({ line }) {
             </div>
             <IoIosCloseCircle
                 className="close-button"
-                onClick={onClickRemoveLine} />
+                onClick={onClickRemoveLine}
+                />
         </div>
     </>
 

@@ -68,7 +68,7 @@
     height: 270px;
     overflow-y: scroll;
 }
-.target-template {
+.current-template-info {
     width: 300px;
     height: 270px;
 }
@@ -79,4 +79,18 @@
 }
 .target-template table th {
     width: 100px;
+}
+.target-template {
+    width:300px;
+    height: 270px;
+}
+.approval-modal-table{
+    text-align: left;
+}
+.approval-modal-table th {
+    width: 100px
+}
+.approval-modal-table input {
+    width: 300px;
+    height:100px;
 }

@@ -14,6 +14,7 @@ export const callDepartmentBox = () => {
 
 export const callDocumentFolderAPI = () => {
     return async (dispatch, getState)=>{
+        console.log(123)
         const response = await authRequest.get('/approval-document-template-folders')
         if(response.status === 200){
             dispatch(setDocumentTemplateFolder(response.data))

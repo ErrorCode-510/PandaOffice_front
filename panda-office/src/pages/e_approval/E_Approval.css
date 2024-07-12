@@ -8,7 +8,7 @@
     cursor: pointer;
 }
 
-.title{
+.title {
     font-size: 34px;
     padding: 0px 0px 20px 0px;
 }
@@ -27,6 +27,7 @@
     justify-content: center;
     align-items: center;
 }
+
 .flex {
     display: flex;
 }
@@ -42,42 +43,53 @@
     height: 45px;
     display: flex;
     justify-content: center;
-    align-items: center; /* 상하 정렬 추가 */
+    align-items: center;
+    /* 상하 정렬 추가 */
 }
+
 /* 일반 컴포넌트 컨텐트 */
-.cc-content{
+.cc-content {
     background-color: white;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    height: 100%; /* 부모 요소의 전체 높이를 차지하도록 설정 */
+    height: auto;
+    /* 부모 요소의 전체 높이를 차지하도록 설정 */
 }
 
 /* 폰트 정렬 */
 .align-c {
     text-align: center;
 }
+
 .align-l {
     text-align: left;
 }
+
 .align-r {
     text-align: right;
 }
 
-.folder-icon{
+.folder-icon {
     font-size: 20px;
     width: 20px;
     height: 20px;
 }
+
 .folder-name {
     font-size: 16px;
     cursor: pointer;
     margin-left: 5px;
-    white-space: nowrap; /* 줄바꿈 방지 */
-    overflow: hidden; /* 넘치는 내용 숨기기 */
-    text-overflow: ellipsis; /* 넘치는 내용 말줄임표 처리 */
-    width: auto; /* 폴더 이름에 맞춰 너비 자동 조정 */
-    max-width: 200px; /* 최대 너비 설정 (필요에 따라 조정) */
+    white-space: nowrap;
+    /* 줄바꿈 방지 */
+    overflow: hidden;
+    /* 넘치는 내용 숨기기 */
+    text-overflow: ellipsis;
+    /* 넘치는 내용 말줄임표 처리 */
+    width: auto;
+    /* 폴더 이름에 맞춰 너비 자동 조정 */
+    max-width: 200px;
+    /* 최대 너비 설정 (필요에 따라 조정) */
 }
 
 .selected-folder-name {
@@ -85,21 +97,26 @@
     cursor: pointer;
     margin-left: 5px;
     color: #2076B4;
-    white-space: nowrap; /* 줄바꿈 방지 */
-    overflow: hidden; /* 넘치는 내용 숨기기 */
-    text-overflow: ellipsis; /* 넘치는 내용 말줄임표 처리 */
-    width: auto; /* 폴더 이름에 맞춰 너비 자동 조정 */
-    max-width: 200px; /* 최대 너비 설정 (필요에 따라 조정) */
+    white-space: nowrap;
+    /* 줄바꿈 방지 */
+    overflow: hidden;
+    /* 넘치는 내용 숨기기 */
+    text-overflow: ellipsis;
+    /* 넘치는 내용 말줄임표 처리 */
+    width: auto;
+    /* 폴더 이름에 맞춰 너비 자동 조정 */
+    max-width: 200px;
+    /* 최대 너비 설정 (필요에 따라 조정) */
     font-weight: bold;
 }
 
-.template-name{
+.template-name {
     font-size: 16px;
     margin-left: 5px;
 }
 
 /* 폴더 컴포넌트 스타일 */
-.folder-button-navy{
+.folder-button-navy {
     border-radius: 3px;
     background-color: #1E1F31;
     width: 30%;
@@ -109,7 +126,8 @@
     margin: 20px 5px 20px 5px;
     cursor: pointer;
 }
-.folder-button-grey{
+
+.folder-button-grey {
     border-radius: 3px;
     background-color: #E6E6E6;
     width: 30%;
@@ -119,34 +137,40 @@
     margin: 20px 5px 20px 5px;
     cursor: pointer;
 }
-.folder-search-input{
+
+.folder-search-input {
     width: 90%;
     height: 30px;
     font-size: 16px;
     margin-bottom: 20px;
 }
-.left-border{
+
+.left-border {
     border-left: 1px solid #ccc;
     margin-left: 20px;
 }
 
-.scroll{
+.scroll {
     overflow-y: auto;
 }
+
 /* 템플릿 매니저 속성 */
-.folder-head{
-    width: 100%; 
+.folder-head {
+    width: 100%;
     height: 120px;
     border-bottom: 1px solid #E6E6E6;
 }
-.folder-title-text{
-    font-size: 30px; 
+
+.folder-title-text {
+    font-size: 30px;
     margin: 15px 0 5px 20px
 }
-.template-manager-button{
+
+.template-manager-button {
     margin-left: 20px;
 }
-.template-button-navy{
+
+.template-button-navy {
     border-radius: 3px;
     background-color: #1E1F31;
     width: 80px;
@@ -156,7 +180,8 @@
     margin: 10px 5px 20px 5px;
     cursor: pointer;
 }
-.template-button-gery{
+
+.template-button-gery {
     border-radius: 3px;
     background-color: #E6E6E6;
     width: 80px;
@@ -166,17 +191,21 @@
     margin: 10px 5px 20px 5px;
     cursor: pointer;
 }
+
 .template-folder-table thead tr th {
     text-align: left;
     border-bottom: solid #E6E6E6 1px;
 }
-.template-folder-table td{
+
+.template-folder-table td {
     text-align: left;
 }
-.template-folder-table th:nth-child(1){
+
+.template-folder-table th:nth-child(1) {
     text-align: center;
     font-size: 20px;
 }
+
 .template-folder-table td:nth-child(1) {
     text-align: center;
     font-size: 20px;
@@ -188,13 +217,13 @@
 }
 
 /* 컨텐츠 없음 문구 */
-.none-content-huge{
+.none-content-huge {
     color: #C6C6C6;
     font-size: 40px;
     margin-top: 200px;
 }
 
-.none-content-mini{
+.none-content-mini {
     color: #C6C6C6;
     font-size: 20px;
     text-align: center;
@@ -220,6 +249,7 @@
     text-align: center;
     width: 100%;
 }
+
 .template-title input {
     font-size: 40px;
     text-align: center;
@@ -228,7 +258,7 @@
 }
 
 /* 결재 영역 */
-.approval-area{
+.approval-area {
     display: flex;
     margin-left: auto;
 }
@@ -238,6 +268,7 @@
 .draft-info {
     left: 0px;
 }
+
 .draft-info table {
 
     font-size: 14px;
@@ -245,7 +276,8 @@
     border-collapse: collapse;
 }
 
-.draft-info th, .draft-info td {
+.draft-info th,
+.draft-info td {
     border: 1px solid black;
     text-align: left;
     padding: 4px 0 4px 8px;
@@ -266,7 +298,9 @@
     width: 400px;
     padding-left: 20px;
     font-size: 16px;
+    margin-bottom: 40px;
 }
+
 .template-set-component label {
     font-size: 20px;
 }
@@ -278,6 +312,7 @@
     border-radius: 3px;
     padding: 0 5px;
 }
+
 .template-set-component button {
     margin-right: 10px;
     height: 30px;
@@ -290,19 +325,48 @@
     cursor: pointer;
 }
 
+.template-set-component input,
+.template-set-component textarea,
+.template-set-component label {
+    /* min-height: 22px; */
+    height: auto;
+    width: 210px;
+    font-size: 16px;
+    resize: none;
+}
+.template-set-component input[type="radio"]{
+    width: 20px;
+}
+
+.template-set-component th {
+    vertical-align: top;
+    padding-right: 15px;
+}
+.template-set-component td {
+    vertical-align: top;
+    height: 25px;
+}
+
+.template-set-inner {
+    margin: 10px 20px 20px;
+}
+.template-set-inner input{
+    padding: 0px 5px;
+}
 
 /* 양식 결재선 박스 */
 .approval-box {
     display: table;
     border-collapse: collapse;
-    width:70px;
-    height:90px;
+    width: 70px;
+    height: 90px;
     border-width: 1px 1px 1px 0px;
     border-style: solid;
     border-color: black;
     flex-shrink: 0;
     font-size: 12px;
 }
+
 .approval-box-cover {
     display: table-row;
     text-align: center;
@@ -310,6 +374,7 @@
     border-top: 1px solid black;
     border-bottom: 1px solid black;
 }
+
 .approval-box-content {
     height: 100%;
     display: flex;
@@ -318,7 +383,8 @@
     text-align: center;
     font-size: 10px;
 }
-.approval-box-description{
+
+.approval-box-description {
     font-size: 15px;
     display: flex;
     justify-content: center;
@@ -330,24 +396,37 @@
     border: 1px solid black;
 }
 
+.border-bottom-padding{
+    padding: 15px 0px;
+    border-bottom: 1px solid #C6C6C6;
+    
+}
+
 .new-line-preview-area {
     display: flex;
     align-items: center;
     position: relative
 }
+
 .new-line-preview-area img {
     width: 50px;
     height: 50px;
 }
+
 .new-line-area {
-    padding: 15px 20px 15px 20px;
+    padding: 15px 0px 15px;
 }
-.approval-line-list {
-    margin: 10px 20px 5px;
-}
+
 .close-button {
     font-size: 30px;
     position: absolute;
     right: 0;
     margin-right: 50px;
+}
+
+.handling-box{
+    background-color: antiquewhite;
+}
+.handling-box-comment{
+
 }

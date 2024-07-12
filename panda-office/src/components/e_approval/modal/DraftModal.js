@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { callDocumentFolderAPI } from '../../../apis/e_approval/ApprovalDocumentFolderAPICalls';
 import { TemplateSelect } from './TemplateSelect';
 import { FolderSelect } from './FolderSelect';
+import { NavLink } from 'react-router-dom';
+import { callGetDocumentTemplate } from '../../../apis/e_approval/ApprovalDocumentTemplateAPICalls';
 
 
 
@@ -17,10 +19,15 @@ export function DraftModal({ setDraftModal }) {
             setDraftModal(false)
         }
     }
-    const onClickDraft = () => { }
     useEffect(() => {
         dispatch(callDocumentFolderAPI())
     }, [])
+    const onClickDraft = () => {
+        if(selectTemplate != null){
+            dispatch(callGetDocumentTemplate(selectTemplate.documentId))
+            setDraftModal(false)
+        }
+    }
     return <div className="modal-bg" onClick={handleBackgroundClick}>
         <div className="modal-min-wrap">
             <div className='modal-title'>양식 선택</div>
@@ -48,8 +55,8 @@ export function DraftModal({ setDraftModal }) {
                     <div className='current-template-info'>
                         <div className='modal-header align-c'>양식 정보</div>
                         <div className='modal-content align-c'>
-                            {selectTemplate &&
-                                <div className='target-template'>
+                            <div className='target-template'>
+                                {selectTemplate &&
                                     <table>
                                         <tr>
                                             <th>제목</th>
@@ -65,11 +72,13 @@ export function DraftModal({ setDraftModal }) {
                                         </tr>
                                         <tr>
                                             <th>설명</th>
-                                            <td>b</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{selectTemplate.description}</td>
                                         </tr>
                                     </table>
-                                </div>
-                            }
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -78,9 +87,17 @@ export function DraftModal({ setDraftModal }) {
                 <button className='cancel-btn'>
                     취소
                 </button>
-                <button className='modyfi-btn'>
-                    작성
-                </button>
+                {selectTemplate ? (
+                        <NavLink to="draft">
+                            <button className='modyfi-btn' onClick={onClickDraft}>
+                                작성
+                            </button>
+                        </NavLink>
+                    ) : (
+                        <button className='modyfi-btn' onClick={onClickDraft}>
+                            작성
+                        </button>
+                    )}
             </div>
         </div>
     </div>

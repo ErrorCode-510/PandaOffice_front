@@ -11,7 +11,7 @@ export function TemplateSelect({ folder, folders, isOpen, setIsOpen, selectTempl
         }))
     }
     const toggleCurrentTemplate = (e) => {
-        if (selectTemplate && selectTemplate.documentId === e) {
+        if (selectTemplate && selectTemplate.documentId == e.currentTarget.id) {
             setSelectTemplate(null)
         } else {
             setSelectTemplate(folder.documentList.find(doc => doc.documentId == e.currentTarget.id))

@@ -1,47 +1,41 @@
 import { useDispatch, useSelector } from "react-redux";
 import { DraftBox } from "./components/DraftBox";
 import { DraftInfo } from "./components/DraftInfo";
-import { ApprovalBox } from "./components/ApprovalBox";
-import { setCreateTemplateForm } from "../../../modules/E_ApprovalModules";
+import { TempApprovalBox } from "./components/TempApprovalBox";
 import { WebEditor } from "./components/WebEditor";
+import { IntegrationTable } from "./components/IntegrationTable";
 
-function TemplateEditor({ draftSample }) {
-    const dispatch = useDispatch();
-    const { autoApprovalLineRequestList } = useSelector(state => state.e_approvalReducer.createApprovalDocumentTemplateRequest)
-    const onChangeHandler = (e) => {
-        dispatch(setCreateTemplateForm({
-            name: e.target.name,
-            value: e.target.value
-        }));
-    }
+function TemplateEditor({ draftEmployee, onChangeFormHandler, templateRequest }) {
 
 
     return (
-        draftSample &&
+        draftEmployee &&
         <div className='cc-content align-l page-component-outer'>
             <div className='page-component-inner'>
                 <div className="template-title">
                     <input placeholder="양식 제목을 입력해주세요."
                         name="title"
-                        onChange={onChangeHandler} />
+                        onChange={onChangeFormHandler}
+                        />
                 </div>
                 <div className="flex">
-                    <DraftInfo draftSample={draftSample} />
+                    <DraftInfo draftEmployee={draftEmployee}/>
                     <div className="approval-area">
                         <div className="approval-box-description">기안</div>
-                        <DraftBox draftSample={draftSample} />
-                        {autoApprovalLineRequestList && autoApprovalLineRequestList.length != 0 &&
+                        <DraftBox draftEmployee={draftEmployee} />
+                        {templateRequest.autoApprovalLineRequestList && templateRequest.autoApprovalLineRequestList.length != 0 &&
                             <>
                                 <div className="approval-box-description">결재</div>
-                                {autoApprovalLineRequestList.map(lineRequest => {
-                                    return <ApprovalBox key={autoApprovalLineRequestList.indexOf(lineRequest)} lineRequest={lineRequest} />
+                                {templateRequest.autoApprovalLineRequestList.map(lineRequest => {
+                                    return <TempApprovalBox key={templateRequest.autoApprovalLineRequestList.indexOf(lineRequest)} lineRequest={lineRequest} />
                                 })}
                             </>
                         }
                     </div>
                 </div>
                 <div>
-                    <WebEditor />
+                    <IntegrationTable/>
+                    <WebEditor onChangeFormHandler={onChangeFormHandler}/>
                 </div>
             </div>
         </div>

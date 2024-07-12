@@ -1,16 +1,16 @@
-export function DraftInfo({draftSample}) {
+export function DraftInfo({draftEmployee, documentId}) {
     return (
-        draftSample&&
+        draftEmployee&&
         <div className="draft-info">
             <table>
                 <tbody>
                     <tr>
                         <th>기안자</th>
-                        <td>{draftSample.name}</td>
+                        <td>{draftEmployee.name}</td>
                     </tr>
                     <tr>
                         <th>기안부서</th>
-                        <td>{draftSample.department.name}</td>
+                        <td>{draftEmployee.department.name}</td>
                     </tr>
                     <tr>
                         <th>기안일</th>
@@ -18,7 +18,7 @@ export function DraftInfo({draftSample}) {
                     </tr>
                     <tr>
                         <th>문서 번호</th>
-                        <td></td>
+                        <td>{documentId?documentId:''}</td>
                     </tr>
                 </tbody>
             </table>
