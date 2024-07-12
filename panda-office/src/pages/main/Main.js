@@ -2,10 +2,11 @@ import Card from '../../components/main/card/Card.js';
 import Calendar from '../../components/main/calender/Calendar.js';
 import Announcement from '../../components/main/announcement/Announcement.js';
 import Footer from '../../components/common/Footer.js';
-import { FaHeartCirclePlus } from 'react-icons/fa6';
-import { FaHeartCircleMinus } from 'react-icons/fa6';
-import { TbRosetteDiscountCheckFilled } from 'react-icons/tb';
-import { LuCalendarCheck } from "react-icons/lu";
+import { BsCartFill } from "react-icons/bs";
+import { BsBookmarkCheckFill } from "react-icons/bs";
+import { TbTruckDelivery } from "react-icons/tb";
+import { PiWarningFill } from "react-icons/pi";
+import { FaFlag } from "react-icons/fa6";
 
 function Main() {
     
@@ -13,10 +14,11 @@ function Main() {
     //색상 코드 넘겨줌
     //고정값이라 useState() 사용 안했음
     const cardMaterials ={
-        classNames : ["day-reservation", "day-refund", "week-reservation", "month-reservation"],
-        cardColors:["#FD9B9B","#8EE7A2","#FFCD6C","#9DE5FC"],
-        cardTexts:["당일예약건","당일취소/환불","금주예약건","당월예약건"],
-        cardIcons:[<FaHeartCirclePlus className='circle-icon'/>,<FaHeartCircleMinus className='circle-icon'/>,<TbRosetteDiscountCheckFilled className='circle-icon'/>,<LuCalendarCheck className='circle-icon'/>]
+        classNames : ["order-received", "order-confirmation", "delivery-processing", "delivery-delay","delivery-completed"],
+        cardColors:["#FD9B9B","#8EE7A2","#cf92d6","#FFCD6C","#9DE5FC"],
+        cardTexts:["주문접수","발주확인","출고처리","출고지연","출고완료"],
+        cardIcons:[<BsCartFill className='circle-icon'/>,<BsBookmarkCheckFill className='circle-icon'/>,<TbTruckDelivery className='circle-icon'/>,< PiWarningFill className='circle-icon'/>,<FaFlag className='circle-icon'/>],
+        cardNums:[10,10,5,1,4]
     }
 
 
@@ -33,7 +35,7 @@ function Main() {
             <div className="card-area">
                 {
                     cardMaterials.classNames.map((className, index) => 
-                        <Card key={index}  className={className}  cardColor={cardMaterials.cardColors[index]} cardText={cardMaterials.cardTexts[index]} cardicon={cardMaterials.cardIcons[index]}/>
+                        <Card key={index}  className={className}  cardColor={cardMaterials.cardColors[index]} cardText={cardMaterials.cardTexts[index]} cardicon={cardMaterials.cardIcons[index]} cardNum={cardMaterials.cardNums[index]}/>
                     )
                 }
             </div>

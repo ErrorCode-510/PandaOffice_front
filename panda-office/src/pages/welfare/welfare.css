@@ -1,0 +1,332 @@
+.survey-area {
+  margin: 20px;
+}
+
+/* 설문 등록 컴포넌트css */
+
+.survey-registration-bg{
+  background-color: white;
+  border-radius: 10px 10px 0 0;
+   border :1px solid #ccc;
+   box-sizing: border-box;
+  width: 100%;
+}
+
+
+.survey-registration-top-bar{
+  /* width:100%; */
+  height: 30px;
+  border-radius: 10px 10px 0 0;
+  box-sizing: border-box;
+  background-color: #1E1F31;
+  padding: 10px;
+}
+.survey-registration-title{
+  display: block;
+   font-size: 35px;
+   margin: 30px 30px 30px 30px;
+   color:black;
+   font-weight:bold;
+}
+
+/* 설문 제목 & 기간  */
+.survey-title-date {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  margin-bottom: 20px;
+}
+
+/* 질문 제목*/
+.survey-title {
+  width: 85%;
+  margin-bottom: 10px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+/* .survey-title::placeholder{
+  color: black;
+} */
+
+/* 질문등록  */
+.question-register-area {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* 등록된 질문 구역*/
+.survey-question-regination-area {
+  margin-top: 20px;
+}
+
+/*  각 질문 항목을 개별적으로 스타일링하고, 리액트의 key 속성을 통해 각 요소를 고유하게 식별하기 위해 사용 */
+.survey-question-regination-box {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  position: relative;
+}
+
+.survey-question-regination {
+  margin-bottom: 10px;
+}
+
+/* .survey-question-regination input{
+  border: none;
+} */
+
+/* 등록된 질문 input */
+.question-title {
+  display: block;
+  width: 90%;
+  margin-bottom: 10px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+/* .question-btn-area{
+  position: relative;
+  left:1000px;
+}
+.save-question-btn, .edit-question-btn, .delete-question-btn {
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 5px;
+  width: 50px;
+  height: 50px;
+} */
+
+.question-btn-area {
+  position: absolute;
+  right: 0px; /* 오른쪽에서의 거리 */
+  top: 0px; /* 상단에서의 거리 */
+}
+
+.save-question-btn, .edit-question-btn, .delete-question-btn {
+  border: none;
+  cursor: pointer;
+  margin: 5px;
+  width: 30px; /* 아이콘 크기 조정 */
+  height: 30px; /* 아이콘 크기 조정 */
+}
+
+
+
+
+.edit-question-btn {
+  right: 40px; /* Adjust based on desired spacing */
+}
+
+
+.create-question-btn-area{
+  text-align: center;
+}
+
+.create-question-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 15px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 10px;
+  width: 150px;
+}
+
+/* .save-question-btn{
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 5px;
+    width: 50px;
+    height: 50px;
+} */
+
+.survey-regist-btn-area{
+  text-align: center;
+}
+.survey-regist-btn{
+  display: block;
+  width: 15%;
+  padding: 15px;
+  font-size: 16px;
+  /* background-color: #4caf50; */
+  background-color: #1E1F31;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin:0 auto;
+}
+.survet-regist-btn:hover{
+  background-color: #151622;
+}
+
+
+/* inpu type="date" css */
+.custom-date-input {
+  position: relative;
+  display: inline-block;
+}
+
+.survey-date {
+  width: 150px;
+  padding: 8px 32px 8px 8px; /* Add padding for the icon */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.calendar-icon {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #aaa;
+}
+
+
+/* 카테고리 선택 */
+.category-select{
+  margin-top: 10px;
+}
+/* -------------------------------------------------------------------------------------- */
+
+/* 설문 진행 폼css (중복되는게 많아서 수정 필수)*/
+.survey-container {
+ width: 100%;
+  margin: 0 auto;
+  /* padding: 20px; */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+.survey-padding{
+  padding: 20px;
+}
+
+.survey-progress-top-bar{
+  height: 30px;
+  width: 100%;
+  border-radius: 10px 10px 0 0;
+  box-sizing: border-box;
+  background-color: #1E1F31;
+  padding: 10px;
+}
+.survey-container h1 {
+  text-align: left;
+  margin-bottom: 60px;
+}
+
+.question {
+  margin-bottom: 7%;
+  padding-left: 25%;
+}
+
+.question p {
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.question ul {
+  list-style: none;
+  padding: 0;
+}
+
+.question li {
+  margin: 15px 0;
+
+}
+
+.radio-name{
+  padding: 5px;
+}
+
+.progress-btn {
+  display: block;
+  width: 15%;
+  padding: 15px;
+  font-size: 16px;
+  background-color: #1E1F31;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin:0 auto;
+}
+
+.progress-btn:hover {
+  background-color: #151622;
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+/* 설문 그래프 */
+.dashboard-container {
+  padding: 20px;
+}
+
+.dashboard-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.dashboard-item {
+  flex: 1 1 30%;
+  margin: 10px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-item-large {
+  flex: 1 1 48%;
+  margin: 10px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.dashboard-value {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.question-chart-container {
+  margin: 20px 0;
+}

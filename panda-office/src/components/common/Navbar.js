@@ -56,7 +56,7 @@ function Navbar() {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/welfare" className="nav-link">
+                            <NavLink to="/welfare/dashboard" className="nav-link">
                                 <TfiHeadphoneAlt className="side-icons"/>
                                 <p>사내민원</p>
                             </NavLink>

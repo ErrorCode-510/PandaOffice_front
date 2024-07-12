@@ -1,0 +1,57 @@
+.dashboard-container {
+  padding: 20px;
+  
+}
+
+.dashboard-title {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.dashboard-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.dashboard-item {
+  flex: 1 1 30%;
+  margin: 10px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+}
+
+.dashboard-item-large {
+  margin: 10px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: relative;
+}
+.dashboard-item-large > h2 {
+  text-align: left;
+}
+
+.dashboard-value {
+  font-size: 2.5em;
+  font-weight: bold;
+  line-height: 220px;
+}
+
+.question-chart-container {
+  margin: 20px 0;
+}
+
+.question-chart-container > h3{
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+/* .custom-pie-chart .recharts-surface{
+  height: 350px;
+} */
