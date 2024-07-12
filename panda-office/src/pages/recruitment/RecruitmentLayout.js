@@ -7,7 +7,7 @@ function Recruitment() {
         <>
             <RecruitmentSidebar />
             <div className="common-comp">
-                <div className="pd">
+                <div className="pd mg-bt-27">
                     <Outlet />
                 </div>
                 <div className="footer">
