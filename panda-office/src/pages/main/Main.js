@@ -1,5 +1,5 @@
 import Card from '../../components/main/card/Card.js';
-import Calendar from '../../components/main/calender/Calendar.js';
+import AnnualLeaveCalendar from '../../components/main/calender/AnnualLeaveCalendar.js';
 import Announcement from '../../components/main/announcement/Announcement.js';
 import Footer from '../../components/common/Footer.js';
 import { BsCartFill } from "react-icons/bs";
@@ -7,6 +7,7 @@ import { BsBookmarkCheckFill } from "react-icons/bs";
 import { TbTruckDelivery } from "react-icons/tb";
 import { PiWarningFill } from "react-icons/pi";
 import { FaFlag } from "react-icons/fa6";
+
 
 function Main() {
 

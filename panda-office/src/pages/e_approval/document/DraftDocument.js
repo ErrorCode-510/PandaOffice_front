@@ -61,9 +61,12 @@ export function DraftDocument() {
                                 <DraftApprovalLine draftForm={draftForm} setDraftForm={setDraftForm} />
                             </div>
                         </div>
+                        <div className="align-c">
+                        <button className="cancel-btn">취소</button>
+                        <button className='modyfi-btn' onClick={onClickSubmit}>등록</button>
+                    </div>
                     </div>
                 </div>
             </div>
-            <button onClick={onClickSubmit}>등록 확인</button>
         </>
 }

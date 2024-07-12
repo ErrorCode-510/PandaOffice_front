@@ -4,6 +4,7 @@ import NoticePagingBar from "./NoticePagingBar";
 import { callNoticeByCategoryAPI } from "../../apis/NoticeAPICalls";
 import NoticeListItem from "./NoticeListItem";
 import { useParams } from "react-router-dom";
+import NoticeList from "./NoticeList";
 import "./notice.css";
 
 
@@ -34,18 +35,14 @@ const CategoryNoticeList = () => {
     const [title, setTitle] = useState("");
 
     useEffect(() => {
-        console.log(`Fetching data for category: ${category}, subCategory: ${subCategory}, page: ${currentPage}`);
         dispatch(callNoticeByCategoryAPI({ category, subCategory, currentPage }));
     }, [category, subCategory, currentPage, dispatch]);
 
     useEffect(() => {
-        console.log('noticesByCategory:', noticesByCategory);
         if (noticesByCategory && noticesByCategory[category] && noticesByCategory[category][subCategory]) {
             setNoticeData(noticesByCategory[category][subCategory]);
-            console.log('Notice data set:', noticesByCategory[category][subCategory]);
         } else {
             setNoticeData(null);
-            console.log('No notice data available for category and subCategory');
         }
     }, [category, subCategory, noticesByCategory]);
 

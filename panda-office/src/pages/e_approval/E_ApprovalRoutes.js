@@ -3,12 +3,16 @@ import { DocumentTemplateFolderPage } from "./documentTemplate/E_ApprovalTemplat
 import DocumentTemplateRegist from "./documentTemplate/E_ApprovalTemplateRegist";
 import { ViewDocument } from "./document/ViewDocument";
 import { DraftDocument } from "./document/DraftDocument";
+import { DocumentList } from "./document/DocumentList";
 
 function E_ApprovalRoute() {
     return (
         <Routes>
+            <Route path="approval-documents"
+                element={<DocumentList />} />
+
             <Route path="approval-document/:documentId"
-            element={<ViewDocument/>}/>
+                element={<ViewDocument />} />
 
             <Route path="document-template"
                 element={<DocumentTemplateFolderPage
@@ -17,11 +21,11 @@ function E_ApprovalRoute() {
 
 
             <Route path="document-template/regist"
-            element={<DocumentTemplateRegist/>}
+                element={<DocumentTemplateRegist />}
             ></Route>
-            
+
             <Route path="draft"
-            element={<DraftDocument/>}
+                element={<DraftDocument />}
             ></Route>
         </Routes>
     );

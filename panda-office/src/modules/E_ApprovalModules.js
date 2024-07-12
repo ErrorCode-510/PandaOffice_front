@@ -22,7 +22,7 @@ const initialState = {
 const SUCCESS = 'approvalDocument/SUCCESS';
 const FETCH_SIDEBAR_STATUS = 'sidebar/FETCH_SIDEBAR_STATUS';
 const SET_DEPARTMENT_BOX = 'sidebar/SET_DEPARTMENT_BOX';
-const GET_APPROVAL_DOCUMENT_LIST = 'approvalDocument/GET_APPROVAL_DOCUMENT_LIST';
+const SET_APPROVAL_DOCUMENT_LIST = 'approvalDocument/SET_APPROVAL_DOCUMENT_LIST';
 const SET_DETAIL_APPROVAL_DOCUMENT = 'approvalDocument/SET_DETAIL_APPROVAL_DOCUMENT';
 const SET_DOCUMENT_TEMPLATE_FOLDER = 'documentTemplate/SET_DOCUMENT_TEMPLATE_FOLDER';
 const FETCH_CURRENT_FOLDER = 'documentTemplate/FETCH_CURRENT_FOLDER';
@@ -34,7 +34,7 @@ const SET_INFO_FOR_CREATE = 'documentTemplate/SET_INFO_FOR_CREATE'
 const SET_APPROVAL_DOCUMENT_TEMPLATE = 'documentTemplate/SET_APPROVAL_DOCUMENT_TEMPLATE'
 
 export const { sidebar: { fetchSidebarStatus, setDepartmentBox },
-    approvalDocument: { getApprovalDocumentList, setDetailApprovalDocument, success },
+    approvalDocument: { setApprovalDocumentList, setDetailApprovalDocument, success },
     documentTemplate: { setDocumentTemplateFolder,
         fetchCurrentFolder, fetchSelectFolders, fetchSelectDocuments, setFolderEditMode, fetchSelectTemplates,
         setInfoForCreate, updateDocumentTemplate,
@@ -48,7 +48,7 @@ export const { sidebar: { fetchSidebarStatus, setDepartmentBox },
         /* 부서함 가져오기 셋 */
         [SET_DEPARTMENT_BOX]: result => (result),
         /* 문서함 문서 리스트 셋 */
-        [GET_APPROVAL_DOCUMENT_LIST]: result => (result),
+        [SET_APPROVAL_DOCUMENT_LIST]: result => result,
         /* 문서 상세보기 셋 */
         [SET_DETAIL_APPROVAL_DOCUMENT]: result => (result),
         /* 양식 폴더 셋 */
@@ -65,7 +65,7 @@ export const { sidebar: { fetchSidebarStatus, setDepartmentBox },
         /* 새로운 양식을 등록하기 위한 정보 */
         [SET_INFO_FOR_CREATE]: result => (result?.employeeList.length > 0 &&
             { ...result, employeeList: result.employeeList.sort((a, b) => a.job.id - b.job.id) }),
-        [SET_APPROVAL_DOCUMENT_TEMPLATE]: result => (result)
+        [SET_APPROVAL_DOCUMENT_TEMPLATE]: result => (result),
     })
 
 const e_approvalReducer = handleActions({
@@ -83,7 +83,7 @@ const e_approvalReducer = handleActions({
         departmentBox: payload
     }),
 
-    [GET_APPROVAL_DOCUMENT_LIST]: (state, { payload }) => ({
+    [SET_APPROVAL_DOCUMENT_LIST]: (state, { payload }) => ({
         ...state,
         approvalDocumentList: payload
     }),

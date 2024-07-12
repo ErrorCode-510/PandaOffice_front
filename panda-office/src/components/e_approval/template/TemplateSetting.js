@@ -73,8 +73,6 @@ export function TemplateSetting({onChangeFormHandler, templateRequest}) {
                     </tr>
                 </tbody>
             </table>
-            <button className="cancel-btn">닫기</button>
-            <button>등록</button>
         </div>
     )
 }
