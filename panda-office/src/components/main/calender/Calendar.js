@@ -1,7 +1,4 @@
-import CalendarApi from "../../../utils/CalendarApi";
 import AnnualLeaveCalendar from "./AnnualLeaveCalendar";
-
-
 
 function Calendar() {
   return(
@@ -17,7 +14,7 @@ function Calendar() {
             </div>
           </div>
       </div>
-  )
+  );
 }
 
 export default Calendar;

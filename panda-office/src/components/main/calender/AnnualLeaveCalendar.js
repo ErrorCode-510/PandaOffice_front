@@ -1,42 +1,32 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { callAnnualLeaveCalendarAPI } from "../apis/AttendanceAPICalls";
-
-
-
+import { callAnnualLeaveCalendarAPI } from "../../../apis/AttendanceAPICalls";
+import Modal from "./Modal";
+import { getModal } from "../../../modules/AttendanceModules";
 
 const AnnualLeaveCalendar = () => {
-
-    const  { annualLeaveCalendar } = useSelector( state => state.attendanceReducer)
-
+    const { annualLeaveCalendar } = useSelector(state => state.attendanceReducer);
+    const dispatch = useDispatch();
+    const [selectedEvent, setSelectedEvent] = useState(null);
 
     useEffect(() => {
-        useDispatch(callAnnualLeaveCalendarAPI());
-    },[])
+        dispatch(callAnnualLeaveCalendarAPI());
+    }, [dispatch]);
 
     /* 캘린더 db에서 꺼내서 조회 */
-    const formattedEvents = annualLeaveCalendar.map((calendarEvent) => ({
-        title: calendarEvent.name,
-        start: `${calendarEvent.startDate}T${calendarEvent.startTime}`,
-        end: addOneDay(calendarEvent.endDate),
-        extendedProps: {
-            memo: calendarEvent.memo,
-            endTime: calendarEvent.endTime,
-            employee: calendarEvent.employee,
-            place: calendarEvent.place,
-            applicantList: calendarEvent.applicantList.map(applicantId => applicantId)
-        }
-    }));
-
-    /* end 날짜를 하루 더하는 함수 */
-    const addOneDay = (dateString) => {
-        const date = new Date(dateString);
-        date.setDate(date.getDate() + 1);
-        return date.toISOString().split('T')[0];
-    };
+    const formattedEvents = annualLeaveCalendar && annualLeaveCalendar.annualLeaveRecordCalendars
+        ? annualLeaveCalendar.annualLeaveRecordCalendars.map((calendarEvent) => ({
+            title: `${calendarEvent.employeeName} ${calendarEvent.employeeJob}`,
+            start: calendarEvent.usedStartDate,
+            end: calendarEvent.usedEndDate || calendarEvent.usedStartDate, // 종료일이 없으면 시작일로 설정
+            extendedProps: {
+                usedLeaveType: calendarEvent.usedLeaveType
+            }
+        }))
+        : [];
 
     // FullCalendar의 글로벌 로케일 설정 배열 초기화
     if (!FullCalendar.globalLocales) {
@@ -66,43 +56,43 @@ const AnnualLeaveCalendar = () => {
         return <span>{date.getDate()}</span>;
     };
 
-
+    /* 이벤트 클릭 핸들러 */
+    const handleEventClick = (info) => {
+        info.jsEvent.preventDefault(); // 이벤트 기본 동작 방지
+        setSelectedEvent({
+            title: info.event.title,
+            start: info.event.start ? info.event.start.toISOString().split('T')[0] : '',
+            end: info.event.end ? info.event.end.toISOString().split('T')[0] : info.event.start.toISOString().split('T')[0], // 종료일이 없으면 시작일로 설정
+            usedLeaveType: info.event.extendedProps.usedLeaveType
+        }); // 클릭한 이벤트를 상태로 저장
+        dispatch(getModal(true)); // 모달을 띄움
+    }
 
     return (
         <>
-        <div className="Calendar" style={{ width: '780px' }}>
-            <FullCalendar
-                height= '570px'
-                plugins={[dayGridPlugin, timeGridPlugin]}
-                initialView="dayGridMonth"
-                /* 캘린더 헤더 스타일 */
-                headerToolbar={{
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                }}
-                /* 언어 설정 */
-                locales={[FullCalendar.globalLocales[FullCalendar.globalLocales.length - 1]]}
-                locale="ko"
-                /* 이벤트 편집 기능(일정 bar를 선택하거나 드래그) */
-                editable={true}
-                /* 여러 날짜 선택 가능 */
-                selectable={true}
-                // 날짜 셀의 내용을 커스터마이즈하는 함수를 전달
-                dayCellContent={customDayCellContent}
-                /* 이벤트 렌더링 */
-                // events={formattedEvents}
-                display='auto'
-                // eventClick={handleEventClick}
-            />
+            <div className="Calendar" style={{ width: '780px' }}>
+                <FullCalendar
+                    height='570px'
+                    plugins={[dayGridPlugin, timeGridPlugin]}
+                    initialView="dayGridMonth"
+                    headerToolbar={{
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    }}
+                    locales={[FullCalendar.globalLocales[FullCalendar.globalLocales.length - 1]]}
+                    locale="ko"
+                    editable={true}
+                    selectable={true}
+                    dayCellContent={customDayCellContent}
+                    events={formattedEvents}
+                    display='auto'
+                    eventClick={handleEventClick} // 이벤트 클릭 핸들러 추가
+                />
             </div>
+            {selectedEvent && <Modal event={selectedEvent} />} {/* 모달에 이벤트 정보를 전달 */}
         </>
-    )
-
-
-
-
-
+    );
 }
 
 export default AnnualLeaveCalendar;

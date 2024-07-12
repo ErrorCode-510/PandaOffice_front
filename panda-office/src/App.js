@@ -2,6 +2,7 @@ import './reset.css';
 import './style.css';
 import './pages/recruitment/recruitment.css';
 import 'react-toastify/dist/ReactToastify.css';
+import './components/main/calender/AnnualLeaveCalendar.css'
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./layouts/Layout";
 
