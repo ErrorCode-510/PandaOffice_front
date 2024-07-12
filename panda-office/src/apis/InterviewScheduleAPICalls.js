@@ -91,3 +91,34 @@ export const callEventsDetailAPI = (eventId) => {
     };
 };
 
+
+/* 면접 일정 수정 API */
+export const callEventsModifyAPI = (formValues) => {
+    const { id, name, mome, startDate, endDate, startTime, place, applicantList, employee } = formValues;
+
+    const event = {
+        name,
+        mome,
+        startDate,
+        endDate,
+        startTime,
+        place: place,
+        applicantList: applicantList.map(applicant => applicant.id),
+        employee: employee.id
+    };
+
+    return async (dispatch, getState) => {
+        try {
+            const result = await authRequest.put(`/recruitment/interview-schedule/modify/${id}`, event);
+
+            if (result.status === 201) {
+                dispatch(callEventsAPI());
+                alert('면접 일정이 성공적으로 수정되었습니다.');
+            } else {
+                alert('면접 일정이 성공적으로 수정되었습니다.');
+            }
+        } catch (error) {
+            alert('서버에 문제가 발생했습니다. 관리자에게 문의하세요.');
+        }
+    };
+};
