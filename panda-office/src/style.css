@@ -13,15 +13,15 @@ body{background-color: #F6F6F6;}
 
 /* header ----------------------------------------------------------------------- */
 .panda-header{width:100%; height: 100px; display: flex; justify-content: space-between;  box-shadow: 0 8px 10px -7px gray;  position: relative; z-index: 1; background-color: white;}
-.panda-logo {width:380px; height :80px; padding: 10px; background-image : url('/public/image/logo/pandaOffice_logo.png'); background-size : 330px 80px; background-position : center; background-repeat: no-repeat; }
+.panda-logo {width:315px; height :90px; padding: 10px; background-image : url('/public/image/logo/pandaOffice_logo.png'); background-size : 300px 70px; background-position : center; background-repeat: no-repeat; }
 .panda-logo{flex:none;}
-.icon-area{ display: flex; justify-content: space-between; flex: none; align-items: center;  width: 200px; margin-right: 50px;} /*헤더 오른쪽 아이콘 공간*/
+.icon-area{ display: flex; justify-content: space-between; flex: none; align-items: center;  margin-right: 50px; gap:20px;} /*헤더 오른쪽 아이콘 공간*/
 .icon-area .icon{width: 45px; height: 45px;}
 
 /* 아이콘 위치 조정 */
-.icon .bell {flex: none; width: 35px; height:35px; color:#898989 } /* 고정된 크기로 설정 */
-.icon .calender {flex: 1; width: 35px; height:35px; color:#898989} /* 남은 공간을 모s두 차지하도록 설정 */
-.icon .logout {flex: none;  width: 35px; height:35px; color:#898989}/* 고정된 크기로 설정 */
+.icon .bell {flex: none; width: 40px; height:40px; color:#898989 } /* 고정된 크기로 설정 */
+/*.icon .calender {flex: none; width: 35px; height:35px; color:#898989} /* 남은 공간을 모두 차지하도록 설정 */
+.icon .logout {flex: none;  width: 40px; height:40px; color:#898989}/* 고정된 크기로 설정 */
 /* .icon-area .icon.bell{background-image : url('/public/image/icon/iconmonstr-bell-1.svg'); background-size: 45px 45px; background-position : center; background-repeat: no-repeat;} */
 /* .icon-area .icon.calender{background-image : url('/public/image/icon/iconmonstr-calendar-5.svg'); background-size: 45px 45px; background-position : center; background-repeat: no-repeat;} */
 /* .icon-area .icon.logout{background-image : url('/public/image/icon/iconmonstr-log-out-18.svg'); background-size: 45px 45px; background-position : center; background-repeat: no-repeat;} */
@@ -89,7 +89,7 @@ body{background-color: #F6F6F6;}
 /* footer ------------------------------------------------------------------------ */
 .footer .isTrue {display: none !important;}
 .panda-footer{width:100%; height: 50px; box-sizing: border-box;  background-color: white; margin-top: 40px;}
-.panda-footer .text{display: block; height: 50px; line-height: 50px; text-align: center;}
+.panda-footer .text{display: block; height: 50px; line-height: 50px; text-align: center; color: #8e8e8e;}
 
 /* main -----------------------------------------------------------------------------*/
 .panda-main{ height: calc(100vh - 100px); overflow-y: scroll; overflow-x:hidden; background-color: #F6F6F6; z-index: -1;}
@@ -100,8 +100,8 @@ body{background-color: #F6F6F6;}
 
 /* main card (메인 상단 카드 4개) -----------------------------------------------------------------------*/
 .card-area{display: flex;  gap:32px; flex-wrap: nowrap; margin-top:30px;} /*메인 컴포넌트에 작성된 클래스*/
-.card-area .card{width: 380px; height: 150px; flex: none; border-radius: 15px;  background-color: white; box-shadow: 0 8px 10px -5px gray;  position: relative;}
-.card-area .card .colorbar{width: 250px; height: 7px; margin: 0 auto; border-radius: 10px 10px 10px 10px; transform:  translateY(-50%);} /* 카드 상단 색상 바(position: absolute; top: -3px; left:75px; ) */
+.card-area .card{width: 297px; height: 150px; flex: none; border-radius: 15px;  background-color: white; box-shadow: 0 8px 10px -5px gray;  position: relative;}
+.card-area .card .colorbar{width: 170px; height: 7px; margin: 0 auto; border-radius: 10px 10px 10px 10px; transform:  translateY(-50%);} /* 카드 상단 색상 바(position: absolute; top: -3px; left:75px; ) */
 .card-area .card .card-flexbox{display: flex; height: 100%;}
 .card-area .card .card-flexbox .card-left{flex-grow: 1; margin-left: 50px;}
 .card-area .card .card-flexbox .card-left .card-text{text-align: center;font-size: 23px; margin: 0; line-height: 60px;}

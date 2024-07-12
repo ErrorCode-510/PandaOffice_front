@@ -37,18 +37,19 @@ function Header() {
                     <div className="panda-logo"/>
                 </Link>
                 <div className="icon-area">
-                    <div className="icon" >
+        
+                <div className="icon" >
                         <Link to>
                             <TbBellFilled className="bell"/>
                         </Link>
                     </div>
 
-                    <div className="icon">
+                    {/* <div className="icon">
                         <Link to>
                             <IoCalendarNumberOutline className="calender"/>
                         </Link>
-                    </div>
-
+                    </div> */}
+                    
                     <div className="icon">
                         <Link to>
                             <FiLogOut className="logout" onClick={ () => dispatch(callLogoutAPI()) }/>
