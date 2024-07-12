@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import './notice.css';
-import axios from 'axios';
+import { callAddNoticeAPI, callNoticeByCategoryAPI  } from '../../apis/NoticeAPICalls';
 
 const categories = {
   전체공지: [],
@@ -16,24 +16,15 @@ const NoticeRegist = () => {
     content: '',
     category: '',
     subCategory: '',
+    viewCount: 0,  // 초기값을 0으로 설정
     status: 'Y', // 초기값을 'Y'로 설정
-    employeeId: '201211001',
-    postedDate: new Date().toISOString().split('T')[0],  // 현재 날짜
   });
 
   useEffect(() => {
-    console.log("실시간 확인: " + JSON.stringify(formData))
   }, [formData])
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const employeeId = useSelector((state) => state.auth.employeeId);
-
-  // useEffect(() => {
-  //   if (employeeId) {
-  //     setFormData((prevData) => ({ ...prevData, employeeId: parseInt(employeeId, 10) }));
-  //   }
-  // }, [employeeId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,35 +37,24 @@ const NoticeRegist = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:8001/notice/regist', formData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+    const response = await dispatch(callAddNoticeAPI(formData));
 
-      if (response.status === 201) {
-        if (formData.category === '전체공지') {
-          navigate('/notice/all-notice');
-        } else if (formData.category === '그룹공지') {
-          if (formData.subCategory) {
-            navigate(`/notice/group/${encodeURIComponent(formData.subCategory)}`);
-          } else {
-            navigate('/notice/group-notice');
-          }
-        } else if (formData.category === '경조사') {
-          if (formData.subCategory) {
-            navigate(`/notice/event/${encodeURIComponent(formData.subCategory)}`);
-          } else {
-            navigate('/notice/event-notice');
-          }
-        }
-      }
-    } catch (error) {
-      console.error('Error creating notice:', error);
+    // 응답이 성공적으로 처리되었는지 확인
+    if (response && response.status === 201) {
+      const redirectUrl = `/notice/category/filter?category=${formData.category}&subCategory=${formData.subCategory}`;
+      navigate(redirectUrl);
+
+      // 목록 갱신을 위해 추가 API 호출
+      await dispatch(callNoticeByCategoryAPI ({
+        category: formData.category,
+        subCategory: formData.subCategory,
+        currentPage: 1
+      }));
+    } else {
+      console.error('Error creating notice:', response);
     }
   };
-
+  
   const handleCancel = () => {
     navigate(-1);  // 바로 이전 페이지로 이동
   }

@@ -1,7 +1,6 @@
 import { authRequest } from './api';
 import { getNotice, getNoticeByCategory, setNotice, addNotice } from '../modules/NoticeModules';
-import axios from 'axios';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+
 
 /* 공지사항 전체 조회 API */
 export const callNoticeListAPI = ({ currentPage }) => {
@@ -11,7 +10,7 @@ export const callNoticeListAPI = ({ currentPage }) => {
         console.log(`Fetching all notices for page: ${currentPage}`);
 
         if (result.status === 200) {
-            dispatch(getNotice(result));
+            dispatch(getNotice(result.data));
             return result.data;  // tatalPages 값을 얻기 위해 반환
         } else {
             console.error('callNoticeListAPI error : ', result);
@@ -37,10 +36,8 @@ export const callNoticeByCategoryAPI = ({ category, subCategory, currentPage }) 
     return async (dispatch, getState) => {
         try {
             const apiUrl = `/notice/category/filter?category=${category}&subCategory=${subCategory}&page=${currentPage}`;
-            console.log(`API 요청 URL ${apiUrl}`);
             const result = await authRequest.get(apiUrl);
-            console.log(`API 응답: `, result);
-
+            
             if (result.status === 200) {
                 dispatch(getNoticeByCategory({
                     category,
@@ -59,28 +56,17 @@ export const callNoticeByCategoryAPI = ({ category, subCategory, currentPage }) 
 }
 
 /* 공지사항 등록 API */
-// callAddNoticeAPI.js
-
-export const callAddNoticeAPI = createAsyncThunk(
-    'notices/addNotice',
-    async (formData, thunkAPI) => {
-      try {
-        const response = await axios.post('http://localhost:8001/notice/regist', formData, {
-          
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-  
-        
-        if (response.status !== 201) {
-            return thunkAPI.rejectWithValue(response.data.message || 'Error adding notice');
-          }
-    
-          return response.data;
-        } catch (error) {
-          return thunkAPI.rejectWithValue(error.message);
+export const callAddNoticeAPI = (formData) => {
+    return async (dispatch) => {
+        const result = await authRequest.post('/notice/regist', formData);
+        console.log('Response Data:', result.data);
+        if (result.status === 201) {
+            dispatch(addNotice( result.data ));
+            
+            /* 성공시 추가 작업 */
+            return result;  // 응답을 반환하여 성공 여부 확인
+        } else {
+            console.error('callAddNoticeAPI error : ', result);
         }
-      }
-    );
-  
+    }
+}
