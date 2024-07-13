@@ -179,7 +179,7 @@ const ApplicantModal = () => {
     return (
         <>
             <div className='modal-bg' onClick={handlerCloseOnClick}>
-                <div className='modal-wrap' onClick={handlerModalWrapClick}>
+                <div className='am-modal-wrap' onClick={handlerModalWrapClick}>
                     <div className='applicant-info'>
                         <h1>면접자 인적사항</h1>
                     </div>

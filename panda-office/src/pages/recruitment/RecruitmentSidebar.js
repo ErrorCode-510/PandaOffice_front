@@ -95,7 +95,6 @@ function RecruitmentSidebar() {
     /* 면접일정 경로 일 경우 면접일정 등록 핸들러 */
     const handlerScheduleOpen = () => {
         dispatch(getScheduleStatus(true))
-        // console.log('사이드바 값 전달 확인')
     }
 
     return (

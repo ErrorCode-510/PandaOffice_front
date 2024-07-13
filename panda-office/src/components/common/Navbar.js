@@ -70,12 +70,12 @@ function Navbar() {
                                 <p>문서함</p>
                             </NavLink>
                         </li>
-                        {depId===11 && <li>
+                        <li>
                             <NavLink to="/recruitment/schedule" className="nav-link">
                                 <PiHandshakeLight className="side-icons"/>
                                 <p>채용면접</p>
                             </NavLink>
-                        </li>}
+                        </li>
                         <li>
                             <NavLink to="/welfare/dashboard" className="nav-link">
                                 <TfiHeadphoneAlt className="side-icons"/>
