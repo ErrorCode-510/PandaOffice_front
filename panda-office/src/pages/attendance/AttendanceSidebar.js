@@ -79,7 +79,7 @@ function AttendanceSidebar() {
                                     </li>
                                     <li>
                                         <NavLink to="/attendance/annual_leave_adjustment" className="icons-text fs-14 mt-10 ml-55 cursor-p">
-                                            연차 조정
+                                            전 사원 연차 내역
                                         </NavLink>
                                     </li>
                                 </ul>

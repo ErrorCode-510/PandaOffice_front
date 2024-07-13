@@ -175,7 +175,6 @@ export const callCheckInAPI = (attendanceData) => {
     };
 };
 
-/* 6.퇴근 찍기 */
 export const callCheckOutAPI = (attendanceData) => {
     return async (dispatch) => {
         try {

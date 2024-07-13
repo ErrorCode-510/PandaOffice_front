@@ -1,6 +1,5 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { callAnnualLeaveCalendarAPI } from "../../../apis/AttendanceAPICalls";
@@ -41,11 +40,8 @@ const AnnualLeaveCalendar = () => {
             next: '다음달',
             today: '오늘',
             month: '월',
-            week: '주',
-            day: '일',
             list: '일정목록',
         },
-        weekText: '주',
         allDayText: '종일',
         moreLinkText: '개',
         noEventsText: '일정이 없습니다',
@@ -73,12 +69,12 @@ const AnnualLeaveCalendar = () => {
             <div className="Calendar" style={{ width: '780px' }}>
                 <FullCalendar
                     height='570px'
-                    plugins={[dayGridPlugin, timeGridPlugin]}
+                    plugins={[dayGridPlugin]}
                     initialView="dayGridMonth"
                     headerToolbar={{
                         left: 'prev,next today',
                         center: 'title',
-                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                        right: 'dayGridMonth'
                     }}
                     locales={[FullCalendar.globalLocales[FullCalendar.globalLocales.length - 1]]}
                     locale="ko"

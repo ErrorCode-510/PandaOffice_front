@@ -64,7 +64,7 @@ const AnnualLeaveAdjustment = () => {
     return (
         <div className="annual-leave-adjustment">
             <div className="header">
-                <h2>연차 조정</h2>
+                <h2>전 사원 연차 내역</h2>
             </div>
             <div className="search-bar">
                 <label>귀속년도</label>

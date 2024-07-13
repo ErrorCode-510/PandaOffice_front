@@ -8,7 +8,7 @@ import { PiHandshakeLight } from "react-icons/pi";
 import { TfiHeadphoneAlt } from "react-icons/tfi";
 import { LiaSitemapSolid } from "react-icons/lia";
 import {useEffect, useState} from "react";
-// import { AttendanceHandler } from './AttendanceHandler';
+import { AttendanceHandler } from './AttendanceHandler';  // AttendanceHandler를 불러옵니다
 import axios from "axios";
 import {getMemberId} from "../../utils/TokenUtils";
 
@@ -33,7 +33,6 @@ function Navbar() {
 
     const depId = employee?.employee?.department?.id;
 
-
     return (
         <>
             <div className={`nav-wrap ${isRootPath ? '' : 'collapsed'}`}>
@@ -42,8 +41,7 @@ function Navbar() {
                         <Clock/>
                     </div>
                     <div className="check-button">
-                        <button>출근</button>
-                        <button>퇴근</button>
+                        <AttendanceHandler />  {/* 출근/퇴근 버튼을 포함한 AttendanceHandler를 사용합니다 */}
                     </div>
                     <ul className="department-list">
                         <li>
@@ -59,7 +57,7 @@ function Navbar() {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="attendance/management/status" className="nav-link">
+                            <NavLink to="/attendance" className="nav-link">
                                 <LiaBusinessTimeSolid className="side-icons"/>
                                 <p>근태</p>
                             </NavLink>
@@ -70,12 +68,12 @@ function Navbar() {
                                 <p>문서함</p>
                             </NavLink>
                         </li>
-                        <li>
+                        {depId===11 && <li>
                             <NavLink to="/recruitment/schedule" className="nav-link">
                                 <PiHandshakeLight className="side-icons"/>
                                 <p>채용면접</p>
                             </NavLink>
-                        </li>
+                        </li>}
                         <li>
                             <NavLink to="/welfare/dashboard" className="nav-link">
                                 <TfiHeadphoneAlt className="side-icons"/>

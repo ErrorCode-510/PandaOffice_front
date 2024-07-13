@@ -35,7 +35,9 @@ const Current = () => {
             </div>
             <div className="content">
                 <div className="user-info">
-                    <img src="user-image.png" alt="User" />
+                <div className='img'>
+                        <img src="/image/김민수.png" alt="User" />
+                    </div>
                     <span>{`${employeeName} ${departmentName}팀`}</span>
                 </div>
                 <div className="leave-stats">

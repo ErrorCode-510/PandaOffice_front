@@ -26,9 +26,11 @@ const Current = () => {
             </div>
             <div className="content">
                 <div className="user-info">
-                    <img src="user-image.png" alt="User" />
+                    <div className='img'>
+                        <img src="/image/김민수.png" alt="User" />
+                    </div>
                     <span>
-                        {usedResponse?.annualLeaveUsedRecords?.[0]?.employeeName} {usedResponse?.annualLeaveUsedRecords?.[0]?.departmentName}팀
+                        김민수 인사 팀
                     </span>
                 </div>
                 <div className="leave-stats">

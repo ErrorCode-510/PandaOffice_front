@@ -46,7 +46,6 @@ const Search = () => {
                             <th>근태 구분</th>
                             <th>시작일자 ~ 종료일자</th>
                             <th>소요 시간</th>
-                            <th>작성 일자</th>
                             <th>상태</th>
                         </tr>
                     </thead>
@@ -57,8 +56,7 @@ const Search = () => {
                                 <td>지각</td>
                                 <td>{record.date} {record.startTime} ~ {record.endTime}</td>
                                 <td>{record.duration}</td>
-                                <td>{record.approvalDate}</td>
-                                <td>{record.status}</td>
+                                <td>신청 완료</td>
                             </tr>
                         ))}
                     </tbody>
@@ -71,7 +69,6 @@ const Search = () => {
                             <th>근태 구분</th>
                             <th>시작일자 ~ 종료일자</th>
                             <th>소요 시간</th>
-                            <th>작성 일자</th>
                             <th>상태</th>
                         </tr>
                     </thead>
@@ -82,8 +79,7 @@ const Search = () => {
                                 <td>{record.type}</td>
                                 <td>{record.dateRange}</td>
                                 <td>{record.duration}</td>
-                                <td>{record.approvalDate}</td>
-                                <td>{record.status}</td>
+                                <td>신청 완료</td>
                             </tr>
                         ))}
                     </tbody>
@@ -96,7 +92,6 @@ const Search = () => {
                             <th>연차 구분</th>
                             <th>시작일자 ~ 종료일자</th>
                             <th>소요 일</th>
-                            <th>작성 일자</th>
                             <th>상태</th>
                         </tr>
                     </thead>
@@ -107,8 +102,7 @@ const Search = () => {
                                 <td>{record.usedType}</td>
                                 <td>{record.dateRange}</td>
                                 <td>{record.duration}</td>
-                                <td>{record.approvalDate}</td>
-                                <td>{record.status}</td>
+                                <td>신청완료</td>
                             </tr>
                         ))}
                     </tbody>
