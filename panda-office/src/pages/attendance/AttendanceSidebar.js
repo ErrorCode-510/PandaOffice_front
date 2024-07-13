@@ -73,11 +73,6 @@ function AttendanceSidebar() {
                                         )}
                                     </li>
                                     <li>
-                                        <NavLink to="/attendance/annualLeaveCalendar" className="icons-text fs-14 mt-10 ml-55 cursor-p">
-                                            연차 캘린더
-                                        </NavLink>
-                                    </li>
-                                    <li>
                                         <NavLink to="/attendance/request_status" className="icons-text fs-14 mt-10 ml-55 cursor-p">
                                             근태 신청 현황
                                         </NavLink>
