@@ -59,7 +59,7 @@ function Navbar() {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/attendance" className="nav-link">
+                            <NavLink to="attendance/management/status" className="nav-link">
                                 <LiaBusinessTimeSolid className="side-icons"/>
                                 <p>근태</p>
                             </NavLink>
