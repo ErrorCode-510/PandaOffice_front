@@ -45,7 +45,6 @@ const Search = () => {
                             <th>번호</th>
                             <th>근태 구분</th>
                             <th>시작일자 ~ 종료일자</th>
-                            <th>소요 시간</th>
                             <th>상태</th>
                         </tr>
                     </thead>
@@ -55,7 +54,6 @@ const Search = () => {
                                 <td>{index + 1}</td>
                                 <td>지각</td>
                                 <td>{record.date} {record.startTime} ~ {record.endTime}</td>
-                                <td>{record.duration}</td>
                                 <td>신청 완료</td>
                             </tr>
                         ))}
@@ -91,7 +89,6 @@ const Search = () => {
                             <th>번호</th>
                             <th>연차 구분</th>
                             <th>시작일자 ~ 종료일자</th>
-                            <th>소요 일</th>
                             <th>상태</th>
                         </tr>
                     </thead>
@@ -101,7 +98,6 @@ const Search = () => {
                                 <td>{index + 1}</td>
                                 <td>{record.usedType}</td>
                                 <td>{record.dateRange}</td>
-                                <td>{record.duration}</td>
                                 <td>신청완료</td>
                             </tr>
                         ))}

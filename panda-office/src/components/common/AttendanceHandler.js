@@ -21,6 +21,7 @@ export function AttendanceHandler() {
         };
         try {
             await dispatch(callCheckInAPI(attendanceData));
+            alert("출근 완료")
         } catch (error) {
             const errorMessage = error.response?.data?.message || "이미 출근하셨습니다.";
             alert(errorMessage);
@@ -34,6 +35,7 @@ export function AttendanceHandler() {
         };
         try {
             await dispatch(callCheckOutAPI(attendanceData));
+            alert("퇴근 완료")
         } catch (error) {
             const errorMessage = error.response?.data?.message || "출근을 안하셨습니다.";
             alert(errorMessage);
