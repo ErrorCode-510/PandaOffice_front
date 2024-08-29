@@ -3,8 +3,6 @@
 <br>
 
 ## 🔐 로그인,인사관리
-### 🛠 기능설명
--
 
 ### 🖼️ 실행화면
 <div style="display: inline-block;">
@@ -20,8 +18,6 @@
 <br>
 
 ## 🧾 급여관리(채워야함)
-### 🛠 기능설명
--
 
 ### 🖼️ 실행화면
 <div style="display: flex; flex-wrap: wrap;">
@@ -34,8 +30,6 @@
 <br>
 
 ## 🕒 근태관리
-### 🛠 기능설명
--
 
 ### 🖼️ 실행화면
 
@@ -48,8 +42,6 @@
 <br>
 
 ## 💻전자결재
-### 🛠 기능설명
--
 
 ### 🖼️ 실행화면
 <div style="display: flex; flex-wrap: wrap;">
@@ -61,8 +53,6 @@
 <br>
 
 ## 💼 채용면접
-### 🛠 기능설명
--
 
 ### 🖼️ 실행화면
 <div style="display: flex; flex-wrap: wrap;">
@@ -74,8 +64,6 @@
 <br>
 
 ## 📋 설문조사 
-### 🛠 기능설명
--
 
 ### 🖼️ 실행화면
 <div style="display: flex; flex-wrap: wrap;">
@@ -87,8 +75,6 @@
 <br>
 
 ## 📢공지사항
-### 🛠 기능설명
--
 
 ### 🖼️ 실행화면
 <div style="display: flex; flex-wrap: wrap;">
